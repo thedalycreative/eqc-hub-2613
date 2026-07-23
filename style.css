@@ -53,11 +53,21 @@
 
 	/* ---- accents ---- */
 	--gold: #a8802f;
-	/* the assignment spotlight */
-	--live: #15803d;
-	/* class done / live now  */
-	--next: #a8621f;
-	/* next class up          */
+	--live: #15803d;   /* class done / live now */
+	--next: #a8621f;   /* next class up         */
+
+	/* ---- 3. SECTION ACCENTS — each section owns a colour, and its
+	         navbar link lights up in that same colour on hover. ---- */
+	--sec-start: #15803d;
+	/* Start here  · green  */
+	--sec-overview: #2563eb;
+	/* Overview    · blue   */
+	--sec-resources: #7c3aed;
+	/* Resources   · violet */
+	--sec-sheets: #c2410c;
+	/* Cheat Sheets· orange */
+	--sec-schedule: #a8802f;
+	/* Schedule    · gold   */
 
 	/* the four loader-mark colours — the brand mark only */
 	--ib-red: #ED303C;
@@ -179,11 +189,41 @@ a.link-dark:hover {
 
 .navbar-dark .navbar-nav .nav-link {
 	color: rgba(255, 255, 255, 0.72);
+	position: relative;
+	transition: color 0.15s ease;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
-	color: #fff;
+/* Each nav link lights up in ITS SECTION'S colour, with a matching underline —
+   so the colour you hover in the nav is the colour you land on. */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus-visible {
+	color: var(--sec, #fff);
 }
+
+.navbar-nav .nav-link[data-sec]::after {
+	content: "";
+	position: absolute;
+	left: 0.5rem;
+	right: 0.5rem;
+	bottom: 0.15rem;
+	height: 2px;
+	background: var(--sec);
+	transform: scaleX(0);
+	transition: transform 0.18s ease;
+}
+
+.navbar-nav .nav-link[data-sec]:hover::after,
+.navbar-nav .nav-link[data-sec]:focus-visible::after,
+.navbar-nav .nav-link[data-sec].show::after {
+	transform: scaleX(1);
+}
+
+/* The one knob per link — matches the section it jumps to */
+.nav-link[data-sec="start"]     { --sec: var(--sec-start); }
+.nav-link[data-sec="overview"]  { --sec: var(--sec-overview); }
+.nav-link[data-sec="resources"] { --sec: var(--sec-resources); }
+.nav-link[data-sec="sheets"]    { --sec: var(--sec-sheets); }
+.nav-link[data-sec="schedule"]  { --sec: var(--sec-schedule); }
 
 .navbar-brand small {
 	font-family: var(--font-mono);
@@ -265,51 +305,192 @@ a.link-dark:hover {
 }
 
 /* ----------------------------------------------------------------------------
-   START HERE — the three steps a brand-new student takes on day one.
-   Numbered because the order genuinely matters.
+   SECTION HEADINGS
+   ----------------------------------------------------------------------------
+   Each section carries `section-block` + a `sec-*` class that sets --sec.
+   The heading gets a thick coloured rule directly above it and sits TIGHT
+   against its own content, so the title clearly belongs to what follows
+   rather than floating between two sections.
 ---------------------------------------------------------------------------- */
+.section-block {
+	--sec: var(--ink);
+	padding-top: 2.75rem;
+	margin-bottom: 3.5rem;
+}
+
+.section-head {
+	border-top: 5px solid var(--sec);
+	padding-top: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.section-eyebrow {
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--sec);
+	display: block;
+	margin-bottom: 0.25rem;
+}
+
+.section-title {
+	font-family: var(--font-display);
+	font-size: clamp(1.9rem, 4vw, 2.9rem);
+	font-weight: 700;
+	line-height: 1.05;
+	letter-spacing: -0.02em;
+	color: var(--sec);
+	margin: 0;
+}
+
+/* The lede sits close to the title — they read as one unit. */
+.section-lede {
+	font-size: 0.95rem;
+	color: var(--muted);
+	margin: 0.4rem 0 0;
+	max-width: 60ch;
+}
+
+/* One knob per section */
+.sec-start { --sec: var(--sec-start); }
+.sec-overview { --sec: var(--sec-overview); }
+.sec-resources { --sec: var(--sec-resources); }
+.sec-schedule { --sec: var(--sec-schedule); }
+
+/* ----------------------------------------------------------------------------
+   START HERE — the three steps a brand-new student takes on day one.
+   ----------------------------------------------------------------------------
+   Laid out as a left-to-right path: big icon, number badge, then the words.
+   On desktop a connector line runs between the steps so it reads as a
+   sequence rather than three unrelated cards.
+---------------------------------------------------------------------------- */
+.start-path {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+	position: relative;
+}
+
+/* The connector — a hairline behind the icons, desktop only */
+.start-path::before {
+	content: "";
+	position: absolute;
+	top: 3.25rem;
+	left: 16%;
+	right: 16%;
+	height: 2px;
+	background: repeating-linear-gradient(to right,
+			var(--line) 0 8px, transparent 8px 14px);
+	z-index: 0;
+}
+
 .start-step {
+	position: relative;
+	z-index: 1;
 	display: flex;
-	gap: 0.85rem;
-	align-items: flex-start;
-	padding: 1rem 1.15rem;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	gap: 0.65rem;
+	padding: 1.5rem 1.25rem;
 	border: 1px solid var(--line);
-	border-radius: 0.375rem;
+	border-radius: 0.5rem;
 	background: var(--paper);
-	height: 100%;
-	transition: transform 0.15s ease, box-shadow 0.15s ease;
+	text-decoration: none;
+	color: inherit;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .start-step:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 0 0 1px var(--build), 0 8px 24px rgba(21, 128, 61, 0.15);
+	transform: translateY(-3px);
+	border-color: var(--sec-start);
+	box-shadow: 0 0 0 1px var(--sec-start), 0 10px 28px rgba(21, 128, 61, 0.16);
+	color: inherit;
 }
 
-.start-step-num {
-	flex-shrink: 0;
-	width: 1.75rem;
-	height: 1.75rem;
+/* The big icon disc — the visual anchor of each step */
+.start-icon {
+	width: 3.5rem;
+	height: 3.5rem;
 	border-radius: 50%;
+	display: grid;
+	place-items: center;
 	background: var(--build-soft);
 	color: var(--build);
+	font-size: 1.5rem;
+	position: relative;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.start-step:hover .start-icon {
+	background: var(--build);
+	color: #fff;
+}
+
+/* The step number rides on the icon's corner */
+.start-icon .start-num {
+	position: absolute;
+	top: -0.25rem;
+	right: -0.25rem;
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 50%;
+	background: var(--ink);
+	color: #fff;
 	font-family: var(--font-mono);
-	font-size: 0.8rem;
+	font-size: 0.68rem;
 	font-weight: 700;
 	display: grid;
 	place-items: center;
+	border: 2px solid var(--paper);
 }
 
 .start-step h3 {
-	font-size: 0.95rem;
-	font-weight: 600;
-	margin-bottom: 0.15rem;
+	font-size: 1rem;
+	font-weight: 700;
+	margin: 0;
 	font-family: var(--font-body);
 }
 
 .start-step p {
-	font-size: 0.82rem;
+	font-size: 0.84rem;
 	color: var(--muted);
 	margin: 0;
+	line-height: 1.45;
+}
+
+/* The little "and then" arrow under each step */
+.start-step .start-go {
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--build);
+	margin-top: auto;
+}
+
+@media (max-width: 767px) {
+	.start-path {
+		grid-template-columns: 1fr;
+	}
+
+	.start-path::before {
+		display: none;
+	}
+
+	.start-step {
+		flex-direction: row;
+		text-align: left;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.start-step .start-body {
+		flex: 1;
+	}
 }
 
 /* ----------------------------------------------------------------------------
@@ -425,21 +606,37 @@ a.link-dark:hover {
 .tile-overview { --accent: var(--learn); --accent-soft: var(--learn-soft); }
 
 /* ----------------------------------------------------------------------------
-   ASSIGNMENT SPOTLIGHT — the golden tile.
-   Wears its colour at rest: gold edge, parchment fill, gold icons.
+   ASSIGNMENT PANEL
+   ----------------------------------------------------------------------------
+   Assignments live inside the modal of the class that launches them, rather
+   than in a separate tile — so the brief sits next to the lesson that
+   introduced it. Gold, so it stands out from the class's own subject colour.
 ---------------------------------------------------------------------------- */
-.tile-assignment {
+.assignment-panel {
 	--accent: var(--gold);
 	--accent-soft: #fbf4e6;
-	border-color: var(--accent) !important;
+	border: 1px solid var(--gold);
+	border-left: 4px solid var(--gold);
 	background: #fffcf5;
-	box-shadow:
-		0 0 0 1px var(--accent),
-		0 4px 18px color-mix(in srgb, var(--accent) 20%, transparent);
+	border-radius: 0.375rem;
+	padding: 1rem 1.15rem;
+	margin: 1rem 0;
 }
 
-.tile-assignment .bi {
-	opacity: 1;
+.assignment-panel .bi {
+	color: var(--gold);
+}
+
+.assignment-panel ul {
+	padding-left: 1.1rem;
+	color: var(--muted);
+}
+
+/* An assignment flag on the schedule tile, so you can spot the two
+   assignment kick-off classes without opening anything. */
+.flag-assign {
+	color: #fff;
+	background: var(--gold);
 }
 
 /* ----------------------------------------------------------------------------

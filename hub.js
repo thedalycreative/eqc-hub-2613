@@ -188,11 +188,28 @@ const CLASSES = [
 			'<strong>The showpiece:</strong> pure-CSS fireflies — <code>@keyframes</code> drift + flash, zero JavaScript',
 			'Rules of the build: CDN only · no inline styles · alt text on everything',
 		],
+		// This class kicks off Assignment 1, so the assignment brief lives here.
+		assignment: {
+			code: 'S02-A01',
+			name: 'Bootstrap Clone',
+			blurb: 'Rebuild the Forbidden Forest site’s layout with Bootstrap 5.',
+			rules: [
+				'Bootstrap 5 <strong>via CDN</strong> — no npm, no build step',
+				'Minimum <strong>5 files</strong>: pages + stylesheet + images folder',
+				'JavaScript only for the <strong>carousel</strong> (Bootstrap’s bundle does it)',
+				'No inline styles — custom CSS lives in your stylesheet',
+				'Alt text on every image; semantic tags; QA checklist before you submit',
+			],
+			walkthrough: { label: 'Clone a Bootstrap site in 5 minutes', href: 'assets/cheatsheets/cheatsheet-clone-a-site.html' },
+		},
 		note: '<strong>Note:</strong> the original imagery and branding belong to Warner Bros. / Fever — this rebuild is for private practice only. Don’t publish your copy.',
 		links: [
 			{ label: 'Class repo: S02-A01-BootstrapClone', href: 'https://github.com/thedalycreative/S02-A01-BootstrapClone' },
+			{ label: 'Original site', href: 'https://hpforbiddenforestexperience.com/' },
+			{ label: 'Flexbox exercise repo', href: 'https://github.com/thedalycreative/flexbox-exercise' },
 			{ label: 'Bootstrap Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-bootstrap.html' },
 			{ label: 'Bootstrap 5 Docs', href: 'https://getbootstrap.com/docs/5.3/' },
+			{ label: 'QA Checklist', href: 'assets/cheatsheets/cheatsheet-qachecklist.html' },
 		],
 	},
 	{
@@ -238,7 +255,25 @@ const CLASSES = [
 		title: 'Your website', sub: 'Concept & folder structure',
 		focus: 'Kick off <em>your</em> portfolio website.',
 		topics: ['Pick a real subject (yourself, or a real client)', 'Sitemap on paper', 'Set up a clean folder + repo'],
-		links: [{ label: 'Folder Structure Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-folderstructure.html' }],
+		// This class kicks off Assignment 2.
+		assignment: {
+			code: 'S02-A02',
+			name: 'Build Your Own Website',
+			blurb: 'Same Bootstrap skills as the clone — but this time the design decisions are yours.',
+			rules: [
+				'A <strong>real subject</strong>: yourself, a real business, or a club you belong to',
+				'About <strong>4 pages</strong>, with a working nav on every one',
+				'Bootstrap 5 via CDN, your own <code>style.css</code> loaded after it',
+				'Real content and real images — no lorem ipsum in a submission',
+				'Validate, run WAVE, and test on an actual phone before you submit',
+			],
+			walkthrough: { label: 'Build your own website — the walkthrough', href: 'assets/cheatsheets/cheatsheet-build-your-own.html' },
+		},
+		links: [
+			{ label: 'Folder Structure Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-folderstructure.html' },
+			{ label: 'Excalidraw', href: 'https://excalidraw.com' },
+			{ label: 'Coolors', href: 'https://coolors.co' },
+		],
 	},
 	{
 		num: 16, date: '2026-08-05', subject: 's2',
@@ -429,7 +464,10 @@ function renderSchedule() {
 				data-class-num="${c.num}">
 				<span class="d-flex align-items-start justify-content-between gap-2">
 					<span class="class-num">${c.num}</span>
-					${flag}
+					<span class="d-flex flex-column align-items-end gap-1">
+						${c.assignment ? `<span class="tile-flag flag-assign">${c.assignment.code}</span>` : ''}
+						${flag}
+					</span>
 				</span>
 				<span class="class-date d-block">${formatDate(parseLocalDate(c.date))}</span>
 				<span class="class-title d-block">${c.title}</span>
@@ -472,9 +510,32 @@ function initModal() {
 			return `<a href="${l.href}"${rel}><i class="bi bi-link-45deg"></i>${l.label}</a>`;
 		}).join('');
 
+		// If this class launches an assignment, its brief renders as a
+		// highlighted panel — that's why there's no separate spotlight tile.
+		let assignment = '';
+		if (c.assignment) {
+			const a = c.assignment;
+			const rules = (a.rules || []).map((r) => `<li>${r}</li>`).join('');
+			assignment = `
+				<div class="assignment-panel">
+					<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+						<h3 class="h6 fw-bold mb-0">
+							<i class="bi bi-star-fill me-2"></i>${a.code} · ${a.name}
+						</h3>
+						<span class="tile-chip">Assignment</span>
+					</div>
+					<p class="small mb-2">${a.blurb}</p>
+					<ul class="small mb-3">${rules}</ul>
+					<a class="btn btn-sm btn-dark" href="${a.walkthrough.href}" target="_blank">
+						<i class="bi bi-journal-text me-1"></i>${a.walkthrough.label}
+					</a>
+				</div>`;
+		}
+
 		document.getElementById('classModalBody').innerHTML =
 			(c.focus ? `<p><strong>Focus:</strong> ${c.focus}</p>` : '') +
 			(topics ? `<ul>${topics}</ul>` : '') +
+			assignment +
 			(c.note ? `<p class="mb-0">${c.note}</p>` : '') +
 			(links ? `<div class="modal-links">${links}</div>` : '');
 	});

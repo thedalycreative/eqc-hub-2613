@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <!--
   ============================================================================
-  INTAKE 26.13 · THE iBONES — CLASS HUB
+  INTAKE 26.13 · TIM'S EQC MINIONS — CLASS HUB
   ============================================================================
   Single-page hub for Equinim College Intake 26.13.
   Bootstrap 5 + a custom stylesheet + one script file.
 
   Page order (top → bottom):
-    1. <nav>       — sticky top bar
+    1. <nav>       — sticky top bar (links light up in their section's colour)
     2. <header>    — hero + live status
     3. Start here  — the three day-one steps
     4. Access card — attendance, Zoom, Study Hub
     5. Overview    — plain-English summary of the course
     6. Resources   — colour-coded tiles, grouped by what you use them for
-    7. Git         — get to know version control
-    8. Schedule    — 24 class tiles, colour-coded by subject
-    9. Modal       — shared modal for class detail
-   10. Footer
-   11. hub.js      — schedule data, rendering, unlock logic
+    7. Schedule    — 24 class tiles, colour-coded by subject
+    8. Modal       — shared modal for class detail
+    9. Footer
+   10. hub.js      — schedule data, rendering, unlock logic
 
   Students: everything is plain HTML + Bootstrap classes — the same Bootstrap
   you're learning in class. Read style.css to see how the colour system works.
@@ -28,7 +27,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>The iBones · Intake 26.13 Class Hub · EQC Front End Web Dev</title>
+	<title>Tim's EQC Minions · Web Development Intake 26.13</title>
 	<meta name="description"
 		content="Class hub for EQC Intake 26.13 — schedule, attendance, Zoom, cheat sheets, resources and the full lesson log.">
 
@@ -62,8 +61,8 @@
 			<a class="navbar-brand d-flex align-items-center gap-2" href="#top">
 				<span class="ib-loader" style="width:1.75rem;height:1.75rem" aria-hidden="true"></span>
 				<span>
-					<strong>The iBones</strong>
-					<small>Intake 26.13</small>
+					<strong>Tim's EQC Minions</strong>
+					<small>Web Development · Intake 26.13</small>
 				</span>
 			</a>
 			<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
@@ -73,21 +72,31 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav ms-auto align-items-lg-center">
-					<li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
-					<li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
-					<li class="nav-item"><a class="nav-link" href="#git">Git</a></li>
-					<li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+					<li class="nav-item"><a class="nav-link" data-sec="start" href="#start">Start</a></li>
+					<li class="nav-item"><a class="nav-link" data-sec="overview" href="#overview">Overview</a></li>
+					<li class="nav-item"><a class="nav-link" data-sec="resources" href="#resources">Resources</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" data-sec="schedule" href="#schedule">Schedule</a></li>
 
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="cheatsheetsDropdown" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false">Cheat Sheets</a>
+						<a class="nav-link dropdown-toggle" data-sec="sheets" href="#" id="cheatsheetsDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">Cheat Sheets</a>
 						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cheatsheetsDropdown">
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-clone-a-site.html"
+									target="_blank">⭐ Clone a Bootstrap site (A1)</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-build-your-own.html"
+									target="_blank">⭐ Build your own website (A2)</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
 							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-htmltags.html"
 									target="_blank">HTML Tags</a></li>
 							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-flexbox.html"
 									target="_blank">Flexbox</a></li>
 							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-bootstrap.html"
 									target="_blank">Bootstrap</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-git.html"
+									target="_blank">Git &amp; GitHub</a></li>
 							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-folderstructure.html"
 									target="_blank">Folder Structure</a></li>
 							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-qachecklist.html"
@@ -129,7 +138,7 @@
 
 			<div class="d-flex align-items-center gap-3 mb-3">
 				<span class="ib-loader" style="width:3.5rem;height:3.5rem" aria-hidden="true"></span>
-				<h1 class="display-4 mb-0 hero-title">Welcome, The iBones</h1>
+				<h1 class="display-4 mb-0 hero-title">Tim's EQC Minions</h1>
 			</div>
 
 			<p class="lead mb-4 text-white-50" style="max-width: 46rem;">
@@ -151,47 +160,65 @@
 		  3. START HERE — the three things a brand-new student does first.
 		  Numbered because the order actually matters.
 		  ==================================================================== -->
-		<section id="start" class="mb-5">
-			<h2 class="h4 mb-1">Start here</h2>
-			<p class="text-muted small mb-4">Brand new? Do these three things, in this order.</p>
+		<section id="start" class="section-block sec-start">
+			<div class="section-head">
+				<span class="section-eyebrow">First things first</span>
+				<h2 class="section-title">Start here</h2>
+				<p class="section-lede">Brand new? Do these three things, in this order — then you're set up for the
+					whole course.</p>
+			</div>
 
-			<div class="row row-cols-1 row-cols-md-3 g-3">
-				<div class="col">
-					<a class="start-step text-decoration-none text-reset" href="https://code.visualstudio.com"
-						target="_blank" rel="noopener">
-						<span class="start-step-num">1</span>
-						<span>
-							<h3>Install your tools</h3>
-							<p>VS Code, the Live Server extension, and Git. Everything else runs in the browser.</p>
-						</span>
-					</a>
-				</div>
-				<div class="col">
-					<a class="start-step text-decoration-none text-reset"
-						href="https://form.jotform.com/260060839447864" target="_blank" rel="noopener">
-						<span class="start-step-num">2</span>
-						<span>
-							<h3>Mark your attendance</h3>
-							<p>Every class, before you start. Then join the Zoom room — it opens at 17:20.</p>
-						</span>
-					</a>
-				</div>
-				<div class="col">
-					<a class="start-step text-decoration-none text-reset" href="#schedule">
-						<span class="start-step-num">3</span>
-						<span>
-							<h3>Open this week's class</h3>
-							<p>Every class in the schedule holds its plan, topics and resources.</p>
-						</span>
-					</a>
-				</div>
+			<div class="start-path">
+				<a class="start-step" href="https://code.visualstudio.com" target="_blank" rel="noopener">
+					<span class="start-icon">
+						<i class="bi bi-download" aria-hidden="true"></i>
+						<span class="start-num">1</span>
+					</span>
+					<span class="start-body">
+						<h3>Install your tools</h3>
+						<p>VS Code, the Live Server extension, and Git. Everything else runs in the browser.</p>
+					</span>
+					<span class="start-go">Get set up <i class="bi bi-arrow-right"></i></span>
+				</a>
+
+				<a class="start-step" href="https://form.jotform.com/260060839447864" target="_blank"
+					rel="noopener">
+					<span class="start-icon">
+						<i class="bi bi-clipboard-check" aria-hidden="true"></i>
+						<span class="start-num">2</span>
+					</span>
+					<span class="start-body">
+						<h3>Mark your attendance</h3>
+						<p>Every class, before you start. Then join the Zoom room — it opens at 17:20.</p>
+					</span>
+					<span class="start-go">Open the form <i class="bi bi-arrow-right"></i></span>
+				</a>
+
+				<a class="start-step" href="#schedule">
+					<span class="start-icon">
+						<i class="bi bi-calendar-week" aria-hidden="true"></i>
+						<span class="start-num">3</span>
+					</span>
+					<span class="start-body">
+						<h3>Open this week's class</h3>
+						<p>Every class in the schedule holds its plan, topics and resources.</p>
+					</span>
+					<span class="start-go">Go to schedule <i class="bi bi-arrow-down"></i></span>
+				</a>
 			</div>
 		</section>
 
 		<!-- ====================================================================
 		  4. ACCESS  +  5. OVERVIEW
 		  ==================================================================== -->
-		<div class="row g-4 mb-5">
+		<section id="overview" class="section-block sec-overview">
+			<div class="section-head">
+				<span class="section-eyebrow">The course</span>
+				<h2 class="section-title">Overview</h2>
+				<p class="section-lede">What you're studying, when it runs, and how to get into class.</p>
+			</div>
+
+			<div class="row g-4">
 
 			<div class="col-lg-5">
 				<div class="card h-100 border resource-tile tile-access">
@@ -219,11 +246,11 @@
 				</div>
 			</div>
 
-			<div class="col-lg-7" id="overview">
+			<div class="col-lg-7">
 				<div class="card h-100 border resource-tile tile-overview">
 					<div class="card-body p-4">
 						<div class="d-flex align-items-center justify-content-between mb-3">
-							<h2 class="h5 fw-bold mb-0">Course Overview</h2>
+							<h3 class="h5 fw-bold mb-0">Two subjects, side by side</h3>
 							<span class="tile-chip">12 weeks</span>
 						</div>
 						<p class="small text-muted mb-3">
@@ -235,7 +262,7 @@
 						<div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
 							<div class="col">
 								<span class="legend-item legend-s1 mb-2"><i class="dot"></i>Subject 1</span>
-								<h3 class="h6 fw-semibold">Clients &amp; Concepts</h3>
+								<h4 class="h6 fw-semibold">Clients &amp; Concepts</h4>
 								<ul class="small text-muted mb-0 ps-3">
 									<li>Originate and develop concepts</li>
 									<li>Match ICT needs to a client brief</li>
@@ -245,7 +272,7 @@
 							</div>
 							<div class="col">
 								<span class="legend-item legend-s2 mb-2"><i class="dot"></i>Subject 2</span>
-								<h3 class="h6 fw-semibold">Front End Web Dev</h3>
+								<h4 class="h6 fw-semibold">Front End Web Dev</h4>
 								<ul class="small text-muted mb-0 ps-3">
 									<li>Clean HTML + CSS from scratch</li>
 									<li>Bootstrap 5 for responsive layouts</li>
@@ -265,7 +292,8 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			</div>
+		</section>
 
 		<!-- ====================================================================
 		  6. RESOURCES
@@ -279,9 +307,13 @@
 		    CHECK  (orange) test it before you ship
 		    CREATE (violet) design it, play with it
 		  ==================================================================== -->
-		<section id="resources" class="mb-5">
-			<h2 class="h4 mb-1">Resources</h2>
-			<p class="text-muted small mb-3">Everything you'll open on a normal class day.</p>
+		<section id="resources" class="section-block sec-resources">
+			<div class="section-head">
+				<span class="section-eyebrow">Bookmarked</span>
+				<h2 class="section-title">Resources</h2>
+				<p class="section-lede">Everything you'll open on a normal class day, grouped by what you use it
+					for.</p>
+			</div>
 
 			<div class="legend mb-4">
 				<span class="legend-item legend-learn"><i class="dot"></i>Learn <span>· read it, look it up</span></span>
@@ -292,68 +324,6 @@
 
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-				<!-- ─── ⭐ ASSIGNMENT SPOTLIGHT · S02-A01 Bootstrap Clone ─── -->
-				<div class="col-12">
-					<div class="border p-4 resource-tile tile-assignment">
-						<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-1">
-							<h3 class="h6 fw-bold text-uppercase small mb-0">
-								<i class="bi bi-star-fill me-2"></i>S02-A01 · Bootstrap Clone
-								<span class="fw-normal text-muted">(aka Build a Bootstrap Website)</span>
-							</h3>
-							<span class="tile-chip">Current assignment</span>
-						</div>
-						<p class="small text-muted mb-3">
-							Everything for the current assignment in one place: clone the Forbidden Forest
-							site with Bootstrap 5.
-						</p>
-						<div class="row row-cols-1 row-cols-md-3 g-3">
-							<div class="col">
-								<h4 class="small fw-bold text-uppercase text-muted mb-2">The build</h4>
-								<ul class="list-unstyled small mb-0">
-									<li class="mb-1"><a class="link-dark"
-											href="https://hpforbiddenforestexperience.com/" target="_blank"
-											rel="noopener"><i class="bi bi-globe me-2"></i>Original site — the one
-											we're cloning</a></li>
-									<li class="mb-1"><a class="link-dark"
-											href="https://github.com/thedalycreative/S02-A01-BootstrapClone"
-											target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>Class
-											repo — full clone + README teardown</a></li>
-									<li class="mb-1"><a class="link-dark"
-											href="https://github.com/thedalycreative/flexbox-exercise" target="_blank"
-											rel="noopener"><i class="bi bi-github me-2"></i>Flexbox exercise repo (the
-											warm-up)</a></li>
-								</ul>
-							</div>
-							<div class="col">
-								<h4 class="small fw-bold text-uppercase text-muted mb-2">Requirements</h4>
-								<ul class="small mb-0 ps-3">
-									<li>Rebuild the layout with <strong>Bootstrap 5 via CDN</strong> — no npm, no
-										build step</li>
-									<li>Minimum <strong>5 files</strong>: pages + stylesheet + images folder</li>
-									<li>JavaScript only for the <strong>carousel</strong></li>
-									<li>No inline styles — custom CSS lives in your stylesheet</li>
-									<li>Alt text on every image; semantic tags; QA checklist before you submit</li>
-								</ul>
-							</div>
-							<div class="col">
-								<h4 class="small fw-bold text-uppercase text-muted mb-2">Tools</h4>
-								<ul class="list-unstyled small mb-0">
-									<li class="mb-1"><a class="link-dark"
-											href="assets/cheatsheets/cheatsheet-bootstrap.html" target="_blank"><i
-												class="bi bi-bootstrap me-2"></i>Bootstrap Cheat Sheet</a></li>
-									<li class="mb-1"><a class="link-dark" href="https://getbootstrap.com/docs/5.3/"
-											target="_blank" rel="noopener"><i class="bi bi-book me-2"></i>Bootstrap 5
-											Docs</a></li>
-									<li class="mb-1"><a class="link-dark"
-											href="assets/cheatsheets/cheatsheet-qachecklist.html" target="_blank"><i
-												class="bi bi-list-check me-2"></i>QA Checklist — run before you
-											submit</a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-
 				<!-- ─── LEARN · Cheatsheets / Interactive Tools ─── -->
 				<div class="col">
 					<div class="border p-3 h-100 resource-tile fam-learn">
@@ -362,12 +332,22 @@
 							<span class="tile-chip">Learn</span>
 						</div>
 						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-clone-a-site.html" target="_blank"><i
+										class="bi bi-star-fill me-2"></i><strong>Clone a Bootstrap site
+										(A1)</strong></a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-build-your-own.html" target="_blank"><i
+										class="bi bi-star-fill me-2"></i><strong>Build your own website
+										(A2)</strong></a></li>
 							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-htmltags.html"
 									target="_blank"><i class="bi bi-code-slash me-2"></i>HTML tags</a></li>
 							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-flexbox.html"
 									target="_blank"><i class="bi bi-columns-gap me-2"></i>Flexbox</a></li>
 							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-bootstrap.html"
 									target="_blank"><i class="bi bi-bootstrap me-2"></i>Bootstrap</a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-git.html"
+									target="_blank"><i class="bi bi-git me-2"></i>Git &amp; GitHub</a></li>
 							<li class="mb-1"><a class="link-dark"
 									href="assets/cheatsheets/cheatsheet-folderstructure.html" target="_blank"><i
 										class="bi bi-folder2-open me-2"></i>Folder structure</a></li>
@@ -618,124 +598,19 @@
 		</section>
 
 		<!-- ====================================================================
-		  7. GIT — three steps, because that's the order you'll need them in.
-		  ==================================================================== -->
-		<section id="git" class="mb-5">
-			<h2 class="h4 mb-1">Get to know Git</h2>
-			<p class="text-muted small mb-4">
-				Version control is how real teams ship. Install it, learn the handful of
-				commands you'll use every day, then practise.
-			</p>
-
-			<div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
-
-				<div class="col">
-					<div class="border p-3 h-100 resource-tile fam-build">
-						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
-							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">1 · Install &amp; set up</h3>
-							<span class="tile-chip">Build</span>
-						</div>
-						<ul class="list-unstyled small mb-0">
-							<li class="mb-1"><a class="link-dark" href="https://git-scm.com/downloads"
-									target="_blank" rel="noopener"><i class="bi bi-download me-2"></i>Install Git</a>
-							</li>
-							<li class="mb-1"><a class="link-dark" href="https://desktop.github.com" target="_blank"
-									rel="noopener"><i class="bi bi-window-desktop me-2"></i>GitHub Desktop — no
-									terminal needed</a></li>
-							<li class="mb-1"><a class="link-dark" href="https://github.com/signup" target="_blank"
-									rel="noopener"><i class="bi bi-person-plus me-2"></i>Create a GitHub account</a>
-							</li>
-							<li class="mb-1"><a class="link-dark"
-									href="https://docs.github.com/en/get-started/quickstart/set-up-git"
-									target="_blank" rel="noopener"><i class="bi bi-gear me-2"></i>Set up Git — name
-									&amp; email</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="border p-3 h-100 resource-tile fam-learn">
-						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
-							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">2 · Learn the basics</h3>
-							<span class="tile-chip">Learn</span>
-						</div>
-						<ul class="list-unstyled small mb-0">
-							<li class="mb-1"><a class="link-dark"
-									href="https://docs.github.com/en/get-started/start-your-journey/hello-world"
-									target="_blank" rel="noopener"><i class="bi bi-flag me-2"></i>GitHub Hello World
-									— 15 minutes</a></li>
-							<li class="mb-1"><a class="link-dark" href="https://www.w3schools.com/git/"
-									target="_blank" rel="noopener"><i class="bi bi-book me-2"></i>W3Schools Git
-									Tutorial</a></li>
-							<li class="mb-1"><a class="link-dark" href="https://git-scm.com/book/en/v2"
-									target="_blank" rel="noopener"><i class="bi bi-journal-bookmark me-2"></i>Pro Git
-									— free book, read ch. 1–3</a></li>
-							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/watch?v=RGOj5yH7evk"
-									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Git &amp; GitHub
-									crash course</a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="col">
-					<div class="border p-3 h-100 resource-tile fam-create">
-						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
-							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">3 · Practise &amp; fix</h3>
-							<span class="tile-chip">Create</span>
-						</div>
-						<ul class="list-unstyled small mb-0">
-							<li class="mb-1"><a class="link-dark" href="https://learngitbranching.js.org"
-									target="_blank" rel="noopener"><i class="bi bi-diagram-2 me-2"></i>Learn Git
-									Branching — visual &amp; game-like</a></li>
-							<li class="mb-1"><a class="link-dark" href="https://ohshitgit.com/" target="_blank"
-									rel="noopener"><i class="bi bi-life-preserver me-2"></i>Oh Sh!t, Git!? — when
-									you've broken something</a></li>
-							<li class="mb-1"><a class="link-dark"
-									href="https://training.github.com/downloads/github-git-cheat-sheet.pdf"
-									target="_blank" rel="noopener"><i class="bi bi-file-earmark-pdf me-2"></i>Git
-									Cheat Sheet (PDF) — print it</a></li>
-							<li class="mb-1"><a class="link-dark" href="https://github.com/thedalycreative"
-									target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>Class repos — every
-									build we do</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<!-- The six commands that cover 95% of what you'll do -->
-			<div class="border p-4 resource-tile fam-build">
-				<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
-					<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">The commands you'll actually use</h3>
-					<span class="tile-chip">Build</span>
-				</div>
-				<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 small">
-					<div class="col"><code>git clone &lt;url&gt;</code> <span class="text-muted">Copy a repo to your
-							machine</span></div>
-					<div class="col"><code>git status</code> <span class="text-muted">What have I changed?</span>
-					</div>
-					<div class="col"><code>git add .</code> <span class="text-muted">Stage your changes</span></div>
-					<div class="col"><code>git commit -m "..."</code> <span class="text-muted">Save a snapshot</span>
-					</div>
-					<div class="col"><code>git push</code> <span class="text-muted">Send it up to GitHub</span></div>
-					<div class="col"><code>git pull</code> <span class="text-muted">Get the latest changes
-							down</span></div>
-				</div>
-			</div>
-		</section>
-
-		<!-- ====================================================================
-		  8. SCHEDULE  (tiles rendered by hub.js)
+		  7. SCHEDULE  (tiles rendered by hub.js)
 		  ====================================================================
 		  Each tile is colour-coded by subject and shows its class number, date
 		  and topic. Past classes open a modal with the full plan + resources.
 		  Future classes stay locked until the morning after they run.
 		  ==================================================================== -->
-		<section id="schedule" class="mb-5">
-			<h2 class="h4 mb-1">Schedule</h2>
-			<p class="text-muted small mb-3">
-				Click any past class to open its plan &amp; resources.
-				Future classes unlock the morning after they run.
-			</p>
+		<section id="schedule" class="section-block sec-schedule">
+			<div class="section-head">
+				<span class="section-eyebrow">24 classes · 12 weeks</span>
+				<h2 class="section-title">Schedule</h2>
+				<p class="section-lede">Click any past class to open its plan and resources. Future classes unlock
+					the morning after they run.</p>
+			</div>
 
 			<div class="legend mb-4">
 				<span class="legend-item legend-s1"><i class="dot"></i>Subject 1 <span>· Clients &amp; Concepts</span></span>

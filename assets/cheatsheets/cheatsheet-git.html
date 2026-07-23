@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTAKE 26.13 · GIT & GITHUB CHEAT SHEET
+  ============================================================================
+  Version control from zero:
+
+    1. What Git actually is  — the save-points mental model
+    2. Install & set up      — one-time setup, then never again
+    3. The daily loop        — the four commands you'll use every day
+    4. Command reference     — everything else, in a table
+    5. When it goes wrong    — the fixes you'll actually need
+    6. Practise              — games and drills
+
+  Built with Bootstrap 5 + the shared style-cheatsheet.css — no other CSS.
+  ============================================================================
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git &amp; GitHub Cheat Sheet · Intake 26.13</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style-cheatsheet.css">
+  <!-- This sheet's accent: green — Git is a BUILD tool -->
+  <style>
+    :root { --accent: #15803d; --accent-soft: #eaf6ee; }
+  </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+        <span class="ib-loader" aria-hidden="true"></span>
+        Tim's EQC Minions
+      </a>
+      <a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+    </div>
+  </nav>
+
+  <header class="bg-black text-white py-5">
+    <div class="container">
+      <p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · Version control</p>
+      <h1 class="display-5 fw-bold mb-2">Git &amp; GitHub Cheat Sheet</h1>
+      <p class="lead text-white-50 mb-0">Save your work, undo mistakes, and share code without emailing zip files.</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+
+    <nav class="border p-3 mb-5" aria-label="On this page">
+      <h2 class="h6 fw-bold text-uppercase text-muted small mb-2">On this page</h2>
+      <ul class="list-unstyled small mb-0">
+        <li class="mb-1"><a class="link-dark" href="#idea">1. What Git actually is</a></li>
+        <li class="mb-1"><a class="link-dark" href="#setup">2. Install &amp; set up (once)</a></li>
+        <li class="mb-1"><a class="link-dark" href="#loop">3. The daily loop — four commands</a></li>
+        <li class="mb-1"><a class="link-dark" href="#reference">4. Command reference</a></li>
+        <li class="mb-1"><a class="link-dark" href="#oops">5. When it goes wrong</a></li>
+        <li class="mb-1"><a class="link-dark" href="#practise">6. Practise</a></li>
+      </ul>
+    </nav>
+
+    <!-- ================================================================== -->
+    <section id="idea" class="mb-5">
+      <p class="sheet-eyebrow mb-0">Section 1</p>
+      <h2 class="sheet-h2">What Git actually is</h2>
+      <p class="text-muted mb-4">Save points for your code.</p>
+
+      <p>Think of a video game. You play for a while, then you <strong>save</strong>. If the next bit goes badly, you
+        reload the save and try again. Git is that, for code.</p>
+
+      <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-folder2-open me-2"></i>Repository (repo)</h3>
+            <p class="small text-muted mb-0">Your project folder, with Git watching it. One repo per website.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-bookmark-check me-2"></i>Commit</h3>
+            <p class="small text-muted mb-0">One save point, with a note saying what you changed. You can always go
+              back to one.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-cloud-arrow-up me-2"></i>GitHub</h3>
+            <p class="small text-muted mb-0">The website your repo gets backed up to, so it's safe and other people
+              can see it.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border p-3" style="border-left: 4px solid var(--accent) !important;">
+        <p class="small mb-0"><strong>Git ≠ GitHub.</strong> Git is the program on your computer that takes the save
+          points. GitHub is the website that stores them online. You can use Git without GitHub — but don't, because
+          then your only copy lives on one laptop.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <section id="setup" class="mb-5">
+      <p class="sheet-eyebrow mb-0">Section 2</p>
+      <h2 class="sheet-h2">Install &amp; set up</h2>
+      <p class="text-muted mb-4">You do this once, then never think about it again.</p>
+
+      <div class="d-flex gap-3 mb-4">
+        <span class="step-num">1</span>
+        <div>
+          <h3 class="h6 fw-bold mb-1">Install Git</h3>
+          <p class="small text-muted mb-2">Download it from <a class="link-dark"
+              href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com/downloads</a>. Accept
+            every default in the installer.</p>
+          <p class="small text-muted mb-0">Prefer buttons to typing? Install <a class="link-dark"
+              href="https://desktop.github.com" target="_blank" rel="noopener">GitHub Desktop</a> instead — it does
+            everything on this page with clicks.</p>
+        </div>
+      </div>
+
+      <div class="d-flex gap-3 mb-4">
+        <span class="step-num">2</span>
+        <div class="flex-grow-1">
+          <h3 class="h6 fw-bold mb-1">Tell Git who you are</h3>
+          <p class="small text-muted mb-2">Every save point gets stamped with your name. Open a terminal (in VS Code:
+            <strong>Terminal → New Terminal</strong>) and run these two lines:</p>
+<pre><code>git config --global user.name "Your Name"
+git config --global user.email "you@example.com"</code></pre>
+        </div>
+      </div>
+
+      <div class="d-flex gap-3">
+        <span class="step-num">3</span>
+        <div>
+          <h3 class="h6 fw-bold mb-1">Make a GitHub account</h3>
+          <p class="small text-muted mb-0">Sign up at <a class="link-dark" href="https://github.com/signup"
+              target="_blank" rel="noopener">github.com/signup</a>. Use your real name — employers look at this. Use
+            the same email you just put in the config.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <section id="loop" class="mb-5">
+      <p class="sheet-eyebrow mb-0">Section 3</p>
+      <h2 class="sheet-h2">The daily loop</h2>
+      <p class="text-muted mb-4">Four commands. This is 95% of Git.</p>
+
+      <p>You do this every time you finish a chunk of work — roughly once or twice a class.</p>
+
+<pre><code>git status                    <span style="color:#7ee2a8"># 1. what have I changed?</span>
+git add .                     <span style="color:#7ee2a8"># 2. pick up all those changes</span>
+git commit -m "Add navbar"    <span style="color:#7ee2a8"># 3. take the save point</span>
+git push                      <span style="color:#7ee2a8"># 4. send it to GitHub</span></code></pre>
+
+      <div class="row row-cols-1 row-cols-md-2 g-3 mt-1 mb-4">
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><code>git status</code></h3>
+            <p class="small text-muted mb-0">Lists what you've changed since the last save. Run it whenever you're
+              unsure — it never changes anything, so it's always safe.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><code>git add .</code></h3>
+            <p class="small text-muted mb-0">Gathers up your changes ready to save. The <code>.</code> means "this
+              whole folder".</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><code>git commit -m "..."</code></h3>
+            <p class="small text-muted mb-0">Takes the save point. The message goes in the quotes — write what you
+              did, not what you touched.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><code>git push</code></h3>
+            <p class="small text-muted mb-0">Uploads your save points to GitHub. Until you push, they only exist on
+              your laptop.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border p-3" style="border-left: 4px solid var(--accent) !important;">
+        <h3 class="h6 fw-bold mb-2">Writing a good commit message</h3>
+        <div class="row row-cols-1 row-cols-md-2 g-2 small mb-0">
+          <div class="col">
+            <p class="mb-1 text-success"><i class="bi bi-check-circle me-1"></i><strong>Do this</strong></p>
+            <ul class="mb-0 ps-3 text-muted">
+              <li><code>Add contact form to about page</code></li>
+              <li><code>Fix navbar overlapping on mobile</code></li>
+              <li><code>Swap placeholder images for real ones</code></li>
+            </ul>
+          </div>
+          <div class="col">
+            <p class="mb-1 text-danger"><i class="bi bi-x-circle me-1"></i><strong>Not this</strong></p>
+            <ul class="mb-0 ps-3 text-muted">
+              <li><code>update</code></li>
+              <li><code>stuff</code></li>
+              <li><code>asdfgh</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <section id="reference" class="mb-5">
+      <p class="sheet-eyebrow mb-0">Section 4</p>
+      <h2 class="sheet-h2">Command reference</h2>
+      <p class="text-muted mb-4">Everything else you might need this course.</p>
+
+      <h3 class="h6 fw-bold text-uppercase text-muted small mb-2">Starting a project</h3>
+      <div class="table-responsive mb-4">
+        <table class="table table-sm align-middle">
+          <thead>
+            <tr><th style="width:38%">Command</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>git clone &lt;url&gt;</code></td><td>Download someone's repo to your machine. This is how you get the class repos.</td></tr>
+            <tr><td><code>git init</code></td><td>Start watching the folder you're in. Only for brand-new projects.</td></tr>
+            <tr><td><code>git remote -v</code></td><td>Show which GitHub repo this folder is linked to.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h6 fw-bold text-uppercase text-muted small mb-2">Everyday work</h3>
+      <div class="table-responsive mb-4">
+        <table class="table table-sm align-middle">
+          <thead>
+            <tr><th style="width:38%">Command</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>git status</code></td><td>What have I changed?</td></tr>
+            <tr><td><code>git add .</code></td><td>Stage every change in this folder.</td></tr>
+            <tr><td><code>git add index.html</code></td><td>Stage just one file.</td></tr>
+            <tr><td><code>git commit -m "msg"</code></td><td>Take a save point.</td></tr>
+            <tr><td><code>git push</code></td><td>Upload save points to GitHub.</td></tr>
+            <tr><td><code>git pull</code></td><td>Download changes from GitHub. Run it before you start work.</td></tr>
+            <tr><td><code>git log --oneline</code></td><td>List your save points, newest first.</td></tr>
+            <tr><td><code>git diff</code></td><td>Show exactly what changed, line by line.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h6 fw-bold text-uppercase text-muted small mb-2">Branches (later weeks)</h3>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead>
+            <tr><th style="width:38%">Command</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>git branch</code></td><td>List branches. The <code>*</code> is where you are.</td></tr>
+            <tr><td><code>git switch -c new-idea</code></td><td>Make a branch and jump to it — try something risky without breaking your main copy.</td></tr>
+            <tr><td><code>git switch main</code></td><td>Go back to the main branch.</td></tr>
+            <tr><td><code>git merge new-idea</code></td><td>Bring the branch's work into where you are now.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <section id="oops" class="mb-5">
+      <p class="sheet-eyebrow mb-0">Section 5</p>
+      <h2 class="sheet-h2">When it goes wrong</h2>
+      <p class="text-muted mb-4">It will. Everyone's does. Here's the way out.</p>
+
+      <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold mb-1">"I broke a file and want it back"</h3>
+            <p class="small text-muted mb-2">Throw away your unsaved changes to one file:</p>
+            <pre class="mb-0"><code>git restore index.html</code></pre>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold mb-1">"Wrong commit message"</h3>
+            <p class="small text-muted mb-2">Rewrite the last one — only if you haven't pushed yet:</p>
+            <pre class="mb-0"><code>git commit --amend -m "Better message"</code></pre>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold mb-1">"I committed but shouldn't have"</h3>
+            <p class="small text-muted mb-2">Undo the commit, keep the work:</p>
+            <pre class="mb-0"><code>git reset --soft HEAD~1</code></pre>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold mb-1">"push was rejected"</h3>
+            <p class="small text-muted mb-2">Someone changed GitHub since you last pulled. Get their work first:</p>
+            <pre class="mb-0"><code>git pull
+git push</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="border p-3 mt-3" style="border-left: 4px solid var(--accent) !important;">
+        <p class="small mb-0"><strong>The nuclear option.</strong> If a repo is truly tangled and you've pushed your
+          work: copy your files somewhere safe, delete the folder, <code>git clone</code> it fresh, and paste your
+          files back. Not elegant, but it works and it takes two minutes. <a class="link-dark"
+            href="https://ohshitgit.com/" target="_blank" rel="noopener">Oh Sh!t, Git!?</a> covers the elegant
+          fixes.</p>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <section id="practise" class="mb-5">
+      <p class="sheet-eyebrow mb-0">Section 6</p>
+      <h2 class="sheet-h2">Practise</h2>
+      <p class="text-muted mb-4">Git only clicks once you've broken it a few times.</p>
+
+      <div class="row row-cols-1 row-cols-md-2 g-3">
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-diagram-2 me-2"></i><a class="link-dark"
+                href="https://learngitbranching.js.org" target="_blank" rel="noopener">Learn Git Branching</a></h3>
+            <p class="small text-muted mb-0">Visual and game-like. The single best way to make branching make sense.
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-flag me-2"></i><a class="link-dark"
+                href="https://docs.github.com/en/get-started/start-your-journey/hello-world" target="_blank"
+                rel="noopener">GitHub Hello World</a></h3>
+            <p class="small text-muted mb-0">The official first-repo walkthrough. Fifteen minutes start to finish.</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-journal-bookmark me-2"></i><a class="link-dark"
+                href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">Pro Git</a></h3>
+            <p class="small text-muted mb-0">The free reference book. Chapters 1–3 cover everything in this course.
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="border p-3 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-file-earmark-pdf me-2"></i><a class="link-dark"
+                href="https://training.github.com/downloads/github-git-cheat-sheet.pdf" target="_blank"
+                rel="noopener">GitHub's own cheat sheet</a></h3>
+            <p class="small text-muted mb-0">One-page PDF. Print it and stick it next to your monitor.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-black text-white-50 mt-auto py-4 small">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <div>EQC Institute of Technology · Intake 26.13 · Git &amp; GitHub Cheat Sheet</div>
+      <a class="link-light text-decoration-none" href="../../index.html">← Back to the Hub</a>
+    </div>
+  </footer>
+
+</body>
+
+</html>
