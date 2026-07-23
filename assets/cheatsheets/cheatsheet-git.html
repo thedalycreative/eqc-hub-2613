@@ -114,17 +114,64 @@
       <h2 class="sheet-h2">Install &amp; set up</h2>
       <p class="text-muted mb-4">You do this once, then never think about it again.</p>
 
+      <div class="border p-3 mb-4" style="border-left: 4px solid var(--accent) !important;">
+        <h3 class="h6 fw-bold mb-2">First: check what you already have</h3>
+        <p class="small text-muted mb-2">Open a terminal in VS Code (<strong>Terminal → New Terminal</strong>) and run
+          both of these. You need <em>both</em> to answer with a version number.</p>
+<pre class="mb-2"><code>git --version     <span style="color:#7ee2a8"># e.g. git version 2.54.0</span>
+gh --version      <span style="color:#7ee2a8"># e.g. gh version 2.95.0</span></code></pre>
+        <p class="small text-muted mb-0">If either says "not found" or "not recognised", install it below. These are
+          two different programs — <strong>git</strong> is version control, <strong>gh</strong> is the GitHub
+          command-line tool. Having one does not mean you have the other.</p>
+      </div>
+
       <div class="d-flex gap-3 mb-4">
         <span class="step-num">1</span>
-        <div>
-          <h3 class="h6 fw-bold mb-1">Install Git</h3>
-          <p class="small text-muted mb-2">Download it from <a class="link-dark"
-              href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com/downloads</a>. Accept
-            every default in the installer.</p>
-          <p class="small text-muted mb-0">Prefer buttons to typing? Install <a class="link-dark"
-              href="https://desktop.github.com" target="_blank" rel="noopener">GitHub Desktop</a> instead — it does
-            everything on this page with clicks.</p>
+        <div class="flex-grow-1">
+          <h3 class="h6 fw-bold mb-2">Install whatever's missing</h3>
+
+          <h4 class="small fw-bold text-uppercase text-muted mb-1 mt-3"><i class="bi bi-windows me-1"></i>Windows</h4>
+          <p class="small text-muted mb-2">In PowerShell or the VS Code terminal:</p>
+<pre class="mb-2"><code>winget install --id Git.Git
+winget install --id GitHub.cli</code></pre>
+          <p class="small text-muted mb-0">It may look frozen on "Starting package install" — it isn't, let it run.
+            <strong>Restart VS Code afterwards</strong>, or the new commands won't be found.</p>
+
+          <h4 class="small fw-bold text-uppercase text-muted mb-1 mt-3"><i class="bi bi-apple me-1"></i>Mac</h4>
+          <p class="small text-muted mb-2">Mac installs go through <a class="link-dark" href="https://brew.sh"
+              target="_blank" rel="noopener">Homebrew</a> — a package manager that wires your terminal up to
+            developer tools. Install Homebrew first if you don't have it, then:</p>
+<pre class="mb-2"><code>brew install git
+brew install gh</code></pre>
+
+          <h4 class="small fw-bold text-uppercase text-muted mb-1 mt-3">Then sign in, on either platform</h4>
+<pre class="mb-2"><code>gh auth login</code></pre>
+          <p class="small text-muted mb-0">Follow the prompts — it opens a browser and gives you a code to paste.</p>
         </div>
+      </div>
+
+      <div class="border p-3 mb-4">
+        <h3 class="h6 fw-bold mb-2">Shortcuts, if the terminal is fighting you</h3>
+        <ul class="small text-muted mb-0 ps-3">
+          <li class="mb-1"><strong>Ask the agent.</strong> Open a new agent chat in VS Code and say "check whether
+            git is installed, and install it if not". It will run the right commands for your machine and ask you to
+            confirm. This works — half the class got unstuck this way.</li>
+          <li class="mb-1"><strong>Use <a class="link-dark" href="https://desktop.github.com" target="_blank"
+                rel="noopener">GitHub Desktop</a></strong> — it does everything on this page with buttons instead of
+            commands.</li>
+          <li class="mb-1"><strong>Just download the ZIP.</strong> On any repo, the green <strong>Code</strong>
+            button has a "Download ZIP" option. No setup at all — you just can't push changes back.</li>
+          <li><strong>On a work computer?</strong> Installs are often blocked by your IT administrator. Use the ZIP
+            route, or do the work on a personal machine.</li>
+        </ul>
+      </div>
+
+      <div class="border p-3 mb-4">
+        <h3 class="h6 fw-bold mb-2">Useful VS Code extensions</h3>
+        <p class="small text-muted mb-2">Optional, but handy: <strong>GitHub Actions</strong>, <strong>GitHub Pull
+            Requests</strong>, and <strong>Git History</strong>.</p>
+        <p class="small text-muted mb-0"><strong>Check the publisher before you install.</strong> Search results are
+          full of look-alikes — only install extensions actually published by GitHub or Microsoft.</p>
       </div>
 
       <div class="d-flex gap-3 mb-4">
@@ -193,6 +240,28 @@ git push                      <span style="color:#7ee2a8"># 4. send it to GitHub
         </div>
       </div>
 
+      <div class="border p-3 mb-3">
+        <h3 class="h6 fw-bold mb-2">Getting the class repo onto your machine</h3>
+        <ol class="small text-muted mb-2 ps-3">
+          <li class="mb-1">Open the repo on GitHub and click the green <strong>Code</strong> button.</li>
+          <li class="mb-1">Pick the <strong>GitHub CLI</strong> tab and copy the line — it looks like
+            <code>gh repo clone thedalycreative/S02-A01-BootstrapClone</code>.</li>
+          <li class="mb-1">In VS Code, open an <em>empty</em> folder, then <strong>Terminal → New Terminal</strong>.
+          </li>
+          <li>Paste and run it. A folder appears with all the repo's files inside.</li>
+        </ol>
+        <p class="small text-muted mb-0"><strong>Pushing back:</strong> you push to <em>your own</em> repo, not the
+          class one. You're taking the code, changing it, and publishing your version — create a blank repo on your
+          account and attach your project to it.</p>
+      </div>
+
+      <div class="border p-3 mb-3" style="border-left: 4px solid var(--accent) !important;">
+        <h3 class="h6 fw-bold mb-2">Name your main file <code>index.html</code></h3>
+        <p class="small text-muted mb-0">Not <code>snail.html</code>, not <code>mysite.html</code>. Browsers and
+          hosts look for <code>index.html</code> by default, and AI agents assume it too — an inventive filename is a
+          reliable way to confuse both. Learned the hard way in Class 12.</p>
+      </div>
+
       <div class="border p-3" style="border-left: 4px solid var(--accent) !important;">
         <h3 class="h6 fw-bold mb-2">Writing a good commit message</h3>
         <div class="row row-cols-1 row-cols-md-2 g-2 small mb-0">
@@ -230,6 +299,7 @@ git push                      <span style="color:#7ee2a8"># 4. send it to GitHub
           </thead>
           <tbody>
             <tr><td><code>git clone &lt;url&gt;</code></td><td>Download someone's repo to your machine. This is how you get the class repos.</td></tr>
+            <tr><td><code>gh repo clone owner/name</code></td><td>The same thing via the GitHub tool — shorter, and it uses your sign-in.</td></tr>
             <tr><td><code>git init</code></td><td>Start watching the folder you're in. Only for brand-new projects.</td></tr>
             <tr><td><code>git remote -v</code></td><td>Show which GitHub repo this folder is linked to.</td></tr>
           </tbody>
