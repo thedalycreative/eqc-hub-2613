@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  BOOTSTRAP 5 CHEAT SHEET · INTAKE 26.13
+  ============================================================================
+  Quick reference for the Bootstrap 5 classes we lean on in class:
+  the grid, forms, navigation and overlay components.
+
+  Page order (top → bottom):
+    1. <nav>      — sticky bar, links back to the hub
+    2. <header>   — hero strip
+    3. Jump links — "On this page"
+    4. Section 1  — Layout & grid systems
+    5. Section 2  — Form components
+    6. Section 3  — Navigation & shells
+    7. Section 4  — Overlays & content
+    8. <footer>   — course meta
+
+  Styling rules for this file:
+    - Bootstrap utility classes do ~90% of the work
+    - The last 10% comes from style-cheatsheet.css (shared, same folder)
+    - No inline styles, no <style> blocks — keep it that way!
+
+  Students: view-source is encouraged. Every demo box below is built with
+  the exact classes it demonstrates — steal freely.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap 5 Cheat Sheet · Intake 26.13</title>
+  <!-- Bootstrap 5 via CDN — same version + integrity hash as the main hub -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Shared cheat sheet styles — ALL custom styling lives in this one file -->
+  <link rel="stylesheet" href="style-cheatsheet.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Sticky nav — mirrors the main hub navbar, links back to it -->
+  <nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+        <img src="../../images/spike-logo.png" alt="Square Spike — cohort mascot" width="28" height="28">
+        Intake 26.13
+      </a>
+      <a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+    </div>
+  </nav>
+
+  <!-- Hero — black strip, same treatment as the hub -->
+  <header class="bg-black text-white py-5">
+    <div class="container">
+      <p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · Framework reference</p>
+      <h1 class="display-5 fw-bold mb-2">Bootstrap 5 Cheat Sheet</h1>
+      <p class="lead text-white-50 mb-0">The core layout, form, navigation and overlay components — what each class does and when to reach for it.</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+
+    <!-- On this page — quick jump links so you can dive straight to a section -->
+    <nav class="mb-5 small" aria-label="On this page">
+      <span class="text-uppercase text-muted letter-spacing me-3">On this page</span>
+      <a class="link-dark me-3" href="#layout">1 · Layout &amp; grid</a>
+      <a class="link-dark me-3" href="#forms">2 · Forms</a>
+      <a class="link-dark me-3" href="#navigation">3 · Navigation</a>
+      <a class="link-dark" href="#overlays">4 · Overlays &amp; content</a>
+    </nav>
+
+    <!-- ====================================================================
+      SECTION 1 · LAYOUT & GRID SYSTEMS
+      Container → row → col. Learn this trio and everything else follows.
+    ==================================================================== -->
+    <section id="layout" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">1 · Layout &amp; grid systems</h2>
+      <p class="text-muted small mb-4">The 12-column grid is the skeleton of every Bootstrap page. Container holds it, rows slice it horizontally, columns divide each row.</p>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Container</h3>
+              <code>.container</code>
+            </div>
+            <p class="small text-muted mb-3">The foundational building block. Wraps your page content, sets a responsive max-width at each breakpoint and centres everything horizontally. Almost every page starts with one.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Responsive max-widths at every breakpoint — see the table below. Also: <code>.container-fluid</code> for full width.</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Grid row</h3>
+              <code>.row</code>
+            </div>
+            <p class="small text-muted mb-3">A wrapper built exclusively to hold columns. Uses flexbox plus negative-margin maths so columns sit perfectly flush with the container's edges.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Flexbox layout controller — columns only, no other direct children.</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Grid columns</h3>
+              <code>.col-*</code>
+            </div>
+            <p class="small text-muted mb-3">Slices each row into fractions of a standard 12-column grid — <code>.col-6</code> is half the row, <code>.col-4</code> is a third. Add a breakpoint infix (<code>.col-md-6</code>) to change the split per screen size.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Responsive breakpoint modifiers: <code>sm</code> · <code>md</code> · <code>lg</code> · <code>xl</code> · <code>xxl</code></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Gutter controls</h3>
+              <code>.g-*</code>
+            </div>
+            <p class="small text-muted mb-3">Controls the horizontal and vertical spacing between columns without shifting their alignment. Set it once on the <code>.row</code> and every column follows.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Adjustable sizes 0–5 · <code>.gx-*</code> horizontal only · <code>.gy-*</code> vertical only</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- The classic grid snippet — copy this to start any layout -->
+      <pre class="mb-4"><code>&lt;div class="container"&gt;
+  &lt;div class="row g-3"&gt;
+    &lt;div class="col-md-8"&gt;Main content&lt;/div&gt;
+    &lt;div class="col-md-4"&gt;Sidebar&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+      <!-- Live result — resize the browser and watch the columns stack -->
+      <div class="demo-box mb-4">
+        <p class="small text-muted mb-2"><i class="bi bi-eye me-1"></i>Live grid — shrink the window below 768px and the columns stack:</p>
+        <div class="row g-3 text-center small">
+          <div class="col-md-4"><div class="border p-2"><code>.col-md-4</code></div></div>
+          <div class="col-md-4"><div class="border p-2"><code>.col-md-4</code></div></div>
+          <div class="col-md-4"><div class="border p-2"><code>.col-md-4</code></div></div>
+          <div class="col-md-8"><div class="border p-2"><code>.col-md-8</code></div></div>
+          <div class="col-md-4"><div class="border p-2"><code>.col-md-4</code></div></div>
+        </div>
+      </div>
+
+      <!-- Breakpoint reference — which infix kicks in at which width -->
+      <div class="table-responsive mb-4">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Breakpoint</th>
+              <th scope="col">Class infix</th>
+              <th scope="col">Kicks in at</th>
+              <th scope="col"><code>.container</code> max-width</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Extra small</td><td><em>(none)</em> — <code>.col-6</code></td><td>&lt; 576px</td><td>100%</td></tr>
+            <tr><td>Small</td><td><code>sm</code></td><td>≥ 576px</td><td>540px</td></tr>
+            <tr><td>Medium</td><td><code>md</code></td><td>≥ 768px</td><td>720px</td></tr>
+            <tr><td>Large</td><td><code>lg</code></td><td>≥ 992px</td><td>960px</td></tr>
+            <tr><td>Extra large</td><td><code>xl</code></td><td>≥ 1200px</td><td>1140px</td></tr>
+            <tr><td>Extra extra large</td><td><code>xxl</code></td><td>≥ 1400px</td><td>1320px</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tip callout -->
+      <div class="border p-3">
+        <p class="small fw-semibold mb-1"><i class="bi bi-lightbulb me-1"></i>Think in twelfths</p>
+        <p class="small text-muted mb-0">Column numbers in one row should add up to 12 (8 + 4, 4 + 4 + 4, 6 + 6…). Go over 12 and the extra columns wrap onto a new line — that wrapping is exactly what makes the grid responsive.</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+      SECTION 2 · FORM COMPONENTS
+      Bootstrap restyles the ugly native inputs so forms look consistent
+      in every browser. One class per element type.
+    ==================================================================== -->
+    <section id="forms" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">2 · Form components</h2>
+      <p class="text-muted small mb-4">Native form elements look different in every browser. These classes normalise them into clean, full-width fields with consistent focus styling.</p>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Form control</h3>
+              <code>.form-control</code>
+            </div>
+            <p class="small text-muted mb-3">Turns plain text inputs and textareas into full-width, fluid fields with padding, borders and a custom focus state that match the rest of the framework.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Applied directly to the <code>&lt;input&gt;</code> or <code>&lt;textarea&gt;</code></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Form select</h3>
+              <code>.form-select</code>
+            </div>
+            <p class="small text-muted mb-3">Overrides the native platform appearance of dropdowns so a <code>&lt;select&gt;</code> looks identical in every browser, while keeping proper sizing and spacing.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Replaces the native <code>&lt;select&gt;</code> look</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Checks &amp; radios</h3>
+              <code>.form-check</code>
+            </div>
+            <p class="small text-muted mb-3">Wraps checkboxes and radio buttons in custom-rendered styling and keeps the label wired to its input. Toggle states stay clean and consistent.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Add <code>.form-switch</code> for toggle switches</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Input group</h3>
+              <code>.input-group</code>
+            </div>
+            <p class="small text-muted mb-3">Bolts static text, buttons or icons onto the front or back edge of an input — think an <code>@</code> before a username field, or a search button after a query box.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Flexbox input layout alignment</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- A minimal labelled field + a switch — the two patterns you'll write most -->
+      <pre class="mb-4"><code>&lt;label for="email" class="form-label"&gt;Email&lt;/label&gt;
+&lt;input type="email" class="form-control" id="email" placeholder="you@example.com"&gt;
+
+&lt;div class="form-check form-switch"&gt;
+  &lt;input class="form-check-input" type="checkbox" role="switch" id="darkMode"&gt;
+  &lt;label class="form-check-label" for="darkMode"&gt;Dark mode&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+
+      <!-- Live result — all four form components, working -->
+      <div class="demo-box mb-4">
+        <p class="small text-muted mb-3"><i class="bi bi-eye me-1"></i>Live form — every field below is one of the four classes above:</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="demoName" class="form-label small fw-semibold">Text input · <code>.form-control</code></label>
+            <input type="text" class="form-control" id="demoName" placeholder="Jane Student">
+          </div>
+          <div class="col-md-6">
+            <label for="demoSelect" class="form-label small fw-semibold">Dropdown · <code>.form-select</code></label>
+            <select class="form-select" id="demoSelect">
+              <option selected>Pick a subject…</option>
+              <option>HTML</option>
+              <option>CSS</option>
+              <option>Bootstrap</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="demoUser" class="form-label small fw-semibold">Input group · <code>.input-group</code></label>
+            <div class="input-group">
+              <span class="input-group-text">@</span>
+              <input type="text" class="form-control" id="demoUser" placeholder="username">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <p class="form-label small fw-semibold mb-1">Checks &amp; switches · <code>.form-check</code></p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="demoCheck">
+              <label class="form-check-label small" for="demoCheck">Checkbox</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="demoSwitch">
+              <label class="form-check-label small" for="demoSwitch">Toggle switch</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tip callout -->
+      <div class="border p-3">
+        <p class="small fw-semibold mb-1"><i class="bi bi-lightbulb me-1"></i>Every input needs a label</p>
+        <p class="small text-muted mb-0">Pair each input with a <code>&lt;label for="…"&gt;</code> that matches the input's <code>id</code>. Screen readers rely on it, and clicking the label focuses the field — free usability.</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+      SECTION 3 · NAVIGATION & SHELLS
+      Everything that helps a visitor move around: navbars, tabs,
+      breadcrumbs and pagination.
+    ==================================================================== -->
+    <section id="navigation" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">3 · Navigation &amp; shells</h2>
+      <p class="text-muted small mb-4">The components that tell visitors where they are and let them move around — from the site-wide navbar down to page numbers.</p>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Navbar shell</h3>
+              <code>.navbar</code>
+            </div>
+            <p class="small text-muted mb-3">A flexible top-bar engine supporting brand/logo placement, navigation link sets and a collapsing hamburger menu on small screens. The bar at the top of this page is one.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Responsive expansion breakpoints via <code>.navbar-expand-{sm|md|lg|xl}</code></div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Navs &amp; tabs</h3>
+              <code>.nav</code>
+            </div>
+            <p class="small text-muted mb-3">Generates aligned tab bars, vertical menu lists or rounded pill shapes for switching between views or in-page routes.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Flex-based layout — add <code>.nav-tabs</code> or <code>.nav-pills</code> for the look</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Breadcrumb</h3>
+              <code>.breadcrumb</code>
+            </div>
+            <p class="small text-muted mb-3">Shows where the current page sits in the site hierarchy, marking the active route. Separators are inserted automatically by CSS — you never type the slashes.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Default separator is a forward slash (customisable via a CSS variable)</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Pagination</h3>
+              <code>.pagination</code>
+            </div>
+            <p class="small text-muted mb-3">Renders large, clearly clickable page buttons for splitting long content across a clean sequence of pages.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Large, accessible touch targets out of the box</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- The responsive navbar skeleton — brand, burger, collapsing menu -->
+      <pre class="mb-4"><code>&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+  &lt;div class="container"&gt;
+    &lt;a class="navbar-brand" href="#"&gt;Brand&lt;/a&gt;
+    &lt;button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#menu"&gt;
+      &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="collapse navbar-collapse" id="menu"&gt;
+      &lt;ul class="navbar-nav ms-auto"&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li class="nav-item"&gt;&lt;a class="nav-link" href="#"&gt;About&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+
+      <!-- Live result — tabs, breadcrumb and pagination need zero JS -->
+      <div class="demo-box mb-4">
+        <p class="small text-muted mb-3"><i class="bi bi-eye me-1"></i>Live examples — tabs, breadcrumb and pagination are pure CSS:</p>
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item"><a class="nav-link active text-dark" aria-current="page" href="#navigation">Active tab</a></li>
+          <li class="nav-item"><a class="nav-link text-dark" href="#navigation">Another tab</a></li>
+          <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
+        </ul>
+        <nav aria-label="Demo breadcrumb">
+          <ol class="breadcrumb mb-3">
+            <li class="breadcrumb-item"><a class="text-dark" href="#navigation">Home</a></li>
+            <li class="breadcrumb-item"><a class="text-dark" href="#navigation">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Bootstrap</li>
+          </ol>
+        </nav>
+        <nav aria-label="Demo pagination">
+          <ul class="pagination mb-0">
+            <li class="page-item"><a class="page-link text-dark" href="#navigation">&laquo;</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#navigation">1</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#navigation">2</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#navigation">3</a></li>
+            <li class="page-item"><a class="page-link text-dark" href="#navigation">&raquo;</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Tip callout -->
+      <div class="border p-3">
+        <p class="small fw-semibold mb-1"><i class="bi bi-lightbulb me-1"></i>The hamburger needs JavaScript</p>
+        <p class="small text-muted mb-0">The navbar itself is pure CSS, but the collapsing hamburger menu (<code>data-bs-toggle="collapse"</code>) only works once Bootstrap's JS bundle is loaded — see the callout at the end of section 4.</p>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+      SECTION 4 · OVERLAYS & CONTENT
+      Containers and pop-over layers: cards, modals, accordions, offcanvas.
+    ==================================================================== -->
+    <section id="overlays" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">4 · Overlays &amp; content</h2>
+      <p class="text-muted small mb-4">Content containers and the layers that appear over the page. Cards are everyday workhorses; the other three are JavaScript-powered overlays.</p>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Card panel</h3>
+              <code>.card</code>
+            </div>
+            <p class="small text-muted mb-3">The all-purpose content container: optional header, image cap, body text and an action footer. You will use these constantly — the hub's tiles are cards.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Replaces Bootstrap 3's old panels &amp; wells</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Modal popups</h3>
+              <code>.modal</code>
+            </div>
+            <p class="small text-muted mb-3">A lightweight dialog that opens over the whole viewport. Bootstrap manages the backdrop, locks body scrolling and traps keyboard focus so you don't have to.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Supports focus trapping &amp; stacked layers — needs the JS bundle</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Accordion</h3>
+              <code>.accordion</code>
+            </div>
+            <p class="small text-muted mb-3">Vertically stacked sections where clicking a header expands its panel. Panels can open one-at-a-time or independently, toggled via JavaScript events.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Powered by the collapse plugin — needs the JS bundle</div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="border p-3 h-100 d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+              <h3 class="h6 fw-bold mb-0">Offcanvas</h3>
+              <code>.offcanvas</code>
+            </div>
+            <p class="small text-muted mb-3">A hidden sidebar that slides in smoothly from any screen edge — left, right, top or bottom. Great for mobile menus and filter panels.</p>
+            <div class="small text-muted border-top pt-2 mt-auto">Built-in backdrop configuration options — needs the JS bundle</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- The modal pattern — a trigger button plus the (hidden) dialog markup -->
+      <pre class="mb-4"><code>&lt;!-- Trigger --&gt;
+&lt;button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#myModal"&gt;
+  Open modal
+&lt;/button&gt;
+
+&lt;!-- The modal itself (hidden until triggered) --&gt;
+&lt;div class="modal fade" id="myModal" tabindex="-1"&gt;
+  &lt;div class="modal-dialog"&gt;
+    &lt;div class="modal-content"&gt;
+      &lt;div class="modal-header"&gt;
+        &lt;h5 class="modal-title"&gt;Hello!&lt;/h5&gt;
+        &lt;button type="button" class="btn-close" data-bs-dismiss="modal"&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class="modal-body"&gt;Modal content goes here.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+      <!-- Live result — a card needs zero JS, so here's a real one -->
+      <div class="demo-box mb-4">
+        <p class="small text-muted mb-3"><i class="bi bi-eye me-1"></i>Live card — every part is labelled with its own class:</p>
+        <div class="row">
+          <div class="col-md-6 col-lg-5">
+            <div class="card">
+              <div class="card-header small fw-semibold"><code>.card-header</code></div>
+              <div class="card-body">
+                <h4 class="card-title h6 fw-bold"><code>.card-title</code></h4>
+                <p class="card-text small text-muted"><code>.card-text</code> — body copy lives here, inside <code>.card-body</code>.</p>
+                <a href="#overlays" class="btn btn-dark btn-sm">Action button</a>
+              </div>
+              <div class="card-footer small text-muted"><code>.card-footer</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warning callout — the JS dependency trips everyone up the first time -->
+      <div class="border p-3">
+        <p class="small fw-semibold mb-1"><i class="bi bi-exclamation-circle me-1"></i>Heads up — modal, accordion &amp; offcanvas need JavaScript</p>
+        <p class="small text-muted mb-2">Cards are pure CSS, but anything that opens, closes or slides needs Bootstrap's JS bundle. If your modal does nothing when clicked, you forgot this line just before <code>&lt;/body&gt;</code>:</p>
+        <pre class="mb-0"><code>&lt;script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-black text-white-50 mt-auto py-4 small">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+      <div><a class="link-light text-decoration-none" href="../../index.html">Back to Hub</a></div>
+    </div>
+  </footer>
+</body>
+</html>

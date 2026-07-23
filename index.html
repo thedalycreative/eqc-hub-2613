@@ -1,523 +1,801 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  INTAKE 26.13 · THE iBONES — CLASS HUB
+  ============================================================================
+  Single-page hub for Equinim College Intake 26.13.
+  Bootstrap 5 + a custom stylesheet + one script file.
+
+  Page order (top → bottom):
+    1. <nav>       — sticky top bar
+    2. <header>    — hero + live status
+    3. Start here  — the three day-one steps
+    4. Access card — attendance, Zoom, Study Hub
+    5. Overview    — plain-English summary of the course
+    6. Resources   — colour-coded tiles, grouped by what you use them for
+    7. Git         — get to know version control
+    8. Schedule    — 24 class tiles, colour-coded by subject
+    9. Modal       — shared modal for class detail
+   10. Footer
+   11. hub.js      — schedule data, rendering, unlock logic
+
+  Students: everything is plain HTML + Bootstrap classes — the same Bootstrap
+  you're learning in class. Read style.css to see how the colour system works.
+  ============================================================================
+-->
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>The iBones · EQC Class Hub · Intake 26.13</title>
-	<meta name="description" content="Class home base for EQC Intake 26.13 — schedule, attendance, Zoom, lesson resources and tools.">
-	<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231f3a5f'/%3E%3Ccircle cx='50' cy='32' r='16' fill='%23ED303C'/%3E%3Ccircle cx='68' cy='50' r='16' fill='%233B8183' opacity='.85'/%3E%3Ccircle cx='50' cy='68' r='16' fill='%23FAD089' opacity='.85'/%3E%3Ccircle cx='32' cy='50' r='16' fill='%23FF9C5B' opacity='.85'/%3E%3C/svg%3E">
+	<title>The iBones · Intake 26.13 Class Hub · EQC Front End Web Dev</title>
+	<meta name="description"
+		content="Class hub for EQC Intake 26.13 — schedule, attendance, Zoom, cheat sheets, resources and the full lesson log.">
+
+	<link rel="icon"
+		href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23111'/%3E%3Ccircle cx='50' cy='32' r='16' fill='%23ED303C'/%3E%3Ccircle cx='68' cy='50' r='16' fill='%233B8183' opacity='.85'/%3E%3Ccircle cx='50' cy='68' r='16' fill='%23FAD089' opacity='.85'/%3E%3Ccircle cx='32' cy='50' r='16' fill='%23FF9C5B' opacity='.85'/%3E%3C/svg%3E">
+
+	<!-- Bootstrap via CDN so you can just double-click index.html to run it. -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+	<!-- Bootstrap Icons — the <i class="bi bi-*"> tags throughout the page. -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+	<!-- Type: Playfair Display (headings) · Roboto (body) · JetBrains Mono (labels) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	<link rel="stylesheet" href="/style.css">
+
+	<!-- Our custom layer. Bootstrap does the layout; this adds the character. -->
+	<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-	<!-- Top strip -->
-	<div class="ib-topbar">
-		<div class="ib-wrap">
-			<span><i class="ib-dot"></i>EQC · Institute of Technology</span>
-			<span>Intake 26.13 · Perth WA</span>
-		</div>
-	</div>
-
-	<!-- Masthead -->
-	<header class="ib-masthead" id="masthead">
-		<div class="ib-wrap">
-			<a href="#" class="ib-brand">
-				<span class="ib-loader" style="width:28px;height:28px" aria-hidden="true"></span>
-				<span class="ib-brand-text">
-					<b class="ib-logo-name">The iBones</b>
-					<small class="ib-logo-sub">Front End Web Dev · 26.13</small>
+	<!-- ========================================================================
+	  1. STICKY NAV
+	  ======================================================================== -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<div class="container">
+			<a class="navbar-brand d-flex align-items-center gap-2" href="#top">
+				<span class="ib-loader" style="width:1.75rem;height:1.75rem" aria-hidden="true"></span>
+				<span>
+					<strong>The iBones</strong>
+					<small>Intake 26.13</small>
 				</span>
 			</a>
-			<nav class="ib-nav" aria-label="Sections">
-				<a href="#this-week">This Week</a>
-				<a href="#lessons">Lessons</a>
-				<a href="#git">Git</a>
-				<a href="#resources">Resources</a>
-				<a href="/games.html">Games</a>
-				<a href="#contact">Contact</a>
-			</nav>
+			<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ms-auto align-items-lg-center">
+					<li class="nav-item"><a class="nav-link" href="#overview">Overview</a></li>
+					<li class="nav-item"><a class="nav-link" href="#resources">Resources</a></li>
+					<li class="nav-item"><a class="nav-link" href="#git">Git</a></li>
+					<li class="nav-item"><a class="nav-link" href="#schedule">Schedule</a></li>
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="cheatsheetsDropdown" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">Cheat Sheets</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cheatsheetsDropdown">
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-htmltags.html"
+									target="_blank">HTML Tags</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-flexbox.html"
+									target="_blank">Flexbox</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-bootstrap.html"
+									target="_blank">Bootstrap</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-folderstructure.html"
+									target="_blank">Folder Structure</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-qachecklist.html"
+									target="_blank">QA Checklist (WCAG 2.1)</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-accessibility.html"
+									target="_blank">Accessibility (POUR)</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-activity4-ictneeds.html"
+									target="_blank">Activity 4 — Answers</a></li>
+						</ul>
+					</li>
+
+					<li class="nav-item d-flex align-items-center ms-lg-2 mt-2 mt-lg-0">
+						<a class="btn-icon-circle" href="https://form.jotform.com/260060839447864" target="_blank"
+							rel="noopener" title="Log attendance" aria-label="Log attendance">
+							<i class="bi bi-clipboard-check"></i>
+						</a>
+					</li>
+					<li class="nav-item d-flex align-items-center ms-lg-2 mt-2 mt-lg-0">
+						<a class="btn-icon-circle"
+							href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1" target="_blank"
+							rel="noopener" title="Join Zoom" aria-label="Join Zoom">
+							<i class="bi bi-camera-video"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- ========================================================================
+	  2. HERO
+	  ======================================================================== -->
+	<header id="top" class="bg-black text-white py-5">
+		<div class="container py-4">
+			<p class="eyebrow mb-3">EQC · Front End Web Development</p>
+
+			<div class="d-flex align-items-center gap-3 mb-3">
+				<span class="ib-loader" style="width:3.5rem;height:3.5rem" aria-hidden="true"></span>
+				<h1 class="display-4 mb-0 hero-title">Welcome, The iBones</h1>
+			</div>
+
+			<p class="lead mb-4 text-white-50" style="max-width: 46rem;">
+				Your central hub for classes, live links, cheat sheets and code.
+				Bookmark this page — everything you need for the intake lives here.
+			</p>
+
+			<!-- Live status: where we are right now, filled in by hub.js -->
+			<div class="d-flex flex-wrap gap-2">
+				<span class="status-pill" id="pillWeek"><i class="bi bi-calendar3"></i><span>Loading…</span></span>
+				<span class="status-pill" id="pillNext"><i class="bi bi-arrow-right-circle"></i><span>Loading…</span></span>
+			</div>
 		</div>
 	</header>
 
-	<!-- Hero -->
-	<section class="ib-hero">
-		<div class="ib-wrap ib-hero-grid">
-			<div>
-				<div class="ib-status-row">
-					<span class="ib-status-pill ib-status-now"><i class="bi bi-clock"></i><span
-							id="pill-now">Now</span></span>
-					<span class="ib-status-pill ib-status-next"><i class="bi bi-calendar-event"></i><span
-							id="pill-next">Next class</span></span>
-				</div>
-				<h1>Everything you need, <em>one page.</em></h1>
-				<p class="ib-hero-lede">Your class home base — schedule, attendance, Zoom, lesson resources and all
-					the tools.</p>
-				<div class="ib-hero-ctas">
-					<a class="ib-btn ib-btn-blue" href="https://form.jotform.com/260060839447864" target="_blank"
-						rel="noopener"><i class="bi bi-qr-code-scan"></i>Mark attendance</a>
-					<a class="ib-btn ib-btn-orange"
-						href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1" target="_blank"
-						rel="noopener"><i class="bi bi-camera-video"></i>Join Zoom</a>
-				</div>
-			</div>
+	<main class="container my-5">
 
-			<div>
-				<aside class="ib-meta-card" aria-label="Class details">
-					<span class="ib-eyebrow">Class details</span>
-					<dl>
-						<div class="ib-meta-row">
-							<dt>When</dt>
-							<dd>Mon &amp; Wed · 17:30–20:30</dd>
-						</div>
-						<div class="ib-meta-row">
-							<dt>Started</dt>
-							<dd>Mon 15 Jun 2026</dd>
-						</div>
-						<div class="ib-meta-row">
-							<dt>Zoom</dt>
-							<dd><a href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1"
-									target="_blank" rel="noopener">Join live call →</a></dd>
-						</div>
-						<div class="ib-meta-row">
-							<dt>ID</dt>
-							<dd>974 5159 3016</dd>
-						</div>
-						<div class="ib-meta-row">
-							<dt>Passcode</dt>
-							<dd>819406</dd>
-						</div>
-						<div class="ib-meta-row">
-							<dt>Trainers</dt>
-							<dd>Tim &amp; Duke</dd>
-						</div>
-					</dl>
-				</aside>
-				<figure class="ib-qr-card">
-					<a class="ib-qr-wrap" href="https://form.jotform.com/260060839447864" target="_blank"
-						rel="noopener">
-						<img src="images/attendance-qr.png" alt="QR code for the Intake 26.13 attendance form"
-							width="84" height="84">
+		<!-- ====================================================================
+		  3. START HERE — the three things a brand-new student does first.
+		  Numbered because the order actually matters.
+		  ==================================================================== -->
+		<section id="start" class="mb-5">
+			<h2 class="h4 mb-1">Start here</h2>
+			<p class="text-muted small mb-4">Brand new? Do these three things, in this order.</p>
+
+			<div class="row row-cols-1 row-cols-md-3 g-3">
+				<div class="col">
+					<a class="start-step text-decoration-none text-reset" href="https://code.visualstudio.com"
+						target="_blank" rel="noopener">
+						<span class="start-step-num">1</span>
+						<span>
+							<h3>Install your tools</h3>
+							<p>VS Code, the Live Server extension, and Git. Everything else runs in the browser.</p>
+						</span>
 					</a>
-					<figcaption><b>Scan to mark attendance.</b><br>Or tap the code to open the form.</figcaption>
-				</figure>
+				</div>
+				<div class="col">
+					<a class="start-step text-decoration-none text-reset"
+						href="https://form.jotform.com/260060839447864" target="_blank" rel="noopener">
+						<span class="start-step-num">2</span>
+						<span>
+							<h3>Mark your attendance</h3>
+							<p>Every class, before you start. Then join the Zoom room — it opens at 17:20.</p>
+						</span>
+					</a>
+				</div>
+				<div class="col">
+					<a class="start-step text-decoration-none text-reset" href="#schedule">
+						<span class="start-step-num">3</span>
+						<span>
+							<h3>Open this week's class</h3>
+							<p>Every class in the schedule holds its plan, topics and resources.</p>
+						</span>
+					</a>
+				</div>
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<!-- §01 This Week -->
-	<section id="this-week" class="ib-section ib-dark-section">
-		<div class="ib-wrap">
-			<div class="ib-week-banner">
-				<i class="bi bi-calendar-week" aria-hidden="true"></i>
-				<strong id="week-banner">This Week</strong>
-			</div>
-			<div id="this-week-grid" class="ib-this-week-grid"></div>
-			<div class="ib-section-label-wrap"><span class="ib-section-label">Section 1: This Week</span></div>
-		</div>
-	</section>
+		<!-- ====================================================================
+		  4. ACCESS  +  5. OVERVIEW
+		  ==================================================================== -->
+		<div class="row g-4 mb-5">
 
-	<!-- §02 Lesson Log -->
-	<section id="lessons" class="ib-section">
-		<div class="ib-wrap">
-			<div class="ib-section-head">
-				<h2>Lesson Log</h2>
-				<p>Every class with its topics and resources — newest first. Open a class to get its links. Each
-					class is colour-coded by subject.</p>
-			</div>
-			<div class="ib-legend">
-				<span class="ib-legend-item ib-legend-s1"><i class="ib-legend-swatch"></i>Subject 1 · Clients &amp;
-					Concepts</span>
-				<span class="ib-legend-item ib-legend-s2"><i class="ib-legend-swatch"></i>Subject 2 · Front End Web
-					Dev</span>
-			</div>
-			<div id="lesson-list" class="ib-lesson-list"></div>
-			<div class="ib-section-label-wrap"><span class="ib-section-label">Section 2: Lesson Log</span></div>
-		</div>
-	</section>
-
-	<!-- §03 Get to know Git -->
-	<section id="git" class="ib-section ib-dark-section">
-		<div class="ib-wrap">
-			<div class="ib-section-head">
-				<h2>Get to know Git</h2>
-				<p>Version control is how real teams ship. Start at the top and work down — install it, learn the
-					handful of commands you'll use every day, then practise.</p>
-			</div>
-
-			<div class="ib-git">
-				<div class="ib-git-head">
-					<span class="ib-git-mark" aria-hidden="true"><i class="bi bi-git"></i></span>
-					<div>
-						<h3>Git &amp; GitHub</h3>
-						<p>Save your work, undo mistakes, and share code without emailing zip files.</p>
+			<div class="col-lg-5">
+				<div class="card h-100 border resource-tile tile-access">
+					<div class="card-body p-4 d-flex flex-column">
+						<div class="d-flex align-items-center justify-content-between mb-3">
+							<h2 class="h5 fw-bold mb-0">Class Access</h2>
+							<span class="tile-chip">Every class</span>
+						</div>
+						<p class="text-muted small mb-4">
+							Log attendance every class, then jump into Zoom.
+							Coursework lives on the Study Hub.
+						</p>
+						<div class="d-grid gap-2 mt-auto">
+							<a href="https://form.jotform.com/260060839447864" target="_blank" rel="noopener"
+								class="btn btn-dark"><i class="bi bi-clipboard-check me-2"></i>Log Daily
+								Attendance</a>
+							<a href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1"
+								target="_blank" rel="noopener" class="btn btn-outline-dark"><i
+									class="bi bi-camera-video me-2"></i>Join Zoom Lecture</a>
+							<a href="https://study.equinimcollege.com/login" target="_blank" rel="noopener"
+								class="btn btn-outline-dark"><i class="bi bi-mortarboard me-2"></i>Equinim Study
+								Hub</a>
+						</div>
 					</div>
 				</div>
+			</div>
 
-				<div class="ib-git-body">
-					<div class="ib-git-groups">
+			<div class="col-lg-7" id="overview">
+				<div class="card h-100 border resource-tile tile-overview">
+					<div class="card-body p-4">
+						<div class="d-flex align-items-center justify-content-between mb-3">
+							<h2 class="h5 fw-bold mb-0">Course Overview</h2>
+							<span class="tile-chip">12 weeks</span>
+						</div>
+						<p class="small text-muted mb-3">
+							Twelve weeks · Twenty-four classes · Two subjects, taught side-by-side.
+						</p>
 
-						<div class="ib-git-group">
-							<h4>1 · Install &amp; set up</h4>
-							<ul>
-								<li><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">
-										<i class="bi bi-download"></i>
-										<span>Install Git<em>Mac, Windows and Linux downloads</em></span></a></li>
-								<li><a href="https://desktop.github.com" target="_blank" rel="noopener">
-										<i class="bi bi-window-desktop"></i>
-										<span>GitHub Desktop<em>The easy way in — no terminal needed</em></span></a>
-								</li>
-								<li><a href="https://github.com/signup" target="_blank" rel="noopener">
-										<i class="bi bi-person-plus"></i>
-										<span>Create a GitHub account<em>Use your real name — it becomes your
-												portfolio</em></span></a></li>
-								<li><a href="https://docs.github.com/en/get-started/quickstart/set-up-git"
-										target="_blank" rel="noopener">
-										<i class="bi bi-gear"></i>
-										<span>Set up Git<em>Name, email and first-time config</em></span></a></li>
-							</ul>
+						<!-- The two subjects, each in its own colour. Same colours the
+						     schedule tiles use, so the link is obvious. -->
+						<div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
+							<div class="col">
+								<span class="legend-item legend-s1 mb-2"><i class="dot"></i>Subject 1</span>
+								<h3 class="h6 fw-semibold">Clients &amp; Concepts</h3>
+								<ul class="small text-muted mb-0 ps-3">
+									<li>Originate and develop concepts</li>
+									<li>Match ICT needs to a client brief</li>
+									<li>Manage client problems &amp; scope</li>
+									<li>Lead and facilitate a team</li>
+								</ul>
+							</div>
+							<div class="col">
+								<span class="legend-item legend-s2 mb-2"><i class="dot"></i>Subject 2</span>
+								<h3 class="h6 fw-semibold">Front End Web Dev</h3>
+								<ul class="small text-muted mb-0 ps-3">
+									<li>Clean HTML + CSS from scratch</li>
+									<li>Bootstrap 5 for responsive layouts</li>
+									<li>Flexbox, Grid and the box model</li>
+									<li>Ship a portfolio-ready website</li>
+								</ul>
+							</div>
 						</div>
 
-						<div class="ib-git-group">
-							<h4>2 · Learn the basics</h4>
-							<ul>
-								<li><a href="https://docs.github.com/en/get-started/start-your-journey/hello-world"
-										target="_blank" rel="noopener">
-										<i class="bi bi-flag"></i>
-										<span>GitHub Hello World<em>The official 15-minute first
-												repo</em></span></a></li>
-								<li><a href="https://www.w3schools.com/git/" target="_blank" rel="noopener">
-										<i class="bi bi-book"></i>
-										<span>W3Schools Git Tutorial<em>Short lessons, same style as
-												class</em></span></a></li>
-								<li><a href="https://git-scm.com/book/en/v2" target="_blank" rel="noopener">
-										<i class="bi bi-journal-bookmark"></i>
-										<span>Pro Git (free book)<em>The reference — read chapters 1 to
-												3</em></span></a></li>
-								<li><a href="https://www.youtube.com/watch?v=RGOj5yH7evk" target="_blank"
-										rel="noopener">
-										<i class="bi bi-youtube"></i>
-										<span>Git &amp; GitHub crash course<em>freeCodeCamp, one
-												sitting</em></span></a></li>
-							</ul>
+						<div class="d-flex flex-wrap gap-3 align-items-center pt-3 border-top">
+							<span class="small text-muted"><i class="bi bi-clock me-1"></i>Mon &amp; Wed ·
+								5:30–8:30pm</span>
+							<a class="btn btn-sm btn-outline-dark" href="assets/2613-classes.ics" download>
+								<i class="bi bi-calendar-plus me-1"></i>Add all 24 classes (.ics)
+							</a>
 						</div>
-
-						<div class="ib-git-group">
-							<h4>3 · Practise &amp; troubleshoot</h4>
-							<ul>
-								<li><a href="https://learngitbranching.js.org" target="_blank" rel="noopener">
-										<i class="bi bi-diagram-2"></i>
-										<span>Learn Git Branching<em>Visual and game-like — the best way to make it
-												click</em></span></a></li>
-								<li><a href="https://ohshitgit.com/" target="_blank" rel="noopener">
-										<i class="bi bi-life-preserver"></i>
-										<span>Oh Sh!t, Git!?<em>Fixes for when you've broken
-												something</em></span></a></li>
-								<li><a href="https://training.github.com/downloads/github-git-cheat-sheet.pdf"
-										target="_blank" rel="noopener">
-										<i class="bi bi-file-earmark-pdf"></i>
-										<span>GitHub Git Cheat Sheet<em>One-page PDF — print it</em></span></a></li>
-								<li><a href="https://github.com/thedalycreative" target="_blank" rel="noopener">
-										<i class="bi bi-github"></i>
-										<span>Class repos<em>Every build we do in class</em></span></a></li>
-							</ul>
-						</div>
-
 					</div>
+				</div>
+			</div>
+		</div>
 
-					<div class="ib-git-cheats">
-						<h4>The commands you'll actually use</h4>
-						<div class="ib-git-cmds">
-							<div class="ib-git-cmd"><code>git clone &lt;url&gt;</code><span>Copy a repo to your
-									machine</span></div>
-							<div class="ib-git-cmd"><code>git status</code><span>What have I changed?</span></div>
-							<div class="ib-git-cmd"><code>git add .</code><span>Stage your changes</span></div>
-							<div class="ib-git-cmd"><code>git commit -m "..."</code><span>Save a snapshot with a
-									message</span></div>
-							<div class="ib-git-cmd"><code>git push</code><span>Send it up to GitHub</span></div>
-							<div class="ib-git-cmd"><code>git pull</code><span>Get the latest changes down</span>
+		<!-- ====================================================================
+		  6. RESOURCES
+		  ====================================================================
+		  Tiles are grouped by WHAT YOU USE THEM FOR, and each group has its
+		  own colour. The legend below explains the coding — so the colours
+		  teach themselves rather than just decorating.
+
+		    LEARN  (blue)   read it, look it up
+		    BUILD  (green)  install it, write code with it
+		    CHECK  (orange) test it before you ship
+		    CREATE (violet) design it, play with it
+		  ==================================================================== -->
+		<section id="resources" class="mb-5">
+			<h2 class="h4 mb-1">Resources</h2>
+			<p class="text-muted small mb-3">Everything you'll open on a normal class day.</p>
+
+			<div class="legend mb-4">
+				<span class="legend-item legend-learn"><i class="dot"></i>Learn <span>· read it, look it up</span></span>
+				<span class="legend-item legend-build"><i class="dot"></i>Build <span>· install it, code with it</span></span>
+				<span class="legend-item legend-check"><i class="dot"></i>Check <span>· test before you ship</span></span>
+				<span class="legend-item legend-create"><i class="dot"></i>Create <span>· design it, play with it</span></span>
+			</div>
+
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+				<!-- ─── ⭐ ASSIGNMENT SPOTLIGHT · S02-A01 Bootstrap Clone ─── -->
+				<div class="col-12">
+					<div class="border p-4 resource-tile tile-assignment">
+						<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-1">
+							<h3 class="h6 fw-bold text-uppercase small mb-0">
+								<i class="bi bi-star-fill me-2"></i>S02-A01 · Bootstrap Clone
+								<span class="fw-normal text-muted">(aka Build a Bootstrap Website)</span>
+							</h3>
+							<span class="tile-chip">Current assignment</span>
+						</div>
+						<p class="small text-muted mb-3">
+							Everything for the current assignment in one place: clone the Forbidden Forest
+							site with Bootstrap 5.
+						</p>
+						<div class="row row-cols-1 row-cols-md-3 g-3">
+							<div class="col">
+								<h4 class="small fw-bold text-uppercase text-muted mb-2">The build</h4>
+								<ul class="list-unstyled small mb-0">
+									<li class="mb-1"><a class="link-dark"
+											href="https://hpforbiddenforestexperience.com/" target="_blank"
+											rel="noopener"><i class="bi bi-globe me-2"></i>Original site — the one
+											we're cloning</a></li>
+									<li class="mb-1"><a class="link-dark"
+											href="https://github.com/thedalycreative/S02-A01-BootstrapClone"
+											target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>Class
+											repo — full clone + README teardown</a></li>
+									<li class="mb-1"><a class="link-dark"
+											href="https://github.com/thedalycreative/flexbox-exercise" target="_blank"
+											rel="noopener"><i class="bi bi-github me-2"></i>Flexbox exercise repo (the
+											warm-up)</a></li>
+								</ul>
+							</div>
+							<div class="col">
+								<h4 class="small fw-bold text-uppercase text-muted mb-2">Requirements</h4>
+								<ul class="small mb-0 ps-3">
+									<li>Rebuild the layout with <strong>Bootstrap 5 via CDN</strong> — no npm, no
+										build step</li>
+									<li>Minimum <strong>5 files</strong>: pages + stylesheet + images folder</li>
+									<li>JavaScript only for the <strong>carousel</strong></li>
+									<li>No inline styles — custom CSS lives in your stylesheet</li>
+									<li>Alt text on every image; semantic tags; QA checklist before you submit</li>
+								</ul>
+							</div>
+							<div class="col">
+								<h4 class="small fw-bold text-uppercase text-muted mb-2">Tools</h4>
+								<ul class="list-unstyled small mb-0">
+									<li class="mb-1"><a class="link-dark"
+											href="assets/cheatsheets/cheatsheet-bootstrap.html" target="_blank"><i
+												class="bi bi-bootstrap me-2"></i>Bootstrap Cheat Sheet</a></li>
+									<li class="mb-1"><a class="link-dark" href="https://getbootstrap.com/docs/5.3/"
+											target="_blank" rel="noopener"><i class="bi bi-book me-2"></i>Bootstrap 5
+											Docs</a></li>
+									<li class="mb-1"><a class="link-dark"
+											href="assets/cheatsheets/cheatsheet-qachecklist.html" target="_blank"><i
+												class="bi bi-list-check me-2"></i>QA Checklist — run before you
+											submit</a></li>
+								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<!-- ─── LEARN · Cheatsheets / Interactive Tools ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Cheat Sheets &amp; Tools</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-htmltags.html"
+									target="_blank"><i class="bi bi-code-slash me-2"></i>HTML tags</a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-flexbox.html"
+									target="_blank"><i class="bi bi-columns-gap me-2"></i>Flexbox</a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-bootstrap.html"
+									target="_blank"><i class="bi bi-bootstrap me-2"></i>Bootstrap</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-folderstructure.html" target="_blank"><i
+										class="bi bi-folder2-open me-2"></i>Folder structure</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-qachecklist.html" target="_blank"><i
+										class="bi bi-list-check me-2"></i>QA Checklist (WCAG 2.1)</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-accessibility.html" target="_blank"><i
+										class="bi bi-universal-access me-2"></i>Accessibility (POUR)</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-activity4-ictneeds.html" target="_blank"><i
+										class="bi bi-patch-check me-2"></i>Activity 4 — Answers</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/interactive/interactive-brandwheel.html" target="_blank"><i
+										class="bi bi-palette me-2"></i>Brand Wheel</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/interactive/interactive-studentpicker.html" target="_blank"><i
+										class="bi bi-shuffle me-2"></i>Random Student Picker</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── LEARN · Docs / Guides ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Docs / Guides</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://www.w3schools.com" target="_blank"
+									rel="noopener"><i class="bi bi-book me-2"></i>W3Schools</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://developer.mozilla.org"
+									target="_blank" rel="noopener"><i class="bi bi-book-half me-2"></i>MDN Web
+									Docs</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://getbootstrap.com/docs/5.3/"
+									target="_blank" rel="noopener"><i class="bi bi-bootstrap me-2"></i>Bootstrap 5
+									Docs</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank"
+									rel="noopener"><i class="bi bi-columns-gap me-2"></i>CSS-Tricks Flexbox
+									Guide</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://www.w3.org/WAI/standards-guidelines/" target="_blank"
+									rel="noopener"><i class="bi bi-universal-access me-2"></i>W3 Accessibility
+									Guidelines</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://dev.to" target="_blank"
+									rel="noopener"><i class="bi bi-newspaper me-2"></i>dev.to</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── LEARN · Learning ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Courses</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://www.codecademy.com" target="_blank"
+									rel="noopener"><i class="bi bi-mortarboard-fill me-2"></i>Codecademy</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.freecodecamp.org" target="_blank"
+									rel="noopener"><i class="bi bi-fire me-2"></i>freeCodeCamp</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.theodinproject.com"
+									target="_blank" rel="noopener"><i class="bi bi-signpost-2 me-2"></i>The Odin
+									Project</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://scrimba.com" target="_blank"
+									rel="noopener"><i class="bi bi-play-circle me-2"></i>Scrimba</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://exercism.org" target="_blank"
+									rel="noopener"><i class="bi bi-puzzle me-2"></i>Exercism</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── BUILD · Environment ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Environment</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://code.visualstudio.com"
+									target="_blank" rel="noopener"><i class="bi bi-code-square me-2"></i>VS Code</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://git-scm.com/downloads"
+									target="_blank" rel="noopener"><i class="bi bi-git me-2"></i>Git</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+									target="_blank" rel="noopener"><i class="bi bi-magic me-2"></i>Prettier</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
+									target="_blank" rel="noopener"><i class="bi bi-broadcast me-2"></i>Live
+									Server</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat"
+									target="_blank" rel="noopener"><i class="bi bi-chat-dots me-2"></i>Copilot
+									Chat</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── BUILD · AI Coding Partners ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">AI Coding Partners</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://claude.ai" target="_blank"
+									rel="noopener"><i class="bi bi-stars me-2"></i>Claude</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://gemini.google.com" target="_blank"
+									rel="noopener"><i class="bi bi-gem me-2"></i>Gemini</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://chatgpt.com" target="_blank"
+									rel="noopener"><i class="bi bi-chat-square-text me-2"></i>ChatGPT</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://github.com/features/copilot"
+									target="_blank" rel="noopener"><i class="bi bi-cpu me-2"></i>GitHub Copilot</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── BUILD · Repos & Channels ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Repos &amp; Channels</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://github.com/thedalycreative"
+									target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>Class repos</a>
+							</li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://github.com/microsoft/Web-Dev-For-Beginners" target="_blank"
+									rel="noopener"><i class="bi bi-github me-2"></i>Web Dev for Beginners</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://github.com/thedaviddias/Front-End-Checklist" target="_blank"
+									rel="noopener"><i class="bi bi-github me-2"></i>Front-End Checklist</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@KevinPowell"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Kevin Powell
+									(CSS)</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@TraversyMedia"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Traversy
+									Media</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@NetNinja"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Net Ninja</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@Fireship"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Fireship</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://css-tricks.com" target="_blank"
+									rel="noopener"><i class="bi bi-rss me-2"></i>CSS-Tricks</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.joshwcomeau.com" target="_blank"
+									rel="noopener"><i class="bi bi-rss me-2"></i>Josh Comeau</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── CHECK · Quality Assurance ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-check">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Quality Assurance</h3>
+							<span class="tile-chip">Check</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-qachecklist.html" target="_blank"><i
+										class="bi bi-list-check me-2"></i>Class QA Checklist</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-accessibility.html" target="_blank"><i
+										class="bi bi-universal-access me-2"></i>Accessibility (POUR)</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://wave.webaim.org" target="_blank"
+									rel="noopener"><i class="bi bi-eye me-2"></i>WAVE Accessibility</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://validator.w3.org" target="_blank"
+									rel="noopener"><i class="bi bi-check2-circle me-2"></i>W3C HTML Validator</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://jigsaw.w3.org/css-validator/"
+									target="_blank" rel="noopener"><i class="bi bi-check2-circle me-2"></i>W3C CSS
+									Validator</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://pagespeed.web.dev/" target="_blank"
+									rel="noopener"><i class="bi bi-speedometer2 me-2"></i>PageSpeed Insights</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── CREATE · Design ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-create">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Design</h3>
+							<span class="tile-chip">Create</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://www.figma.com" target="_blank"
+									rel="noopener"><i class="bi bi-vector-pen me-2"></i>Figma</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://excalidraw.com" target="_blank"
+									rel="noopener"><i class="bi bi-pencil me-2"></i>Excalidraw</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://coolors.co" target="_blank"
+									rel="noopener"><i class="bi bi-palette2 me-2"></i>Coolors</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://fonts.google.com" target="_blank"
+									rel="noopener"><i class="bi bi-fonts me-2"></i>Google Fonts</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://icons.getbootstrap.com"
+									target="_blank" rel="noopener"><i class="bi bi-bootstrap me-2"></i>Bootstrap
+									Icons</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://unsplash.com" target="_blank"
+									rel="noopener"><i class="bi bi-camera me-2"></i>Unsplash</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://pexels.com" target="_blank"
+									rel="noopener"><i class="bi bi-camera-reels me-2"></i>Pexels</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── CREATE · Games ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-create">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Games</h3>
+							<span class="tile-chip">Create</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://flexboxfroggy.com" target="_blank"
+									rel="noopener"><i class="bi bi-controller me-2"></i>Flexbox Froggy</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://cssgridgarden.com" target="_blank"
+									rel="noopener"><i class="bi bi-flower1 me-2"></i>Grid Garden</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://flukeout.github.io" target="_blank"
+									rel="noopener"><i class="bi bi-cup-straw me-2"></i>CSS Diner</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://cssbattle.dev" target="_blank"
+									rel="noopener"><i class="bi bi-trophy me-2"></i>CSSBattle</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://mastery.games/flexboxzombies/"
+									target="_blank" rel="noopener"><i class="bi bi-crosshair me-2"></i>Flexbox
+									Zombies</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://learngitbranching.js.org"
+									target="_blank" rel="noopener"><i class="bi bi-diagram-2 me-2"></i>Learn Git
+									Branching</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.codewars.com" target="_blank"
+									rel="noopener"><i class="bi bi-shield me-2"></i>Codewars</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://monkeytype.com" target="_blank"
+									rel="noopener"><i class="bi bi-keyboard me-2"></i>Monkeytype (typing)</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- ====================================================================
+		  7. GIT — three steps, because that's the order you'll need them in.
+		  ==================================================================== -->
+		<section id="git" class="mb-5">
+			<h2 class="h4 mb-1">Get to know Git</h2>
+			<p class="text-muted small mb-4">
+				Version control is how real teams ship. Install it, learn the handful of
+				commands you'll use every day, then practise.
+			</p>
+
+			<div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">1 · Install &amp; set up</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://git-scm.com/downloads"
+									target="_blank" rel="noopener"><i class="bi bi-download me-2"></i>Install Git</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://desktop.github.com" target="_blank"
+									rel="noopener"><i class="bi bi-window-desktop me-2"></i>GitHub Desktop — no
+									terminal needed</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://github.com/signup" target="_blank"
+									rel="noopener"><i class="bi bi-person-plus me-2"></i>Create a GitHub account</a>
+							</li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://docs.github.com/en/get-started/quickstart/set-up-git"
+									target="_blank" rel="noopener"><i class="bi bi-gear me-2"></i>Set up Git — name
+									&amp; email</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">2 · Learn the basics</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark"
+									href="https://docs.github.com/en/get-started/start-your-journey/hello-world"
+									target="_blank" rel="noopener"><i class="bi bi-flag me-2"></i>GitHub Hello World
+									— 15 minutes</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.w3schools.com/git/"
+									target="_blank" rel="noopener"><i class="bi bi-book me-2"></i>W3Schools Git
+									Tutorial</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://git-scm.com/book/en/v2"
+									target="_blank" rel="noopener"><i class="bi bi-journal-bookmark me-2"></i>Pro Git
+									— free book, read ch. 1–3</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/watch?v=RGOj5yH7evk"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Git &amp; GitHub
+									crash course</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-create">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">3 · Practise &amp; fix</h3>
+							<span class="tile-chip">Create</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://learngitbranching.js.org"
+									target="_blank" rel="noopener"><i class="bi bi-diagram-2 me-2"></i>Learn Git
+									Branching — visual &amp; game-like</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://ohshitgit.com/" target="_blank"
+									rel="noopener"><i class="bi bi-life-preserver me-2"></i>Oh Sh!t, Git!? — when
+									you've broken something</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://training.github.com/downloads/github-git-cheat-sheet.pdf"
+									target="_blank" rel="noopener"><i class="bi bi-file-earmark-pdf me-2"></i>Git
+									Cheat Sheet (PDF) — print it</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://github.com/thedalycreative"
+									target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>Class repos — every
+									build we do</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 
-			<div class="ib-section-label-wrap"><span class="ib-section-label">Section 3: Get to know Git</span></div>
-		</div>
-	</section>
+			<!-- The six commands that cover 95% of what you'll do -->
+			<div class="border p-4 resource-tile fam-build">
+				<div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+					<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">The commands you'll actually use</h3>
+					<span class="tile-chip">Build</span>
+				</div>
+				<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-2 small">
+					<div class="col"><code>git clone &lt;url&gt;</code> <span class="text-muted">Copy a repo to your
+							machine</span></div>
+					<div class="col"><code>git status</code> <span class="text-muted">What have I changed?</span>
+					</div>
+					<div class="col"><code>git add .</code> <span class="text-muted">Stage your changes</span></div>
+					<div class="col"><code>git commit -m "..."</code> <span class="text-muted">Save a snapshot</span>
+					</div>
+					<div class="col"><code>git push</code> <span class="text-muted">Send it up to GitHub</span></div>
+					<div class="col"><code>git pull</code> <span class="text-muted">Get the latest changes
+							down</span></div>
+				</div>
+			</div>
+		</section>
 
-	<!-- §04 Student Link Feed -->
-	<section class="ib-section">
-		<div class="ib-wrap">
-			<div class="ib-section-head">
-				<h2>Student Link Feed</h2>
-			</div>
-			<div class="ib-feed-form">
-				<input type="text" class="ib-feed-input" id="feed-input"
-					placeholder="Paste a link or type a note — hit Enter to post" aria-label="Post a link or note">
-				<button type="button" class="ib-feed-post" id="feed-post">Post</button>
-			</div>
-			<p class="ib-feed-hint">Posts save to this browser only — share links in class so everyone can grab
-				them.</p>
-			<div id="feed-list" class="ib-feed-list" aria-live="polite"></div>
-			<div class="ib-section-label-wrap"><span class="ib-section-label">Section 4: Student Feed</span></div>
-		</div>
-	</section>
+		<!-- ====================================================================
+		  8. SCHEDULE  (tiles rendered by hub.js)
+		  ====================================================================
+		  Each tile is colour-coded by subject and shows its class number, date
+		  and topic. Past classes open a modal with the full plan + resources.
+		  Future classes stay locked until the morning after they run.
+		  ==================================================================== -->
+		<section id="schedule" class="mb-5">
+			<h2 class="h4 mb-1">Schedule</h2>
+			<p class="text-muted small mb-3">
+				Click any past class to open its plan &amp; resources.
+				Future classes unlock the morning after they run.
+			</p>
 
-	<!-- §05 Software & Tools -->
-	<section class="ib-section ib-dark-section">
-		<div class="ib-wrap">
-			<div class="ib-section-head">
-				<h2>Software &amp; Tools</h2>
-				<p>Install these before your first class.</p>
+			<div class="legend mb-4">
+				<span class="legend-item legend-s1"><i class="dot"></i>Subject 1 <span>· Clients &amp; Concepts</span></span>
+				<span class="legend-item legend-s2"><i class="dot"></i>Subject 2 <span>· Front End Web Dev</span></span>
 			</div>
-			<div class="ib-card-grid ib-grid-tools">
-				<a class="ib-card" href="https://code.visualstudio.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-code-slash"></i></span>
-					<span class="ib-card-title">VS Code</span>
-					<span class="ib-card-desc">Your code editor.</span>
-				</a>
-				<a class="ib-card" href="https://git-scm.com/downloads" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-git"></i></span>
-					<span class="ib-card-title">Git</span>
-					<span class="ib-card-desc">Version control — install first.</span>
-				</a>
-				<a class="ib-card" href="https://desktop.github.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-github"></i></span>
-					<span class="ib-card-title">GitHub Desktop</span>
-					<span class="ib-card-desc">Visual Git — easier start.</span>
-				</a>
-				<a class="ib-card" href="https://nodejs.org" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-box-seam"></i></span>
-					<span class="ib-card-title">Node.js + npm</span>
-					<span class="ib-card-desc">JS runtime &amp; packages.</span>
-				</a>
-				<a class="ib-card" href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
-					target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-magic"></i></span>
-					<span class="ib-card-title">Prettier</span>
-					<span class="ib-card-desc">Auto-format extension.</span>
-				</a>
-				<a class="ib-card"
-					href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer" target="_blank"
-					rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-broadcast"></i></span>
-					<span class="ib-card-title">Live Server</span>
-					<span class="ib-card-desc">Local dev server extension.</span>
-				</a>
-				<a class="ib-card" href="https://www.google.com/chrome/" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-globe"></i></span>
-					<span class="ib-card-title">Chrome / Firefox / Brave</span>
-					<span class="ib-card-desc">Browsers with dev tools.</span>
-				</a>
-				<a class="ib-card" href="https://developer.chrome.com/docs/lighthouse" target="_blank"
-					rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-speedometer2"></i></span>
-					<span class="ib-card-title">Lighthouse</span>
-					<span class="ib-card-desc">Audit your site (in Chrome).</span>
-				</a>
-				<a class="ib-card" href="https://www.colorzilla.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-eyedropper"></i></span>
-					<span class="ib-card-title">ColorZilla</span>
-					<span class="ib-card-desc">Colour picker extension.</span>
-				</a>
-				<a class="ib-card" href="https://wave.webaim.org" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-universal-access"></i></span>
-					<span class="ib-card-title">WAVE</span>
-					<span class="ib-card-desc">Accessibility checker.</span>
-				</a>
-				<a class="ib-card" href="https://validator.w3.org" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-check2-circle"></i></span>
-					<span class="ib-card-title">W3C Validator</span>
-					<span class="ib-card-desc">Check your HTML is valid.</span>
-				</a>
-				<a class="ib-card" href="https://github.com/features/actions" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-gear"></i></span>
-					<span class="ib-card-title">GitHub Actions</span>
-					<span class="ib-card-desc">CI/CD automation (later weeks).</span>
-				</a>
-			</div>
-			<div class="ib-section-label-wrap"><span class="ib-section-label">Section 5: Software &amp; Tools</span>
-			</div>
-		</div>
-	</section>
 
-	<!-- §06 Course Links -->
-	<section id="resources" class="ib-section">
-		<div class="ib-wrap">
-			<div class="ib-section-head">
-				<h2>Course Links</h2>
-				<p>Repos, references, tools — everything bookmarked.</p>
-			</div>
-			<div class="ib-card-grid ib-grid-links">
-				<a class="ib-card ib-link-tile" style="--tile-color:#3B8183;--tile-soft:#3B818314"
-					href="https://study.equinimcollege.com/my-study" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-mortarboard"></i></span>
-					<span class="ib-card-title">Student StudyHub</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#ED303C;--tile-soft:#ED303C14"
-					href="https://zoom.us/meeting/tJMpcuitpzgqG9KqfOVCUM2NVDUH9rC38uzD/ics?icsToken=DJMm6qcMtxOSb4KuywAALAAAAJuSe9iSVpKOateGynY29z4KEA80oBzUDSHQx3IGujeV-G0PR6k1XWRmiFfC1SLWwwVyBWsYKFKYkR5TcTAwMDAwMQ&meetingMasterEventId=FNerSHsrQpu9J0XJzJVcIA"
-					target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-calendar-event"></i></span>
-					<span class="ib-card-title">iCal Schedule</span>
-				</a>
-				<a class="ib-card ib-zoom-tile"
-					href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1" target="_blank"
-					rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-camera-video-fill"></i></span>
-					<span class="ib-zoom-text">
-						<span class="ib-card-title">Join Zoom Class</span>
-						<span class="ib-zoom-sub">Mon &amp; Wed · 17:30</span>
-					</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#333;--tile-soft:#33333314"
-					href="https://github.com/thedalycreative" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-github"></i></span>
-					<span class="ib-card-title">Class GitHub</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#3B8183;--tile-soft:#3B818314"
-					href="https://www.w3schools.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-book"></i></span>
-					<span class="ib-card-title">W3Schools</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#ED303C;--tile-soft:#ED303C14"
-					href="https://developer.mozilla.org" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-code-square"></i></span>
-					<span class="ib-card-title">MDN Web Docs</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#7952b3;--tile-soft:#7952b314"
-					href="https://getbootstrap.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-bootstrap"></i></span>
-					<span class="ib-card-title">Bootstrap 5</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#333;--tile-soft:#33333314" href="https://dev.to"
-					target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-braces"></i></span>
-					<span class="ib-card-title">Dev.to</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#FF9C5B;--tile-soft:#FF9C5B14"
-					href="https://www.codedex.io" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-puzzle"></i></span>
-					<span class="ib-card-title">Codédex</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#3B8183;--tile-soft:#3B818314"
-					href="https://fonts.google.com/icons" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-grid-3x3-gap"></i></span>
-					<span class="ib-card-title">Google Icons</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#ED303C;--tile-soft:#ED303C14"
-					href="https://www.figma.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-pen"></i></span>
-					<span class="ib-card-title">Figma</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#a8621f;--tile-soft:#a8621f14"
-					href="https://excalidraw.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-pencil-square"></i></span>
-					<span class="ib-card-title">Excalidraw</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#333;--tile-soft:#33333314"
-					href="https://vercel.com/home" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-rocket-takeoff"></i></span>
-					<span class="ib-card-title">Vercel</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#3B8183;--tile-soft:#3B818314"
-					href="https://quickref.me" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-journal-code"></i></span>
-					<span class="ib-card-title">QuickRef.ME</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#FF9C5B;--tile-soft:#FF9C5B14"
-					href="https://www.free-css.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-file-earmark-code"></i></span>
-					<span class="ib-card-title">Free CSS</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#a8621f;--tile-soft:#a8621f14"
-					href="https://github.com/sindresorhus/awesome" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-stars"></i></span>
-					<span class="ib-card-title">Awesome Lists</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#1976d2;--tile-soft:#1976d214"
-					href="https://mui.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-palette"></i></span>
-					<span class="ib-card-title">Material UI</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#ED303C;--tile-soft:#ED303C14"
-					href="https://www.drawio.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-diagram-3"></i></span>
-					<span class="ib-card-title">draw.io</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#FF9C5B;--tile-soft:#FF9C5B14"
-					href="https://console.firebase.google.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-fire"></i></span>
-					<span class="ib-card-title">Firebase</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#ED303C;--tile-soft:#ED303C14"
-					href="https://css-loaders.com/dots-bars/" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-circle-half"></i></span>
-					<span class="ib-card-title">CSS Loaders</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#204056;--tile-soft:#20405614"
-					href="https://www.codecademy.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-mortarboard-fill"></i></span>
-					<span class="ib-card-title">Codecademy</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#3B8183;--tile-soft:#3B818314"
-					href="https://shell.cloud.google.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-cloud-arrow-up"></i></span>
-					<span class="ib-card-title">Cloud Shell</span>
-				</a>
-				<a class="ib-card ib-link-tile" style="--tile-color:#a8621f;--tile-soft:#a8621f14"
-					href="https://colab.research.google.com" target="_blank" rel="noopener">
-					<span class="ib-card-icon"><i class="bi bi-code-slash"></i></span>
-					<span class="ib-card-title">Google Colab</span>
-				</a>
-			</div>
-			<div class="ib-section-label-wrap"><span class="ib-section-label">Section 6: Course Links</span></div>
-		</div>
-	</section>
+			<div id="classGrid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"></div>
+		</section>
 
-	<!-- Contact -->
-	<div id="contact" class="ib-contact">
-		<div class="ib-wrap">
-			<span class="ib-contact-pill">
-				<i class="bi bi-person-badge"></i>
-				<span class="ib-contact-label">Trainers</span>
-				<span class="ib-contact-value">Tim &amp; Duke</span>
-			</span>
-			<a class="ib-contact-pill" href="tel:0414265050">
-				<i class="bi bi-telephone"></i>
-				<span class="ib-contact-label">Call</span>
-				<span class="ib-contact-value">0414 265 050</span>
-			</a>
-			<a class="ib-contact-pill" href="mailto:tim@equinimcollege.com">
-				<i class="bi bi-envelope"></i>
-				<span class="ib-contact-label">Email</span>
-				<span class="ib-contact-value">tim@equinimcollege.com</span>
-			</a>
+	</main>
+
+	<!-- ========================================================================
+	  9. SHARED MODAL (populated on tile click)
+	  ======================================================================== -->
+	<div class="modal fade" id="classModal" tabindex="-1" aria-labelledby="classModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable modal-lg">
+			<div class="modal-content border" id="classModalContent">
+				<div class="modal-header">
+					<div>
+						<span class="tile-chip" id="classModalChip">Class</span>
+						<h2 class="modal-title h5 fw-bold mt-2 mb-0" id="classModalLabel">Class</h2>
+						<p class="class-date mb-0" id="classModalDate"></p>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="classModalBody">
+					<!-- injected by hub.js -->
+				</div>
+			</div>
 		</div>
 	</div>
 
-	<!-- Footer -->
-	<footer class="ib-footer">
-		<div class="ib-wrap">
-			<div class="ib-footer-brand">
-				<span class="ib-loader" style="width:24px;height:24px" aria-hidden="true"></span>
-				<span>The iBones</span>
-			</div>
-			<div class="ib-footer-credit">
-				EQC Institute of Technology · Front End Web Development<br>
-				Built &amp; maintained by <a href="https://github.com/thedalycreative" target="_blank"
-					rel="noopener">Tim Daly · The Daly Creative</a>
+	<!-- Floating "return to top" — appears once you scroll down a bit. -->
+	<button type="button" id="backToTop" aria-label="Return to top" title="Return to top">
+		<i class="bi bi-arrow-up"></i>
+	</button>
+
+	<!-- ========================================================================
+	  10. FOOTER
+	  ======================================================================== -->
+	<footer class="bg-black text-white-50 mt-auto py-4 small">
+		<div
+			class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+			<div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+			<div>
+				<a class="link-light text-decoration-none me-3"
+					href="mailto:tim@equinimcollege.com">tim@equinimcollege.com</a>
+				<a class="link-light text-decoration-none" href="https://github.com/thedalycreative" target="_blank"
+					rel="noopener">GitHub</a>
 			</div>
 		</div>
 	</footer>
 
-	<script src="/hub.js"></script>
+	<!-- Bootstrap JS — the navbar toggle, dropdown and modal all need it. -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+
+	<!-- Schedule data + rendering. Edit the CLASSES array in here to add a class. -->
+	<script src="hub.js"></script>
 
 </body>
 

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  ACCESSIBILITY (POUR / WCAG 2.2) · INTAKE 26.13 — TIM'S MINIONS
+  ============================================================================
+  The accessibility deep-dive from Class 09: why accessibility matters, the
+  POUR framework, the law in Australia, empathy exercises you can run in
+  your own browser, and the practical habits to build into every site.
+
+  Pairs with the QA Checklist (cheatsheet-qachecklist.html) — this sheet is
+  the WHY and the framework; the checklist is the pre-submission audit.
+
+  Built like every other sheet in this folder:
+    Bootstrap 5 CDN  +  style-cheatsheet.css  (that's all the styling)
+  ============================================================================
+-->
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessibility (POUR / WCAG 2.2) · Intake 26.13</title>
+	<!-- Bootstrap 5 via CDN — same version + integrity hash as the main hub -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!-- Bootstrap Icons -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+	<!-- Shared cheat sheet styles — ALL custom styling lives in this one file -->
+	<link rel="stylesheet" href="style-cheatsheet.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+	<!-- Sticky nav — mirrors the main hub navbar, links back to it -->
+	<nav class="navbar navbar-dark bg-dark sticky-top">
+		<div class="container">
+			<a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+				<img src="../../images/spike-logo.png" alt="Square Spike — cohort mascot" width="28" height="28">
+				Intake 26.13
+			</a>
+			<a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+		</div>
+	</nav>
+
+	<!-- Hero — black strip, same treatment as the hub -->
+	<header class="bg-black text-white py-5">
+		<div class="container">
+			<p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · Accessibility</p>
+			<h1 class="display-5 fw-bold mb-2">Accessibility</h1>
+			<p class="lead text-white-50 mb-0">
+				POUR framework · WCAG 2.2 · why it matters, what the law says, and how to feel it for yourself.
+			</p>
+		</div>
+	</header>
+
+	<main class="container my-5">
+
+		<!-- On this page — jump links -->
+		<nav class="mb-5" aria-label="On this page">
+			<h2 class="h6 fw-bold text-uppercase text-muted small mb-2">On this page</h2>
+			<ul class="list-unstyled small mb-0">
+				<li class="mb-1"><a class="link-dark" href="#why">Why accessibility matters</a></li>
+				<li class="mb-1"><a class="link-dark" href="#law">The law in Australia</a></li>
+				<li class="mb-1"><a class="link-dark" href="#pour">The POUR framework</a></li>
+				<li class="mb-1"><a class="link-dark" href="#feel">Feel it yourself — empathy exercises</a></li>
+				<li class="mb-1"><a class="link-dark" href="#design">Design notes from class</a></li>
+				<li class="mb-1"><a class="link-dark" href="#habits">Practical habits</a></li>
+			</ul>
+		</nav>
+
+		<!-- ================================================================
+		  WHY — the human case before the technical one
+		  ================================================================ -->
+		<section id="why" class="mb-5">
+			<h2 class="h4 fw-bold mb-3">Why accessibility matters</h2>
+
+			<div class="border p-4 mb-3">
+				<p class="small mb-2">
+					<strong>One in six people globally</strong> live with a significant disability. And
+					disability isn't one fixed thing — it can be:
+				</p>
+				<ul class="small mb-0">
+					<li><strong>Permanent</strong> — blindness, deafness, limited mobility</li>
+					<li><strong>Temporary</strong> — a broken wrist, eye surgery recovery, an ear infection</li>
+					<li><strong>Situational</strong> — bright sunlight on your screen, holding a baby,
+						a noisy train with no headphones</li>
+				</ul>
+			</div>
+
+			<!-- The story from class — this is what makes it real -->
+			<div class="border p-4">
+				<h3 class="h6 fw-bold text-uppercase mb-2"><i class="bi bi-person-heart me-2"></i>A real example from class</h3>
+				<p class="small text-muted mb-0">
+					Tim's former roommate was deaf-blind and used a <strong>Brailliant braille keyboard</strong>
+					to browse the web. Uber Eats' ordering flow was accessible — he could order dinner on his
+					own. But the <em>complaints</em> flow wasn't. When the wrong food arrived, he had no way to
+					report it — which, with food allergies in play, is a genuine health risk. Accessibility
+					isn't a nice-to-have; it decides what people can and can't do independently.
+				</p>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  LAW — this is not optional in Australia
+		  ================================================================ -->
+		<section id="law" class="mb-5">
+			<h2 class="h4 fw-bold mb-3">The law in Australia</h2>
+			<div class="border p-4">
+				<ul class="small mb-0">
+					<li class="mb-2">Web accessibility is a legal requirement under the
+						<strong>Disability Discrimination Act 1992</strong>, enforced by the
+						Australian Human Rights Commission.</li>
+					<li class="mb-2">The standard: <strong>WCAG Level AA</strong> compliance — currently
+						assessed against <a class="link-dark" href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">WCAG 2.2</a>.</li>
+					<li class="mb-0">Government forms must ship in <strong>both Word and PDF</strong> —
+						Word for editability with assistive tech, PDF for universal browser support.
+						(And yes — improving form accessibility inside big organisations meets real
+						internal pushback. Budget for the argument.)</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  POUR — the four principles behind every WCAG rule
+		  ================================================================ -->
+		<section id="pour" class="mb-5">
+			<h2 class="h4 fw-bold mb-1">The POUR framework</h2>
+			<p class="text-muted small mb-3">
+				Every WCAG guideline hangs off one of four principles. If you remember nothing else,
+				remember POUR.
+			</p>
+
+			<div class="row row-cols-1 row-cols-md-2 g-3">
+				<div class="col">
+					<div class="border p-4 h-100">
+						<h3 class="h6 fw-bold"><i class="bi bi-eye me-2"></i>P · Perceivable</h3>
+						<p class="small text-muted mb-2">Users must be able to perceive your content — sight isn't guaranteed, neither is hearing.</p>
+						<ul class="small mb-0">
+							<li>Meaningful <code>alt</code> text on every image</li>
+							<li>Contrast ratio ≥ <strong>4.5:1</strong> for text</li>
+							<li>Captions on video</li>
+							<li>Text zooms to <strong>200%</strong> without breaking layout</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col">
+					<div class="border p-4 h-100">
+						<h3 class="h6 fw-bold"><i class="bi bi-hand-index me-2"></i>O · Operable</h3>
+						<p class="small text-muted mb-2">Users must be able to operate your site — with a keyboard alone if needed.</p>
+						<ul class="small mb-0">
+							<li>Full <kbd>Tab</kbd> navigation through the whole page</li>
+							<li>Visible focus indicators, no keyboard traps</li>
+							<li>Nothing flashes more than 3×/second</li>
+							<li>Descriptive page titles</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col">
+					<div class="border p-4 h-100">
+						<h3 class="h6 fw-bold"><i class="bi bi-lightbulb me-2"></i>U · Understandable</h3>
+						<p class="small text-muted mb-2">Content and controls must make sense and behave predictably.</p>
+						<ul class="small mb-0">
+							<li><code>&lt;html lang="en"&gt;</code> set on every page</li>
+							<li>Visible labels on every form field</li>
+							<li>Errors that say what went wrong and how to fix it</li>
+							<li>Consistent navigation across pages</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col">
+					<div class="border p-4 h-100">
+						<h3 class="h6 fw-bold"><i class="bi bi-gear me-2"></i>R · Robust</h3>
+						<p class="small text-muted mb-2">Clean, standard code that browsers and assistive tech can parse reliably.</p>
+						<ul class="small mb-0">
+							<li>Valid HTML (W3C validator, zero errors)</li>
+							<li>Semantic elements: <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;button&gt;</code> — not div-for-everything</li>
+							<li>Works across browsers and screen readers</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  FEEL IT — the empathy exercises demonstrated in class
+		  ================================================================ -->
+		<section id="feel" class="mb-5">
+			<h2 class="h4 fw-bold mb-1">Feel it yourself — empathy exercises</h2>
+			<p class="text-muted small mb-3">
+				We ran these live in class. Run them on <em>your own</em> site — the results are usually humbling.
+			</p>
+			<div class="border p-4">
+				<ul class="small mb-0">
+					<li class="mb-2"><strong>Unplug your mouse</strong> — navigate your site with
+						<kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> / <kbd>Enter</kbd> only. Can you reach everything?
+						Can you <em>see where you are</em> at all times?</li>
+					<li class="mb-2"><strong>Simulate colour blindness</strong> — Chrome DevTools →
+						<em>Rendering</em> panel → <em>Emulate vision deficiencies</em>: try protanopia
+						(red-blind), deuteranopia (green-blind), and achromatopsia (grayscale). Does your
+						site still communicate?</li>
+					<li class="mb-2"><strong>Blur it</strong> — the same panel simulates blurred vision.
+						Is your text still readable at a squint? Are your buttons obviously buttons?</li>
+					<li class="mb-2"><strong>Tunnel vision</strong> — cover the edges of your screen with
+						your hands. Is anything critical living only in a corner?</li>
+					<li class="mb-0"><strong>Listen to it</strong> — turn on VoiceOver
+						(<kbd>Cmd+F5</kbd> on Mac) and close your eyes. Is the reading order sane?
+						Do your images say anything useful?</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  DESIGN NOTES — discussion points worth keeping
+		  ================================================================ -->
+		<section id="design" class="mb-5">
+			<h2 class="h4 fw-bold mb-3">Design notes from class</h2>
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold"><i class="bi bi-grid-3x3-gap me-2"></i>Iconography is accessibility</h3>
+				<p class="small text-muted mb-0">
+					Icons paired with text help dyslexic users parse a page quickly, and reduce load for
+					users prone to visual overstimulation. Icons aren't decoration — they're a second,
+					parallel channel for meaning.
+				</p>
+			</div>
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold"><i class="bi bi-collection me-2"></i>Cluster, don't scatter</h3>
+				<p class="small text-muted mb-0">
+					Discussion sparked by the Proloquo2Go communication app: too many interactive elements
+					spread across a screen overwhelms some autistic users. Group your interactive controls
+					into one predictable area of the page rather than sprinkling them everywhere.
+				</p>
+			</div>
+			<div class="border p-4">
+				<h3 class="h6 fw-bold"><i class="bi bi-robot me-2"></i>AI can write your alt text</h3>
+				<p class="small text-muted mb-0">
+					No idea how to describe an image? Paste it into Gemini, ChatGPT or Claude and ask for
+					alt text. Review what it gives you — you're the accountable human — but it beats
+					an empty <code>alt</code> attribute every time.
+				</p>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  HABITS — what to actually do on every project
+		  ================================================================ -->
+		<section id="habits" class="mb-5">
+			<h2 class="h4 fw-bold mb-3">Practical habits</h2>
+			<div class="border p-4">
+				<ol class="small mb-3">
+					<li class="mb-1">Write <code>alt</code> text the moment you add an image — not "later"</li>
+					<li class="mb-1">Check contrast <em>while</em> choosing your palette, not after the build</li>
+					<li class="mb-1">Tab through every page before you call it done</li>
+					<li class="mb-1">Run WAVE + the W3C validator before submitting anything</li>
+					<li class="mb-0">Keep semantic HTML as your default — accessibility mostly falls out of it for free</li>
+				</ol>
+				<p class="small mb-0">
+					<a class="link-dark fw-semibold" href="cheatsheet-qachecklist.html">
+						<i class="bi bi-list-check me-1"></i>Then run the full QA Checklist →</a>
+				</p>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="bg-black text-white-50 mt-auto py-4 small">
+		<div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+			<div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+			<div><a class="link-light text-decoration-none" href="../../index.html">Back to Hub</a></div>
+		</div>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,286 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//EQC//Intake 26.13 Class Hub//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:EQC Intake 26.13
+BEGIN:VTIMEZONE
+TZID:Australia/Perth
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+TZNAME:AWST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:eqc-2613-class-01@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260615T173000
+DTEND;TZID=Australia/Perth:20260615T203000
+SUMMARY:26.13 Class 01 · Introduction — Setup & browser mechanics
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-02@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260617T173000
+DTEND;TZID=Australia/Perth:20260617T203000
+SUMMARY:26.13 Class 02 · Basic HTML — Tags, structure, links, images
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-03@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260622T173000
+DTEND;TZID=Australia/Perth:20260622T203000
+SUMMARY:26.13 Class 03 · Inline CSS — Colors, fonts, the box model
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-04@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260624T173000
+DTEND;TZID=Australia/Perth:20260624T203000
+SUMMARY:26.13 Class 04 · External stylesheets — Classes, IDs, specificit
+ y
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-05@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260629T173000
+DTEND;TZID=Australia/Perth:20260629T203000
+SUMMARY:26.13 Class 05 · Originate & develop concepts — Client briefs
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-06@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260701T173000
+DTEND;TZID=Australia/Perth:20260701T203000
+SUMMARY:26.13 Class 06 · Tables & icons — Font Awesome
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-07@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260706T173000
+DTEND;TZID=Australia/Perth:20260706T203000
+SUMMARY:26.13 Class 07 · Planning, tools & folder structure — The dev ki
+ t
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-08@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260708T173000
+DTEND;TZID=Australia/Perth:20260708T203000
+SUMMARY:26.13 Class 08 · ICT needs & Class Hub launch — Activity 4: Matc
+ h ICT Needs
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-09@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260713T173000
+DTEND;TZID=Australia/Perth:20260713T203000
+SUMMARY:26.13 Class 09 · Accessibility — POUR & WCAG 2.2 — QA checklis
+ t & MC catch-up
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-10@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260715T173000
+DTEND;TZID=Australia/Perth:20260715T203000
+SUMMARY:26.13 Class 10 · Flexbox — containers & items — Froggy night
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-11@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260720T173000
+DTEND;TZID=Australia/Perth:20260720T203000
+SUMMARY:26.13 Class 11 · Clone build — Forbidden Forest — S02-A01 begi
+ ns
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-12@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260722T173000
+DTEND;TZID=Australia/Perth:20260722T203000
+SUMMARY:26.13 Class 12 · Clone build continues — Cards, carousel, footer
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-13@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260727T173000
+DTEND;TZID=Australia/Perth:20260727T203000
+SUMMARY:26.13 Class 13 · Polish the clone — QA pass
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-14@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260729T173000
+DTEND;TZID=Australia/Perth:20260729T203000
+SUMMARY:26.13 Class 14 · Managing client problems — Scope & feedback
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-15@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260803T173000
+DTEND;TZID=Australia/Perth:20260803T203000
+SUMMARY:26.13 Class 15 · Your website — Concept & folder structure
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-16@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260805T173000
+DTEND;TZID=Australia/Perth:20260805T203000
+SUMMARY:26.13 Class 16 · Wireframes & AI tools — Excalidraw, Figma, Clau
+ de
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-17@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260810T173000
+DTEND;TZID=Australia/Perth:20260810T203000
+SUMMARY:26.13 Class 17 · Prototype & HTML skeleton — Structure first
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-18@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260812T173000
+DTEND;TZID=Australia/Perth:20260812T203000
+SUMMARY:26.13 Class 18 · Build — Every page, responsive check
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-19@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260817T173000
+DTEND;TZID=Australia/Perth:20260817T203000
+SUMMARY:26.13 Class 19 · Lead & facilitate — Team assessment
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-20@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260819T173000
+DTEND;TZID=Australia/Perth:20260819T203000
+SUMMARY:26.13 Class 20 · Build time — One-on-ones
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-21@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260824T173000
+DTEND;TZID=Australia/Perth:20260824T203000
+SUMMARY:26.13 Class 21 · Complete first-pass builds — Everything renders
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-22@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260826T173000
+DTEND;TZID=Australia/Perth:20260826T203000
+SUMMARY:26.13 Class 22 · Review & test — Accessibility audit
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-23@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260831T173000
+DTEND;TZID=Australia/Perth:20260831T203000
+SUMMARY:26.13 Class 23 · Final polish — Submission prep
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+BEGIN:VEVENT
+UID:eqc-2613-class-24@equinimcollege.com
+DTSTAMP:20260707T000000Z
+DTSTART;TZID=Australia/Perth:20260902T173000
+DTEND;TZID=Australia/Perth:20260902T203000
+SUMMARY:26.13 Class 24 · Submit & show & tell — Final presentations
+DESCRIPTION:Join Zoom: https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysq
+ PvpUTCdoxDyj.1\nLog attendance: https://form.jotform.com/260060120423841
+LOCATION:Zoom (online)
+URL:https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1
+END:VEVENT
+END:VCALENDAR

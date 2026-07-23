@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brand Colours & Their Hidden Meanings</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0b0f;
+  --surface:#141419;
+  --card:#1c1c24;
+  --text:#eae8e1;
+  --dim:#6b6878;
+}
+html{font-size:16px}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Outfit',system-ui,sans-serif;
+  min-height:100vh;overflow-x:hidden;
+  display:flex;flex-direction:column;align-items:center;
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  opacity:.3;
+}
+canvas#confetti{position:fixed;inset:0;z-index:9998;pointer-events:none}
+
+/* header */
+.header{text-align:center;padding:2rem 1rem .6rem;position:relative;z-index:2}
+.header h1{
+  font-family:'Instrument Serif',serif;font-weight:400;font-style:italic;
+  font-size:clamp(1.5rem,4.5vw,2.5rem);line-height:1.15;
+}
+.header h1 span{
+  background:linear-gradient(135deg,#E53935,#FB8C00,#FDD835,#43A047,#1E88E5,#8E24AA,#EC407A);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.header p{font-size:.82rem;color:var(--dim);margin-top:.3rem;font-weight:300}
+
+/* stage */
+.stage{
+  position:relative;z-index:2;
+  width:min(86vw,500px);height:min(86vw,500px);
+  margin:1rem auto;flex-shrink:0;
+}
+.pointer{
+  position:absolute;top:-4px;left:50%;transform:translateX(-50%);z-index:20;
+  width:0;height:0;
+  border-left:13px solid transparent;border-right:13px solid transparent;
+  border-top:26px solid #eae8e1;
+  filter:drop-shadow(0 3px 6px rgba(0,0,0,.5));
+}
+.wheel-ring{
+  position:absolute;inset:0;border-radius:50%;
+  transition:transform 4s cubic-bezier(.14,.72,.10,1);
+  will-change:transform;cursor:pointer;
+}
+.wheel-ring.shortcut{transition-duration:1.2s;transition-timing-function:cubic-bezier(.33,1,.68,1)}
+.wheel-ring.none{transition:none}
+.wheel-ring canvas{width:100%;height:100%;border-radius:50%;display:block}
+.wheel-glow{
+  position:absolute;inset:-30px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.03) 0%,transparent 70%);
+  pointer-events:none;transition:background .8s;
+}
+
+/* center */
+.center-area{
+  position:absolute;top:50%;left:50%;
+  width:50%;height:50%;
+  transform:translate(-50%,-50%);
+  z-index:10;border-radius:50%;
+  background:var(--bg);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 0 40px rgba(0,0,0,.5);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:10%;overflow:hidden;
+  cursor:default;
+}
+.center-idle{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.center-idle .t{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:clamp(.65rem,2.2vw,1rem);line-height:1.3;color:var(--dim);
+}
+.center-idle .h{font-size:clamp(.5rem,1.4vw,.68rem);color:rgba(255,255,255,.18);margin-top:.2rem}
+
+.emo-display{display:none;flex-direction:column;align-items:center;gap:.2rem;cursor:pointer}
+.emo-display.active{display:flex}
+.emo-swatch{
+  width:clamp(24px,7vw,44px);height:clamp(24px,7vw,44px);border-radius:50%;
+  box-shadow:0 6px 20px rgba(0,0,0,.3);margin-bottom:.15rem;
+}
+.emo-text{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:clamp(.8rem,2.8vw,1.4rem);line-height:1.15;
+  opacity:0;animation:eFade .8s .2s forwards;
+}
+.emo-label{
+  font-size:clamp(.45rem,1.3vw,.65rem);text-transform:uppercase;letter-spacing:.18em;
+  color:var(--dim);opacity:0;animation:eFade .8s .5s forwards;
+}
+.emo-hint{
+  font-size:clamp(.45rem,1.4vw,.65rem);color:rgba(255,255,255,.22);
+  margin-top:.25rem;opacity:0;animation:eFade .8s .85s forwards;
+}
+@keyframes eFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* controls */
+.controls{position:relative;z-index:2;margin-top:.4rem;text-align:center}
+.spin-btn{
+  background:linear-gradient(135deg,#eae8e1,#c8c4ba);
+  border:none;color:#0b0b0f;
+  font-family:'Outfit',sans-serif;font-weight:700;
+  font-size:clamp(.82rem,2.4vw,1rem);
+  padding:.7rem 2rem;border-radius:60px;cursor:pointer;
+  box-shadow:0 4px 18px rgba(0,0,0,.3);transition:all .2s;
+}
+.spin-btn:hover{transform:translateY(-2px);box-shadow:0 6px 26px rgba(0,0,0,.4)}
+.spin-btn:active{transform:translateY(0)}
+.spin-btn:disabled{opacity:.4;cursor:default;transform:none}
+.hint-text{font-size:.68rem;color:var(--dim);margin-top:.4rem;font-weight:300;opacity:.6}
+
+/* palette */
+.palette{display:flex;gap:5px;justify-content:center;margin-top:.8rem;position:relative;z-index:2}
+.pal-d{
+  width:clamp(16px,3.8vw,26px);height:clamp(16px,3.8vw,26px);
+  border-radius:50%;cursor:pointer;border:2px solid transparent;
+  transition:all .2s;box-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.pal-d:hover{transform:scale(1.2);border-color:rgba(255,255,255,.3)}
+.pal-d.on{border-color:#fff;transform:scale(1.15)}
+
+/* =========== MODAL =========== */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(6,6,10,.78);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;
+  transition:opacity .4s;
+}
+.modal-backdrop.open{opacity:1;pointer-events:auto}
+
+.modal{
+  position:fixed;z-index:101;
+  top:50%;left:50%;
+  width:min(92vw,560px);
+  max-height:88vh;
+  transform:translate(-50%,-50%) scale(.6);
+  opacity:0;pointer-events:none;
+  transition:transform .45s cubic-bezier(.2,1,.3,1), opacity .35s;
+  border-radius:24px;
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.07);
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.modal.open{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
+
+.modal-header{
+  padding:1.6rem 1.6rem 1rem;text-align:center;flex-shrink:0;
+}
+.modal-color-bar{
+  height:4px;border-radius:2px;margin-bottom:1rem;
+}
+.modal-emotion{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:1.6rem;line-height:1.15;margin-bottom:.3rem;
+}
+.modal-color-name{
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--dim);
+  margin-bottom:.6rem;
+}
+.modal-desc{
+  font-size:.82rem;line-height:1.55;color:var(--dim);font-weight:300;
+  max-width:420px;margin:0 auto;
+}
+.modal-divider{
+  height:1px;background:rgba(255,255,255,.06);margin:0 1.6rem;flex-shrink:0;
+}
+.modal-section-label{
+  text-align:center;font-size:.65rem;text-transform:uppercase;letter-spacing:.2em;
+  color:var(--dim);padding:.8rem 0 .4rem;flex-shrink:0;
+}
+
+/* floating logos area */
+.logos-sea{
+  position:relative;
+  min-height:260px;
+  padding:1rem 1.2rem 1.4rem;
+  overflow:hidden;
+  flex:1;
+}
+.logo-bubble{
+  position:absolute;
+  width:clamp(60px,15vw,82px);height:clamp(60px,15vw,82px);
+  border-radius:16px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  padding:6px;
+  animation:drift var(--dur) var(--del) ease-in-out infinite alternate;
+  transition:transform .2s;
+  cursor:default;
+}
+.logo-bubble:hover{transform:scale(1.12) !important;z-index:5;border-color:rgba(255,255,255,.2)}
+.logo-bubble img{
+  width:38px;height:38px;object-fit:contain;
+  background:#fff;
+  padding:5px;
+  border-radius:10px;
+}
+.logo-bubble img.failed{display:none}
+.logo-bubble .brand-name{
+  font-size:clamp(.42rem,1.2vw,.58rem);font-weight:600;
+  margin-top:3px;text-align:center;line-height:1.1;
+  color:var(--text);opacity:.8;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:100%;
+}
+.logo-bubble .fallback-letter{
+  display:none;
+  width:36px;height:36px;border-radius:8px;
+  background:rgba(255,255,255,.1);
+  font-size:1.1rem;font-weight:700;
+  line-height:36px;text-align:center;
+}
+.logo-bubble img.failed ~ .fallback-letter{display:block}
+
+/* drift animations */
+@keyframes drift{
+  0%{transform:translate(0,0) rotate(0deg)}
+  100%{transform:translate(var(--dx),var(--dy)) rotate(var(--dr))}
+}
+
+/* modal close */
+.modal-close{
+  position:absolute;top:12px;right:14px;
+  background:rgba(255,255,255,.06);border:none;
+  color:var(--dim);font-size:1.1rem;
+  width:32px;height:32px;border-radius:50%;
+  cursor:pointer;transition:all .15s;z-index:5;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-close:hover{background:rgba(255,255,255,.12);color:var(--text)}
+
+.modal-footer{
+  padding:.8rem 1.6rem 1.2rem;text-align:center;flex-shrink:0;
+}
+.modal-spin-btn{
+  background:none;border:1px solid rgba(255,255,255,.15);
+  color:var(--dim);font-family:'Outfit',sans-serif;font-weight:600;
+  font-size:.78rem;padding:.5rem 1.4rem;border-radius:30px;
+  cursor:pointer;transition:all .2s;
+}
+.modal-spin-btn:hover{border-color:rgba(255,255,255,.3);color:var(--text)}
+
+.footer{
+  text-align:center;padding:1.2rem 1rem;font-size:.6rem;
+  color:var(--dim);opacity:.35;position:relative;z-index:2;margin-top:auto;
+}
+
+@media(max-width:420px){
+  .stage{width:92vw;height:92vw}
+  .center-area{width:46%;height:46%;padding:8%}
+  .logos-sea{min-height:220px}
+  .modal-header{padding:1.2rem 1.2rem .8rem}
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="header">
+  <h1><span>Brand Colours</span> & Their Hidden Meanings</h1>
+  <p>Spin the wheel or tap a colour to explore</p>
+</div>
+
+<div class="stage" id="stage">
+  <div class="wheel-glow" id="glow"></div>
+  <div class="pointer"></div>
+  <div class="wheel-ring" id="ring"><canvas id="wc"></canvas></div>
+  <div class="center-area" id="center">
+    <div class="center-idle" id="idle">
+      <div class="t">Brand Colours<br>&amp; Their Hidden<br>Meanings</div>
+      <div class="h">Spin or tap a colour</div>
+    </div>
+    <div class="emo-display" id="emo">
+      <div class="emo-swatch" id="eSwatch"></div>
+      <div class="emo-text" id="eText"></div>
+      <div class="emo-label" id="eLabel"></div>
+      <div class="emo-hint">tap to explore →</div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <button class="spin-btn" id="spinBtn">Spin</button>
+  <div class="hint-text">or tap a segment on the wheel</div>
+</div>
+<div class="palette" id="palette"></div>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="backdrop"></div>
+<div class="modal" id="modal">
+  <button class="modal-close" id="modalClose">✕</button>
+  <div class="modal-header" id="modalHeader"></div>
+  <div class="modal-divider"></div>
+  <div class="modal-section-label">Brands that use this colour</div>
+  <div class="logos-sea" id="logosSea"></div>
+  <div class="modal-footer">
+    <button class="modal-spin-btn" id="modalSpin">↻ Spin again</button>
+  </div>
+</div>
+
+<div class="footer">Inspired by colour psychology in branding. Logos are property of their respective owners.</div>
+
+<script>
+// ===== DATA =====
+const SEG = [
+  {
+    color:'#E53935', name:'Red',
+    emotion:'Excitement & Boldness',
+    desc:'Red demands attention. It triggers urgency, passion and raw energy — the go-to for brands that want to feel powerful and impossible to ignore.',
+    brands:[
+      {n:'Coca-Cola',   d:'coca-cola.com'},
+      {n:'YouTube',     d:'youtube.com'},
+      {n:'Netflix',     d:'netflix.com'},
+      {n:'CNN',         d:'cnn.com'},
+      {n:'Pinterest',   d:'pinterest.com'},
+      {n:'Canon',       d:'canon.com'},
+      {n:'H&M',         d:'hm.com'},
+      {n:'KFC',         d:'kfc.com'},
+      {n:'Levi\'s',     d:'levi.com'},
+      {n:'Nintendo',    d:'nintendo.com'},
+    ]
+  },
+  {
+    color:'#FB8C00', name:'Orange',
+    emotion:'Comfort & Affordability',
+    desc:'Orange blends warmth with energy — signalling friendliness, creativity and great value. The colour of approachable disruptors.',
+    brands:[
+      {n:'Amazon',      d:'amazon.com'},
+      {n:'Fanta',       d:'fanta.com'},
+      {n:'Nickelodeon', d:'nick.com'},
+      {n:'Mastercard',  d:'mastercard.com'},
+      {n:'Hermès',      d:'hermes.com'},
+      {n:'Home Depot',  d:'homedepot.com'},
+      {n:'Firefox',     d:'mozilla.org'},
+      {n:'Etsy',        d:'etsy.com'},
+    ]
+  },
+  {
+    color:'#FDD835', name:'Yellow',
+    emotion:'Attention & Excitement',
+    desc:'Yellow radiates optimism and grabs the eye first. It triggers happiness, stimulates mental activity and screams "look here."',
+    brands:[
+      {n:'McDonald\'s',  d:'mcdonalds.com'},
+      {n:'IKEA',         d:'ikea.com'},
+      {n:'Snapchat',     d:'snapchat.com'},
+      {n:'Shell',        d:'shell.com'},
+      {n:'Ferrari',      d:'ferrari.com'},
+      {n:'Nat Geo',      d:'nationalgeographic.com'},
+      {n:'DHL',          d:'dhl.com'},
+      {n:'Caterpillar',  d:'cat.com'},
+      {n:'Nikon',        d:'nikon.com'},
+    ]
+  },
+  {
+    color:'#43A047', name:'Green',
+    emotion:'Health & Sustainability',
+    desc:'Green is trust, nature and growth. It calms the mind and signals freshness, responsibility and wellbeing.',
+    brands:[
+      {n:'Starbucks',     d:'starbucks.com'},
+      {n:'Spotify',       d:'spotify.com'},
+      {n:'Whole Foods',   d:'wholefoodsmarket.com'},
+      {n:'Animal Planet', d:'animalplanet.com'},
+      {n:'Android',       d:'android.com'},
+      {n:'Land Rover',    d:'landrover.com'},
+      {n:'Lacoste',       d:'lacoste.com'},
+      {n:'BP',            d:'bp.com'},
+    ]
+  },
+  {
+    color:'#1E88E5', name:'Blue',
+    emotion:'Trust & Dependability',
+    desc:'Blue is the world\'s most trusted colour. Dependable, calm and authoritative — from oceans to boardrooms to every tech company logo.',
+    brands:[
+      {n:'Facebook',  d:'facebook.com'},
+      {n:'Samsung',   d:'samsung.com'},
+      {n:'PayPal',    d:'paypal.com'},
+      {n:'Ford',      d:'ford.com'},
+      {n:'Intel',     d:'intel.com'},
+      {n:'HP',        d:'hp.com'},
+      {n:'Visa',      d:'visa.com'},
+      {n:'Cisco',     d:'cisco.com'},
+      {n:'LinkedIn',  d:'linkedin.com'},
+      {n:'Oral-B',    d:'oralb.com'},
+    ]
+  },
+  {
+    color:'#8E24AA', name:'Purple',
+    emotion:'Royalty & Sophistication',
+    desc:'Purple whispers luxury, mystery and premium quality. Historically rare and expensive, it still commands respect and intrigue.',
+    brands:[
+      {n:'Cadbury',   d:'cadbury.co.uk'},
+      {n:'Hallmark',  d:'hallmark.com'},
+      {n:'Yahoo',     d:'yahoo.com'},
+      {n:'FedEx',     d:'fedex.com'},
+      {n:'Roku',      d:'roku.com'},
+      {n:'BenQ',      d:'benq.com'},
+      {n:'Twitch',    d:'twitch.tv'},
+    ]
+  },
+  {
+    color:'#EC407A', name:'Pink',
+    emotion:'Style & Luxury',
+    desc:'Pink is compassion meets confidence. It signals youthful energy, romance and fearless self-expression — bold femininity without apology.',
+    brands:[
+      {n:'Barbie',          d:'barbie.com'},
+      {n:'Cosmopolitan',    d:'cosmopolitan.com'},
+      {n:'Lyft',            d:'lyft.com'},
+      {n:'T-Mobile',        d:'t-mobile.com'},
+      {n:'Victoria\'s Secret', d:'victoriassecret.com'},
+      {n:'LG',              d:'lg.com'},
+      {n:'Baskin-Robbins',  d:'baskinrobbins.com'},
+    ]
+  },
+  {
+    color:'#263238', name:'Black',
+    emotion:'Power & Elegance',
+    desc:'Black is the ultimate power move. Timeless, premium and effortlessly sophisticated — for brands that need no introduction.',
+    brands:[
+      {n:'Nike',           d:'nike.com'},
+      {n:'Apple',          d:'apple.com'},
+      {n:'Chanel',         d:'chanel.com'},
+      {n:'Prada',          d:'prada.com'},
+      {n:'Adidas',         d:'adidas.com'},
+      {n:'Louis Vuitton',  d:'louisvuitton.com'},
+      {n:'Gucci',          d:'gucci.com'},
+      {n:'Dior',           d:'dior.com'},
+      {n:'Zara',           d:'zara.com'},
+      {n:'Puma',           d:'puma.com'},
+    ]
+  },
+];
+
+const N = SEG.length;
+const ARC = (Math.PI*2)/N;
+
+// Logo sources — ordered by reliability
+function logoSrc(domain, tier) {
+  switch(tier) {
+    case 0: return `https://icons.duckduckgo.com/ip3/${domain}.ico`;
+    case 1: return `https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
+    case 2: return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+    default: return null;
+  }
+}
+
+// ===== DRAW WHEEL =====
+const wc = document.getElementById('wc');
+const ctx = wc.getContext('2d');
+function draw(){
+  const box = wc.parentElement.getBoundingClientRect();
+  const s = box.width, dpr = devicePixelRatio||1;
+  wc.width=s*dpr; wc.height=s*dpr;
+  wc.style.width=s+'px'; wc.style.height=s+'px';
+  ctx.scale(dpr,dpr);
+  const cx=s/2, cy=s/2, R=s/2-3, iR=R*.42;
+  for(let i=0;i<N;i++){
+    const a0=ARC*i-Math.PI/2, a1=a0+ARC;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(a0)*iR, cy+Math.sin(a0)*iR);
+    ctx.arc(cx,cy,R,a0,a1);
+    ctx.arc(cx,cy,iR,a1,a0,true);
+    ctx.closePath();
+    ctx.fillStyle=SEG[i].color;
+    ctx.fill();
+    ctx.strokeStyle='rgba(0,0,0,.12)';
+    ctx.lineWidth=1.5;
+    ctx.stroke();
+  }
+}
+draw(); window.addEventListener('resize',draw);
+
+// ===== PALETTE =====
+const palette=document.getElementById('palette');
+SEG.forEach((s,i)=>{
+  const d=document.createElement('div');
+  d.className='pal-d';
+  d.style.background=s.color;
+  if(s.name==='Black') d.style.border='2px solid rgba(255,255,255,.15)';
+  d.addEventListener('click',()=>goTo(i,true));
+  palette.appendChild(d);
+});
+
+// ===== STATE =====
+let rot=0, spinning=false, landed=null, modalOpen=false;
+const ring=document.getElementById('ring');
+const spinBtn=document.getElementById('spinBtn');
+const glow=document.getElementById('glow');
+const idleEl=document.getElementById('idle');
+const emoEl=document.getElementById('emo');
+
+// ===== SPIN =====
+spinBtn.addEventListener('click',()=>{
+  goTo(Math.floor(Math.random()*N), false);
+});
+
+function goTo(idx, shortcut){
+  if(spinning) return;
+  spinning=true; spinBtn.disabled=true;
+  closeModal();
+  resetCenter();
+
+  const targetDeg=360-(((ARC*idx+ARC/2)*180)/Math.PI);
+  const cur=rot%360;
+  let delta=targetDeg-cur; if(delta<0) delta+=360;
+  const extra=shortcut? 1 : Math.floor(Math.random()*4+4);
+  rot += extra*360+delta;
+
+  ring.classList.remove('shortcut','none');
+  void ring.offsetHeight;
+  if(shortcut) ring.classList.add('shortcut');
+  ring.style.transform=`rotate(${rot}deg)`;
+
+  landed=idx;
+  setTimeout(()=>{
+    spinning=false; spinBtn.disabled=false;
+    showEmotion(idx);
+  }, shortcut?1300:4200);
+}
+
+// click wheel segment
+wc.addEventListener('click',(e)=>{
+  if(spinning) return;
+  const r=wc.getBoundingClientRect();
+  const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2;
+  const dist=Math.sqrt(x*x+y*y), mx=r.width/2, mn=mx*.42;
+  if(dist<mn||dist>mx) return;
+  let ang=Math.atan2(y,x)+Math.PI/2; if(ang<0) ang+=Math.PI*2;
+  const rRad=((rot%360)*Math.PI)/180;
+  let adj=ang-rRad; adj=((adj%(Math.PI*2))+Math.PI*2)%(Math.PI*2);
+  goTo(Math.floor(adj/ARC)%N, true);
+});
+
+// ===== SHOW EMOTION =====
+function showEmotion(idx){
+  const s=SEG[idx];
+  idleEl.style.display='none';
+  emoEl.classList.add('active');
+  document.getElementById('eSwatch').style.cssText=`background:${s.color};box-shadow:0 6px 20px ${s.color}66`;
+  const t=document.getElementById('eText');
+  t.style.color=s.name==='Black'?'#eae8e1':s.color;
+  t.textContent=s.emotion;
+  reAnim(t,'eFade .8s .2s forwards');
+  const l=document.getElementById('eLabel');
+  l.textContent=s.name;
+  reAnim(l,'eFade .8s .5s forwards');
+  reAnim(emoEl.querySelector('.emo-hint'),'eFade .8s .85s forwards');
+
+  glow.style.background=`radial-gradient(circle,${s.color}18 0%,transparent 70%)`;
+  document.querySelectorAll('.pal-d').forEach((d,i)=>d.classList.toggle('on',i===idx));
+  fireConfetti(s.color);
+}
+function reAnim(el,v){el.style.animation='none';void el.offsetHeight;el.style.animation=v;el.style.opacity='0'}
+function resetCenter(){idleEl.style.display='flex';emoEl.classList.remove('active')}
+
+// ===== CENTER TAP → OPEN MODAL =====
+document.getElementById('center').addEventListener('click',()=>{
+  if(landed===null||!emoEl.classList.contains('active')||modalOpen) return;
+  openModal(landed);
+});
+
+// ===== MODAL =====
+const backdrop=document.getElementById('backdrop');
+const modal=document.getElementById('modal');
+
+function openModal(idx){
+  modalOpen=true;
+  const s=SEG[idx];
+  const accent=s.name==='Black'?'#eae8e1':s.color;
+
+  // header
+  document.getElementById('modalHeader').innerHTML=`
+    <div class="modal-color-bar" style="background:${s.color}"></div>
+    <div class="modal-emotion" style="color:${accent}">${s.emotion}</div>
+    <div class="modal-color-name">${s.name}</div>
+    <div class="modal-desc">${s.desc}</div>
+  `;
+
+  // logos
+  const sea=document.getElementById('logosSea');
+  sea.innerHTML='';
+  const positions = distributeBubbles(s.brands.length, sea);
+  s.brands.forEach((b,i)=>{
+    const bubble=document.createElement('div');
+    bubble.className='logo-bubble';
+    // random drift params
+    const dur=8+Math.random()*7;
+    const del=Math.random()*-6;
+    const dx=(Math.random()-.5)*24;
+    const dy=(Math.random()-.5)*18;
+    const dr=(Math.random()-.5)*6;
+    bubble.style.cssText=`
+      left:${positions[i].x}%;top:${positions[i].y}%;
+      --dur:${dur}s;--del:${del}s;--dx:${dx}px;--dy:${dy}px;--dr:${dr}deg;
+      border-color:${accent}22;
+    `;
+    const img=document.createElement('img');
+    img.dataset.domain=b.d;
+    img.dataset.tier='0';
+    img.src=logoSrc(b.d, 0);
+    img.alt=b.n;
+    img.loading='lazy';
+    img.referrerPolicy='no-referrer';
+    img.onerror=function(){
+      const t=parseInt(this.dataset.tier)+1;
+      const next=logoSrc(this.dataset.domain, t);
+      if(next){
+        this.dataset.tier=String(t);
+        this.src=next;
+      } else {
+        this.classList.add('failed');
+      }
+    };
+    const name=document.createElement('div');
+    name.className='brand-name';
+    name.textContent=b.n;
+
+    const fallback=document.createElement('div');
+    fallback.className='fallback-letter';
+    fallback.textContent=b.n[0];
+    fallback.style.color=accent;
+
+    bubble.appendChild(img);
+    bubble.appendChild(fallback);
+    bubble.appendChild(name);
+    sea.appendChild(bubble);
+  });
+
+  backdrop.classList.add('open');
+  modal.classList.add('open');
+}
+
+function closeModal(){
+  modalOpen=false;
+  backdrop.classList.remove('open');
+  modal.classList.remove('open');
+}
+document.getElementById('modalClose').addEventListener('click',closeModal);
+backdrop.addEventListener('click',closeModal);
+document.getElementById('modalSpin').addEventListener('click',()=>{
+  closeModal();
+  resetCenter();
+  setTimeout(()=>goTo(Math.floor(Math.random()*N),false),350);
+});
+
+// Distribute bubbles in a nice scattered grid
+function distributeBubbles(count, container){
+  const cols=Math.ceil(Math.sqrt(count*1.4));
+  const rows=Math.ceil(count/cols);
+  const cellW=100/cols, cellH=100/rows;
+  const positions=[];
+  for(let i=0;i<count;i++){
+    const col=i%cols, row=Math.floor(i/cols);
+    positions.push({
+      x: col*cellW + cellW*.1 + Math.random()*cellW*.4,
+      y: row*cellH + cellH*.05 + Math.random()*cellH*.35,
+    });
+  }
+  return positions;
+}
+
+// ===== CONFETTI =====
+const cc=document.getElementById('confetti');
+const cctx=cc.getContext('2d');
+let parts=[],cAnim=null;
+function resCC(){cc.width=innerWidth;cc.height=innerHeight}
+resCC(); window.addEventListener('resize',resCC);
+function fireConfetti(base){
+  parts=[];
+  const cols=[base,lighten(base,50),lighten(base,-30),'#eae8e1','#FDD835'];
+  for(let i=0;i<90;i++){
+    parts.push({x:cc.width/2+(Math.random()-.5)*160,y:cc.height*.4,
+      vx:(Math.random()-.5)*13,vy:Math.random()*-11-3,
+      w:Math.random()*8+3,h:Math.random()*5+2,
+      color:cols[Math.floor(Math.random()*cols.length)],
+      rot:Math.random()*360,rs:(Math.random()-.5)*10,
+      g:.22+Math.random()*.08,op:1,d:.01+Math.random()*.007});
+  }
+  if(cAnim) cancelAnimationFrame(cAnim);
+  animC();
+}
+function animC(){
+  cctx.clearRect(0,0,cc.width,cc.height);
+  let alive=false;
+  for(const p of parts){
+    if(p.op<=0) continue; alive=true;
+    p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.vx*=.99;
+    p.rot+=p.rs;p.op-=p.d;
+    cctx.save();cctx.translate(p.x,p.y);
+    cctx.rotate(p.rot*Math.PI/180);
+    cctx.globalAlpha=Math.max(0,p.op);
+    cctx.fillStyle=p.color;
+    cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+    cctx.restore();
+  }
+  if(alive) cAnim=requestAnimationFrame(animC);
+}
+function lighten(hex,amt){
+  let r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  r=Math.min(255,Math.max(0,r+amt));g=Math.min(255,Math.max(0,g+amt));b=Math.min(255,Math.max(0,b+amt));
+  return`#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+</script>
+</body>
+</html>

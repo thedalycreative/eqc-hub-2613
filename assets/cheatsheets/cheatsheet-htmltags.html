@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTAKE 26.13 · CHEAT SHEET · HTML TAGS
+  ============================================================================
+  A quick-reference for every HTML tag we use in this course, grouped by
+  what the tag is FOR:
+
+    1. Basic HTML            — the skeleton every page starts with
+    2. Formatting elements   — bold, italic, highlight, sub/superscript
+    3. Forms & inputs        — collecting data from the user
+    4. Structural & semantic — divs, sections, headers, footers
+    5. Links & media         — anchors, images, audio, video
+    6. Lists & data tables   — ul/ol/dl and the table family
+
+  Styling: Bootstrap 5 (CDN) + the shared style-cheatsheet.css. That's it —
+  no inline styles, no extra CSS. View source freely; it's meant to be read.
+
+  Students: notice how the tags in the tables below are ESCAPED as &lt; and
+  &gt; so the browser prints them as text instead of rendering them.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Tags Cheat Sheet · Intake 26.13</title>
+  <!-- Bootstrap 5 via CDN — same version + integrity hash as the main hub -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Shared cheat sheet styles — ALL custom styling lives in this one file -->
+  <link rel="stylesheet" href="style-cheatsheet.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Sticky nav — mirrors the main hub navbar, links back to it -->
+  <nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+        <img src="../../images/spike-logo.png" alt="Square Spike — cohort mascot" width="28" height="28">
+        Intake 26.13
+      </a>
+      <a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+    </div>
+  </nav>
+
+  <!-- Hero — black strip, same treatment as the hub -->
+  <header class="bg-black text-white py-5">
+    <div class="container">
+      <p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · HTML reference</p>
+      <h1 class="display-5 fw-bold mb-2">HTML Tags Cheat Sheet</h1>
+      <p class="lead text-white-50 mb-0">Every tag you'll reach for in this course, grouped by what it does — from document skeleton to forms, media and tables.</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+
+    <!-- On this page — jump links to each section below -->
+    <nav aria-label="On this page" class="mb-5">
+      <p class="text-uppercase small text-muted fw-semibold mb-2">On this page</p>
+      <ul class="list-inline small mb-0">
+        <li class="list-inline-item me-3"><a class="link-dark" href="#basic">Basic HTML</a></li>
+        <li class="list-inline-item me-3"><a class="link-dark" href="#formatting">Formatting elements</a></li>
+        <li class="list-inline-item me-3"><a class="link-dark" href="#forms">Forms &amp; inputs</a></li>
+        <li class="list-inline-item me-3"><a class="link-dark" href="#structure">Structural &amp; semantic</a></li>
+        <li class="list-inline-item me-3"><a class="link-dark" href="#media">Links &amp; media</a></li>
+        <li class="list-inline-item"><a class="link-dark" href="#lists-tables">Lists &amp; data tables</a></li>
+      </ul>
+    </nav>
+
+    <!-- 1. BASIC HTML — the boilerplate skeleton every page starts with -->
+    <section id="basic" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">1. Basic HTML</h2>
+      <p class="text-muted small mb-3">The skeleton. Every page you ever build starts with these.</p>
+
+      <div class="table-responsive mb-4">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Tag</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;!DOCTYPE&gt;</code></td>
+              <td>Declares the document type. <code>&lt;!DOCTYPE html&gt;</code> means HTML5 — always line one.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;html&gt;</code></td>
+              <td>The root element — wraps the entire document.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;head&gt;</code></td>
+              <td>Metadata about the document: title, stylesheets, meta tags. Nothing here renders on the page.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;title&gt;</code></td>
+              <td>The document title shown in the browser tab.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;body&gt;</code></td>
+              <td>The visible content of the page — everything the visitor actually sees.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;h1&gt; to &lt;h6&gt;</code></td>
+              <td>Headings, from most important (<code>&lt;h1&gt;</code>) to least (<code>&lt;h6&gt;</code>).</td>
+            </tr>
+            <tr>
+              <td><code>&lt;p&gt;</code></td>
+              <td>A paragraph of text.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;br&gt;</code></td>
+              <td>Inserts a single line break. Self-closing — no closing tag.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;hr&gt;</code></td>
+              <td>A thematic change in the content — renders as a horizontal line.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- The classic boilerplate, assembled from the tags above -->
+      <p class="small text-muted mb-2">Put together, they make the boilerplate you'll type a hundred times:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, world&lt;/h1&gt;
+    &lt;p&gt;My first paragraph.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+      <div class="border p-3 small">
+        <strong>Tip:</strong> use exactly one <code>&lt;h1&gt;</code> per page, and don't skip heading levels
+        (<code>&lt;h2&gt;</code> then <code>&lt;h3&gt;</code>, never <code>&lt;h2&gt;</code> straight to <code>&lt;h5&gt;</code>).
+        Screen readers and search engines both rely on that outline.
+      </div>
+    </section>
+
+    <!-- 2. FORMATTING — inline tags that change how text reads and renders -->
+    <section id="formatting" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">2. Formatting elements</h2>
+      <p class="text-muted small mb-3">Inline tags that shape text — some purely visual, some carrying real meaning.</p>
+
+      <div class="table-responsive mb-4">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Tag</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;acronym&gt;</code></td>
+              <td><strong>Not supported in HTML5.</strong> Use <code>&lt;abbr&gt;</code> instead. Previously defined an acronym.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;abbr&gt;</code></td>
+              <td>An abbreviation or acronym — add a <code>title</code> attribute holding the full term.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;address&gt;</code></td>
+              <td>Contact information for the author/owner of the document.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;b&gt;</code></td>
+              <td>Bold text <em>without</em> conveying extra semantic importance.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;bdi&gt;</code></td>
+              <td>Isolates text that might flow in a different direction (bi-directional isolation).</td>
+            </tr>
+            <tr>
+              <td><code>&lt;bdo&gt;</code></td>
+              <td>Overrides the current text direction.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;strong&gt;</code></td>
+              <td>Text with strong importance — rendered bold. Prefer this over <code>&lt;b&gt;</code> when the emphasis matters.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;i&gt;</code></td>
+              <td>Text in an alternate voice or mood — rendered italic.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;em&gt;</code></td>
+              <td>Emphasised text — rendered italic, and read with stress by screen readers.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;mark&gt;</code></td>
+              <td>Marked or highlighted text.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;small&gt;</code></td>
+              <td>Smaller text — fine print, copyright lines.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;del&gt;</code></td>
+              <td>Text deleted from the document — rendered with a strikethrough.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;ins&gt;</code></td>
+              <td>Text inserted into the document — rendered underlined.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;sub&gt;</code></td>
+              <td>Subscript text — sits below the line, as in H<sub>2</sub>O.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;sup&gt;</code></td>
+              <td>Superscript text — sits above the line, as in x<sup>2</sup>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Live example: the markup on the left renders as the result on the right -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">You write:</p>
+<pre class="mb-0"><code>&lt;p&gt;
+  &lt;strong&gt;Strong&lt;/strong&gt;, &lt;em&gt;emphasised&lt;/em&gt;,
+  &lt;del&gt;deleted&lt;/del&gt;, &lt;ins&gt;inserted&lt;/ins&gt;,
+  H&lt;sub&gt;2&lt;/sub&gt;O and x&lt;sup&gt;2&lt;/sup&gt;.
+&lt;/p&gt;</code></pre>
+        </div>
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">The browser renders:</p>
+          <div class="demo-box">
+            <p class="mb-0">
+              <strong>Strong</strong>, <em>emphasised</em>,
+              <del>deleted</del>, <ins>inserted</ins>,
+              H<sub>2</sub>O and x<sup>2</sup>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FORMS & INPUTS — everything for collecting data from the user -->
+    <section id="forms" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">3. Forms &amp; inputs</h2>
+      <p class="text-muted small mb-3">Everything you need to collect input from the user.</p>
+
+      <div class="table-responsive mb-4">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Tag</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;form&gt;</code></td>
+              <td>Wraps a set of inputs the user submits together.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;input&gt;</code></td>
+              <td>A single input control — text, email, checkbox, radio and more, chosen via the <code>type</code> attribute.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;textarea&gt;</code></td>
+              <td>A multi-line text input.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;button&gt;</code></td>
+              <td>A clickable button.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;select&gt;</code></td>
+              <td>A drop-down list.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;optgroup&gt;</code></td>
+              <td>Groups related options inside a drop-down list.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;option&gt;</code></td>
+              <td>One individual choice inside a drop-down list.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;label&gt;</code></td>
+              <td>A caption tied to an <code>&lt;input&gt;</code> — clicking the label focuses its input.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;fieldset&gt;</code></td>
+              <td>Groups related form inputs together inside a shared boundary.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;legend&gt;</code></td>
+              <td>A caption heading for a <code>&lt;fieldset&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;datalist&gt;</code></td>
+              <td>A list of pre-defined suggestions for an input.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;output&gt;</code></td>
+              <td>Displays the result of a calculation or script.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="border p-3 small">
+        <strong>Tip:</strong> every <code>&lt;input&gt;</code> deserves a <code>&lt;label&gt;</code>.
+        Connect them with <code>for="..."</code> on the label matching <code>id="..."</code> on the input —
+        it's an accessibility requirement, not a nice-to-have.
+      </div>
+    </section>
+
+    <!-- 4. STRUCTURAL & SEMANTIC — the containers that give a page its shape -->
+    <section id="structure" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">4. Structural &amp; semantic</h2>
+      <p class="text-muted small mb-3">The containers that give a page its shape — and tell browsers what each region means.</p>
+
+      <div class="table-responsive mb-4">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Tag</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;div&gt;</code></td>
+              <td>A generic block-level container — no meaning of its own, used for layout and styling.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;span&gt;</code></td>
+              <td>A generic inline container — for styling part of a line of text.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;header&gt;</code></td>
+              <td>Introductory content or navigation for a page or section.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;footer&gt;</code></td>
+              <td>Footer content for a page or section.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;main&gt;</code></td>
+              <td>The unique main content of the document — exactly one per page.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;section&gt;</code></td>
+              <td>A standalone thematic block of content.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;article&gt;</code></td>
+              <td>Independent, self-contained content that could be reused on its own — a post, a card, a comment.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;aside&gt;</code></td>
+              <td>Content set aside from the main flow — sidebars, pull-quotes.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;details&gt;</code></td>
+              <td>An interactive disclosure widget the user can open and close.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;summary&gt;</code></td>
+              <td>The always-visible heading for a <code>&lt;details&gt;</code> element.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;dialog&gt;</code></td>
+              <td>A popup dialog box or modal window.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;data&gt;</code></td>
+              <td>Ties content to a machine-readable value via the <code>value</code> attribute.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Live example: details/summary needs zero JavaScript -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">You write:</p>
+<pre class="mb-0"><code>&lt;details&gt;
+  &lt;summary&gt;Click to toggle&lt;/summary&gt;
+  &lt;p&gt;Hidden until opened — no JS needed.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+        </div>
+        <div class="col-md-6">
+          <p class="small text-muted mb-2">The browser renders (try it):</p>
+          <div class="demo-box">
+            <details>
+              <summary class="fw-semibold">Click to toggle</summary>
+              <p class="small text-muted mt-2 mb-0">Hidden until opened — no JavaScript needed. This is the <code>&lt;details&gt;</code> + <code>&lt;summary&gt;</code> pair doing all the work.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. LINKS & MEDIA — anchors, images, audio, video and embeds -->
+    <section id="media" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">5. Links &amp; media</h2>
+      <p class="text-muted small mb-3">Connecting to other pages and embedding images, sound and video.</p>
+
+      <div class="table-responsive mb-4">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Tag</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;a&gt;</code></td>
+              <td>An anchor — the hyperlink. Destination goes in the <code>href</code> attribute.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;link&gt;</code></td>
+              <td>Connects the document to an external file — most often a stylesheet. Lives in the <code>&lt;head&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;img&gt;</code></td>
+              <td>Embeds an image. Always include <code>alt</code> text.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;audio&gt;</code></td>
+              <td>Embeds sound or audio tracks.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;video&gt;</code></td>
+              <td>Embeds video clips or streams.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;source&gt;</code></td>
+              <td>Offers multiple media files for <code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code> — the browser plays the first format it supports.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;track&gt;</code></td>
+              <td>Text tracks for media — e.g. subtitles and captions for <code>&lt;video&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;embed&gt;</code></td>
+              <td>A container for external content or plugin-rendered resources.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;object&gt;</code></td>
+              <td>An embedded external object or resource — rarely needed in modern work.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="border p-3 small">
+        <strong>Heads up:</strong> <code>&lt;a&gt;</code> and <code>&lt;link&gt;</code> both "link", but they are not
+        interchangeable — <code>&lt;a&gt;</code> is something the visitor clicks, <code>&lt;link&gt;</code>
+        quietly attaches a file (like <code>style.css</code>) in the <code>&lt;head&gt;</code>.
+      </div>
+    </section>
+
+    <!-- 6. LISTS & DATA TABLES — ul/ol/dl and the full table family -->
+    <section id="lists-tables" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">6. Lists &amp; data tables</h2>
+      <p class="text-muted small mb-3">Three flavours of list, plus the family of tags that build a proper data table.</p>
+
+      <div class="table-responsive mb-4">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Tag</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;ul&gt;</code></td>
+              <td>An unordered (bulleted) list.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;ol&gt;</code></td>
+              <td>An ordered (numbered) list.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;li&gt;</code></td>
+              <td>A single list item — used inside both <code>&lt;ul&gt;</code> and <code>&lt;ol&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;dl&gt;</code></td>
+              <td>A description list — pairs of terms and their descriptions.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;dt&gt;</code></td>
+              <td>A term name inside a description list.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;dd&gt;</code></td>
+              <td>The description that goes with a term.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;table&gt;</code></td>
+              <td>A structured data table.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;tr&gt;</code></td>
+              <td>A table row.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;th&gt;</code></td>
+              <td>A header cell — the column (or row) title.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;td&gt;</code></td>
+              <td>A standard data cell.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;thead&gt;</code></td>
+              <td>Groups the header rows of a table.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;tbody&gt;</code></td>
+              <td>Groups the main body rows of a table.</td>
+            </tr>
+            <tr>
+              <td><code>&lt;tfoot&gt;</code></td>
+              <td>Groups the summary / footer rows of a table.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="border p-3 small">
+        <strong>Golden rule:</strong> tables are for <em>data</em>, not layout.
+        If you're tempted to lay a page out with <code>&lt;table&gt;</code>, you want
+        Flexbox or the Bootstrap grid instead — see the Flexbox cheat sheet on the hub.
+      </div>
+    </section>
+
+    <!-- Quiet way back to the jump list at the top of the page -->
+    <p class="small mb-0">
+      <a class="link-dark" href="#top"><i class="bi bi-arrow-up me-1"></i>Back to top</a>
+    </p>
+
+  </main>
+
+  <footer class="bg-black text-white-50 mt-auto py-4 small">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+      <div><a class="link-light text-decoration-none" href="../../index.html">Back to Hub</a></div>
+    </div>
+  </footer>
+</body>
+</html>
