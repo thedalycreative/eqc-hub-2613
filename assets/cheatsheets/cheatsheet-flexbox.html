@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTAKE 26.13 · FLEXBOX CHEAT SHEET
+  ============================================================================
+  Everything you need to lay things out with CSS Flexbox on one page:
+
+    1. The big idea      — container vs items, main axis vs cross axis
+    2. Container props   — flex-direction, justify-content, align-items,
+                           flex-wrap, align-content, gap
+    3. Item props        — flex-grow, flex-shrink, flex-basis, align-self,
+                           order, and the flex shorthand
+    4. Live demos        — real flex containers you can see working
+    5. Practice          — games and sandboxes to drill the muscle memory
+
+  Built with Bootstrap 5 + the shared style-cheatsheet.css — no other CSS.
+  View source freely: every section is plain HTML you already know.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flexbox Cheat Sheet · Intake 26.13</title>
+  <!-- Bootstrap 5 via CDN — same version + integrity hash as the main hub -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Shared cheat sheet styles — ALL custom styling lives in this one file -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style-cheatsheet.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Sticky nav — mirrors the main hub navbar, links back to it -->
+  <nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+        <span class="ib-loader" aria-hidden="true"></span>
+        Tim's EQC Minions
+      </a>
+      <a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+    </div>
+  </nav>
+
+  <!-- Hero — black strip, same treatment as the hub -->
+  <header class="bg-black text-white py-5">
+    <div class="container">
+      <p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · CSS layout reference</p>
+      <h1 class="display-5 fw-bold mb-2">Flexbox Cheat Sheet</h1>
+      <p class="lead text-white-50 mb-0">One-axis layout made simple — container properties, item properties, alignment and sizing rules, all in one place.</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+
+    <!-- On this page — jump links so you can get to a section fast -->
+    <nav class="border p-3 mb-5" aria-label="On this page">
+      <h2 class="h6 fw-bold text-uppercase text-muted small mb-2">On this page</h2>
+      <ul class="list-unstyled small mb-0">
+        <li class="mb-1"><a class="link-dark" href="#big-idea">1. The big idea — container vs items</a></li>
+        <li class="mb-1"><a class="link-dark" href="#container-properties">2. Parent container properties</a></li>
+        <li class="mb-1"><a class="link-dark" href="#item-properties">3. Child item properties</a></li>
+        <li class="mb-1"><a class="link-dark" href="#live-demos">4. Live demos — see it working</a></li>
+        <li class="mb-1"><a class="link-dark" href="#practice">5. Practice tools &amp; games</a></li>
+      </ul>
+    </nav>
+
+    <!-- 1. THE BIG IDEA — the mental model everything else hangs off -->
+    <section id="big-idea" class="mb-5">
+      <h2 class="h4 fw-bold mb-3">1. The big idea</h2>
+      <p>
+        Flexbox is a <strong>one-axis layout system</strong>. You turn a parent element into a
+        <em>flex container</em> with <code>display: flex</code> (or <code>inline-flex</code>),
+        and every direct child instantly becomes a <em>flex item</em>. From then on there are
+        exactly two families of properties:
+      </p>
+      <div class="row g-4 mb-4">
+        <div class="col-md-6">
+          <div class="border p-4 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-box me-2"></i>Container properties</h3>
+            <p class="small text-muted mb-0">
+              Go on the <strong>parent</strong>. They set the direction items flow, how leftover
+            space is shared out, and whether items wrap onto new lines.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="border p-4 h-100">
+            <h3 class="h6 fw-bold"><i class="bi bi-boxes me-2"></i>Item properties</h3>
+            <p class="small text-muted mb-0">
+              Go on the <strong>children</strong>. They control how one item grows, shrinks,
+              orders itself, or breaks away from the group alignment.
+            </p>
+          </div>
+        </div>
+      </div>
+      <pre><code>.container {
+  display: flex;   /* the parent becomes a flex container */
+}
+/* every direct child of .container is now a flex item */</code></pre>
+      <!-- Tip callout — main axis vs cross axis trips everyone up at first -->
+      <div class="border p-3 mt-3">
+        <p class="small mb-0">
+          <i class="bi bi-lightbulb me-2"></i><strong>Axis rule of thumb:</strong> the
+          <em>main axis</em> follows <code>flex-direction</code> (row = horizontal, column = vertical);
+          the <em>cross axis</em> is the perpendicular one. <code>justify-content</code> works on the
+          main axis, <code>align-items</code> works on the cross axis. Learn that pair and the rest falls into place.
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. CONTAINER PROPERTIES — the six rules that go on the parent -->
+    <section id="container-properties" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">2. Parent container properties</h2>
+      <p class="text-muted small mb-3">
+        These apply directly to the wrapper element — the one carrying
+        <code>display: flex</code> or <code>display: inline-flex</code>.
+      </p>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Property</th>
+              <th scope="col">Controls</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Common values</th>
+              <th scope="col">Docs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>flex-direction</code></td>
+              <td>Axis</td>
+              <td>Sets the main axis — whether items flow left-to-right, right-to-left, top-to-bottom or bottom-to-top.</td>
+              <td><code>row</code> · <code>column</code> · <code>row-reverse</code> · <code>column-reverse</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+            <tr>
+              <td><code>justify-content</code></td>
+              <td>Main axis</td>
+              <td>Distributes items and leftover free space along the main axis — start, centre, end, or spread out evenly.</td>
+              <td><code>flex-start</code> · <code>center</code> · <code>space-between</code> · <code>space-around</code></td>
+              <td><a class="link-dark" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-justify-content" target="_blank" rel="noopener">CSS-Tricks</a></td>
+            </tr>
+            <tr>
+              <td><code>align-items</code></td>
+              <td>Cross axis</td>
+              <td>Sets the default alignment of every item across the cross axis (perpendicular to the main axis).</td>
+              <td><code>stretch</code> · <code>center</code> · <code>flex-start</code> · <code>flex-end</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-items" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+            <tr>
+              <td><code>flex-wrap</code></td>
+              <td>Wrapping</td>
+              <td>Decides whether items squeeze onto one line or break onto new lines when they run out of room.</td>
+              <td><code>nowrap</code> · <code>wrap</code> · <code>wrap-reverse</code></td>
+              <td><a class="link-dark" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-wrap" target="_blank" rel="noopener">CSS-Tricks</a></td>
+            </tr>
+            <tr>
+              <td><code>align-content</code></td>
+              <td>Multi-line</td>
+              <td>Aligns the <em>lines themselves</em> on the cross axis when wrapping creates extra space. Only affects multi-line containers.</td>
+              <td><code>stretch</code> · <code>center</code> · <code>space-around</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/align-content" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+            <tr>
+              <td><code>gap</code> <span class="text-muted">(row-gap / column-gap)</span></td>
+              <td>Gutter</td>
+              <td>Sets consistent spacing between items directly — no margin hacks needed.</td>
+              <td>any length or percentage, e.g. <code>gap: 1rem</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/gap" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pre><code>.container {
+  display: flex;
+  flex-direction: row;            /* main axis: left → right (default) */
+  justify-content: space-between; /* spread items along the main axis  */
+  align-items: center;            /* centre items on the cross axis    */
+  flex-wrap: wrap;                /* allow wrapping onto new lines     */
+  gap: 1rem;                      /* 1rem gutter between every item    */
+}</code></pre>
+    </section>
+
+    <!-- 3. ITEM PROPERTIES — the six rules that go on the children -->
+    <section id="item-properties" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">3. Child item properties</h2>
+      <p class="text-muted small mb-3">
+        These go on the individual elements <em>inside</em> the flex container —
+        each child can have its own values.
+      </p>
+      <div class="table-responsive">
+        <table class="table align-middle">
+          <thead>
+            <tr>
+              <th scope="col">Property</th>
+              <th scope="col">Controls</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Values / default</th>
+              <th scope="col">Docs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>flex-grow</code></td>
+              <td>Growing</td>
+              <td>How much of the leftover free space this item takes, as a share. <code>flex-grow: 2</code> grabs twice as much as <code>flex-grow: 1</code>.</td>
+              <td>number · default <code>0</code> (don't grow)</td>
+              <td><a class="link-dark" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-flex-grow" target="_blank" rel="noopener">CSS-Tricks</a></td>
+            </tr>
+            <tr>
+              <td><code>flex-shrink</code></td>
+              <td>Shrinking</td>
+              <td>How willingly this item shrinks when the container is too small for everyone. <code>0</code> means "never squash me".</td>
+              <td>number · default <code>1</code> (shrink equally)</td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+            <tr>
+              <td><code>flex-basis</code></td>
+              <td>Base size</td>
+              <td>The item's starting size along the main axis, <em>before</em> any growing or shrinking is calculated.</td>
+              <td><code>auto</code> · any length, e.g. <code>200px</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-basis" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+            <tr>
+              <td><code>align-self</code></td>
+              <td>Override</td>
+              <td>Lets one item ignore the container's <code>align-items</code> setting and align itself independently on the cross axis.</td>
+              <td><code>auto</code> · <code>center</code> · <code>flex-start</code> · <code>flex-end</code></td>
+              <td><a class="link-dark" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-align-self" target="_blank" rel="noopener">CSS-Tricks</a></td>
+            </tr>
+            <tr>
+              <td><code>order</code></td>
+              <td>Sequence</td>
+              <td>Changes the visual display order of items without touching the HTML. Lower numbers appear first.</td>
+              <td>integer · default <code>0</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/order" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+            <tr>
+              <td><code>flex</code> <span class="text-muted">(shorthand)</span></td>
+              <td>Combined</td>
+              <td>Merges <code>flex-grow</code>, <code>flex-shrink</code> and <code>flex-basis</code> into one line — the way you'll usually write it.</td>
+              <td><code>flex: grow shrink basis</code>, e.g. <code>flex: 1 1 auto</code></td>
+              <td><a class="link-dark" href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex" target="_blank" rel="noopener">MDN</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <pre><code>.item {
+  flex: 1 1 200px;  /* grow: 1 · shrink: 1 · basis: 200px */
+  align-self: center;
+  order: 2;         /* display after items with order 0 or 1 */
+}</code></pre>
+      <!-- Tip callout — the shorthand is what you'll actually write day-to-day -->
+      <div class="border p-3 mt-3">
+        <p class="small mb-0">
+          <i class="bi bi-lightbulb me-2"></i><strong>Shorthand cheat codes:</strong>
+          <code>flex: 1</code> = share space equally · <code>flex: auto</code> = size to content, then grow ·
+          <code>flex: none</code> = fixed size, never grow or shrink.
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. LIVE DEMOS — actual flex containers built with Bootstrap's own
+         flex utilities (d-flex, justify-content-*, align-items-*), so what
+         you see IS flexbox running in your browser right now -->
+    <section id="live-demos" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">4. Live demos</h2>
+      <p class="text-muted small mb-3">
+        Each grey box below is a real flex container — Bootstrap's flex utility classes are just
+        flexbox properties wearing a name tag. Resize the browser and watch the wrap demo reflow.
+      </p>
+
+      <div class="row g-4">
+        <!-- justify-content: space-between -->
+        <div class="col-lg-6">
+          <p class="small fw-semibold mb-2"><code>justify-content: space-between</code></p>
+          <div class="demo-box d-flex justify-content-between">
+            <span class="border px-3 py-2">1</span>
+            <span class="border px-3 py-2">2</span>
+            <span class="border px-3 py-2">3</span>
+          </div>
+        </div>
+
+        <!-- justify-content: center -->
+        <div class="col-lg-6">
+          <p class="small fw-semibold mb-2"><code>justify-content: center</code> + <code>gap</code></p>
+          <div class="demo-box d-flex justify-content-center gap-2">
+            <span class="border px-3 py-2">1</span>
+            <span class="border px-3 py-2">2</span>
+            <span class="border px-3 py-2">3</span>
+          </div>
+        </div>
+
+        <!-- align-items: center on a taller container -->
+        <div class="col-lg-6">
+          <p class="small fw-semibold mb-2"><code>align-items: center</code> (cross-axis centring)</p>
+          <!-- The tall middle item sets the container height; the short ones centre against it -->
+          <div class="demo-box d-flex align-items-center gap-2">
+            <span class="border px-3 py-2">short</span>
+            <span class="border px-3 py-5">tall</span>
+            <span class="border px-3 py-2">short</span>
+          </div>
+        </div>
+
+        <!-- flex-wrap: wrap -->
+        <div class="col-lg-6">
+          <p class="small fw-semibold mb-2"><code>flex-wrap: wrap</code> (resize the window!)</p>
+          <div class="demo-box d-flex flex-wrap gap-2">
+            <span class="border px-3 py-2">one</span>
+            <span class="border px-3 py-2">two</span>
+            <span class="border px-3 py-2">three</span>
+            <span class="border px-3 py-2">four</span>
+            <span class="border px-3 py-2">five</span>
+            <span class="border px-3 py-2">six</span>
+            <span class="border px-3 py-2">seven</span>
+          </div>
+        </div>
+
+        <!-- flex-grow: middle item takes the leftover space -->
+        <div class="col-lg-6">
+          <p class="small fw-semibold mb-2"><code>flex-grow: 1</code> on the middle item only</p>
+          <div class="demo-box d-flex gap-2">
+            <span class="border px-3 py-2">fixed</span>
+            <span class="border px-3 py-2 flex-grow-1 text-center">flex-grow: 1</span>
+            <span class="border px-3 py-2">fixed</span>
+          </div>
+        </div>
+
+        <!-- flex-direction: column -->
+        <div class="col-lg-6">
+          <p class="small fw-semibold mb-2"><code>flex-direction: column</code></p>
+          <div class="demo-box d-flex flex-column gap-2">
+            <span class="border px-3 py-2">first</span>
+            <span class="border px-3 py-2">second</span>
+            <span class="border px-3 py-2">third</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Callout — the Bootstrap connection, since we use it every class -->
+      <div class="border p-3 mt-4">
+        <p class="small mb-0">
+          <i class="bi bi-bootstrap me-2"></i><strong>Bootstrap connection:</strong>
+          <code>d-flex</code>, <code>justify-content-between</code>, <code>align-items-center</code>,
+          <code>flex-wrap</code>, <code>flex-grow-1</code>, <code>flex-column</code> — every Bootstrap
+          flex utility maps one-to-one to a flexbox property on this page. Learn flexbox once,
+          get Bootstrap's layout classes for free.
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. PRACTICE — external games + sandboxes to drill it in -->
+    <section id="practice" class="mb-5">
+      <h2 class="h4 fw-bold mb-1">5. Practice tools &amp; games</h2>
+      <p class="text-muted small mb-3">
+        Reading a cheat sheet gets you 20% of the way — playing with real containers gets you the rest.
+      </p>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="border p-4 h-100 d-flex flex-column">
+            <h3 class="h6 fw-bold"><i class="bi bi-controller me-2"></i>Flexbox Froggy <span class="text-muted fw-normal">· game</span></h3>
+            <p class="small text-muted">An interactive game — guide frogs to their lilypads by writing real flexbox alignment rules, level by level.</p>
+            <a class="link-dark small mt-auto" href="https://flexboxfroggy.com/" target="_blank" rel="noopener">Play Froggy <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="border p-4 h-100 d-flex flex-column">
+            <h3 class="h6 fw-bold"><i class="bi bi-joystick me-2"></i>Flexbox Zombies <span class="text-muted fw-normal">· course</span></h3>
+            <p class="small text-muted">A narrative-driven course that builds long-term muscle memory around alignment mechanics and item scaling.</p>
+            <a class="link-dark small mt-auto" href="https://gedd.ski/courses/flexbox-zombies" target="_blank" rel="noopener">Launch the course <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="border p-4 h-100 d-flex flex-column">
+            <h3 class="h6 fw-bold"><i class="bi bi-sliders me-2"></i>Malven's Visual Guide <span class="text-muted fw-normal">· interactive spec</span></h3>
+            <p class="small text-muted">A visual reference — toggle each property and watch a live container update. Great for "wait, which one was it again?" moments.</p>
+            <a class="link-dark small mt-auto" href="https://flexbox.malven.co/" target="_blank" rel="noopener">Open the sandbox <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="border p-4 h-100 d-flex flex-column">
+            <h3 class="h6 fw-bold"><i class="bi bi-braces me-2"></i>Joy of Code Playground <span class="text-muted fw-normal">· lab</span></h3>
+            <p class="small text-muted">An interactive layout editor for staging element groupings and watching real-time wrapping, axis shifts and flex calculations.</p>
+            <a class="link-dark small mt-auto" href="https://joyofcode.xyz/" target="_blank" rel="noopener">Explore the labs <i class="bi bi-box-arrow-up-right ms-1"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-black text-white-50 mt-auto py-4 small">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+      <div><a class="link-light text-decoration-none" href="../../index.html">Back to Hub</a></div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  ACTIVITY 4 · MATCH ICT NEEDS — MODEL ANSWERS · INTAKE 26.13
+  ============================================================================
+  Model answers for Activity 4 (Match ICT Needs) from the "Working with
+  Clients in the Industry" subject, worked through together in Class 08.
+
+  Case study: ABC Solutions — a company with a legacy HTML4/CSS2 website on
+  a dedicated physical server, and a strategic plan it can't deliver on.
+
+  IMPORTANT (students): these are MODEL answers. Reword them in your own
+  voice before submitting — see the warning box at the top of the page.
+
+  Built like every other sheet in this folder:
+    Bootstrap 5 CDN  +  style-cheatsheet.css  (that's all the styling)
+  ============================================================================
+-->
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Activity 4 · Match ICT Needs — Answers · Intake 26.13</title>
+	<!-- Bootstrap 5 via CDN — same version + integrity hash as the main hub -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<!-- Bootstrap Icons -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
+	<!-- Shared cheat sheet styles — ALL custom styling lives in this one file -->
+	<link rel="stylesheet" href="style-cheatsheet.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+	<!-- Sticky nav — mirrors the main hub navbar, links back to it -->
+	<nav class="navbar navbar-dark bg-dark sticky-top">
+		<div class="container">
+			<a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+				<span class="ib-loader" aria-hidden="true"></span>
+				Tim's EQC Minions
+			</a>
+			<a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+		</div>
+	</nav>
+
+	<!-- Hero — black strip, same treatment as the hub -->
+	<header class="bg-black text-white py-5">
+		<div class="container">
+			<p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · Assessment answers</p>
+			<h1 class="display-5 fw-bold mb-2">Activity 4 · Match ICT Needs</h1>
+			<p class="lead text-white-50 mb-0">
+				Model answers for all 18 questions, as worked through together in Class 08.
+				Case study: ABC Solutions.
+			</p>
+		</div>
+	</header>
+
+	<main class="container my-5">
+
+		<!-- ⚠️ The one rule: make these answers YOURS before submitting -->
+		<div class="border p-4 mb-5">
+			<h2 class="h6 fw-bold text-uppercase mb-2"><i class="bi bi-exclamation-triangle me-2"></i>Reword, don't copy</h2>
+			<p class="small text-muted mb-2">
+				These are <strong>model answers</strong> — they show the level of detail and the reasoning
+				your submission needs. Submitting them word-for-word is plagiarism and easy to spot.
+				Rewrite every answer in your own voice.
+			</p>
+			<p class="small text-muted mb-0">
+				<strong>Paraphrasing helpers:</strong> on a Mac, select text → right-click →
+				<em>Writing Tools</em>. In Google Docs, use the built-in Gemini sidebar.
+				Or paste an answer into Claude/Gemini and ask it to "reword this in plain,
+				first-person English".
+			</p>
+		</div>
+
+		<!-- On this page — jump links to the three assessment parts -->
+		<nav class="mb-5" aria-label="On this page">
+			<h2 class="h6 fw-bold text-uppercase text-muted small mb-2">On this page</h2>
+			<ul class="list-unstyled small mb-0">
+				<li class="mb-1"><a class="link-dark" href="#part1">Part 1 — Evaluate Current Strategic Plan (Q1–7)</a></li>
+				<li class="mb-1"><a class="link-dark" href="#part2">Part 2 — Evaluate Effects of Changes (Q8–11)</a></li>
+				<li class="mb-1"><a class="link-dark" href="#part3">Action Plan (Q12–18)</a></li>
+			</ul>
+		</nav>
+
+		<!-- ================================================================
+		  PART 1 · EVALUATE CURRENT STRATEGIC PLAN  (Questions 1–7)
+		  ================================================================ -->
+		<section id="part1" class="mb-5">
+			<h2 class="h4 fw-bold mb-4">Part 1 — Evaluate Current Strategic Plan</h2>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q1 · Summarise the organisation's current strategic plan (list the main points).</h3>
+				<p class="small mb-0">
+					ABC Solutions aims to become an innovative IT industry leader by delivering cutting-edge
+					digital solutions. Their core objectives focus on achieving market leadership, driving
+					digital transformation, and ensuring data security and customer satisfaction.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q2 · How does the strategic plan align with the current industry environment and organisational objectives?</h3>
+				<p class="small mb-0">
+					The strategic plan correctly focuses on innovation and security to match today's highly
+					competitive tech industry. However, the company cannot achieve these objectives because
+					its current website infrastructure is too outdated to reflect modern industry standards.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q3 · What software systems are used?</h3>
+				<p class="small mb-0">
+					The website's front-end is built using legacy <code>HTML 4</code> and <code>CSS 2</code>
+					software technologies.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q4 · What data management systems are used?</h3>
+				<p class="small mb-0">
+					The organisation uses the MySQL relational database management system to handle and
+					store its website data.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q5 · What website hosting platform is used?</h3>
+				<p class="small mb-0">
+					The entire website system is currently hosted on a rigid dedicated physical server.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q6 · Compare the strategic plan with the current state of the ICT systems — list any gaps or improvement opportunities.</h3>
+				<p class="small mb-0">
+					The primary gap is an ancient, non-responsive website that fails to showcase innovation
+					and lacks mobile usability. Additionally, the rigid dedicated server hosting limits the
+					company's ability to scale quickly and exposes legacy databases to modern security
+					vulnerabilities.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q7 · Write out a proposal for a change/changes to the organisation's ICT systems.</h3>
+				<p class="small mb-0">
+					I propose rebuilding the website frontend using modern <code>HTML5</code> and
+					<code>CSS3</code> to ensure it is fully mobile-responsive and secure. Furthermore, the
+					legacy MySQL database should be safely migrated to a scalable, managed cloud hosting
+					platform like AWS or Google Cloud.
+				</p>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  PART 2 · EVALUATE EFFECTS OF CHANGES  (Questions 8–11)
+		  ================================================================ -->
+		<section id="part2" class="mb-5">
+			<h2 class="h4 fw-bold mb-4">Part 2 — Evaluate Effects of Changes</h2>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q8 · Do the proposed ICT changes support what the organisation wants to achieve in the long run?</h3>
+				<p class="small mb-0">
+					Yes, a modern, cloud-hosted website directly supports their long-term goals of looking
+					innovative and attracting higher-paying software clients. It also builds market trust by
+					upgrading the baseline security of their data infrastructure.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q9 · What will the potential impacts be of implementing the proposed changes? (positive or negative)</h3>
+				<p class="small mb-0">
+					Positives include faster page load speeds, an enhanced brand image, and robust user data
+					security. Negatives include the initial financial cost of development and potential
+					short-term network downtime during the live server migration.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q10 · How will the proposed ICT changes contribute to helping the organisation reach its goals?</h3>
+				<p class="small mb-0">
+					The changes will turn their website into a fast, mobile-friendly marketing tool that
+					explicitly proves their technical expertise to prospective clients. This directly drives
+					lead generation, increases corporate revenue, and positions ABC Solutions as a digital
+					leader.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q11 · Evaluate the difficulty of implementing the proposed changes. What difficulties could you encounter? List 2.</h3>
+				<p class="small mb-0">
+					The overall implementation difficulty is moderate, with a primary risk of data corruption
+					when migrating the old MySQL database schemas to the cloud. Second, internal staff will
+					face a learning curve and require training to confidently manage the new cloud platform
+					interface.
+				</p>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		  ACTION PLAN  (Questions 12–18)
+		  ================================================================ -->
+		<section id="part3" class="mb-5">
+			<h2 class="h4 fw-bold mb-4">Action Plan</h2>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q12 · Priority steps that need to occur (list as many as is relevant).</h3>
+				<p class="small mb-0">
+					First, we must audit the existing database content, research modern hosting vendors, and
+					present wireframes to management. Following approval, the technical team needs to code
+					the new frontend, test data migration in a private staging environment, upskill staff,
+					and execute the live launch.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q13 · Write a proposed schedule that they will occur in.</h3>
+				<!-- Trainer tip from class: pad every phase — under-promise, over-deliver. -->
+				<ul class="small mb-2">
+					<li><strong>Assessment Phase (2 weeks):</strong> Audit legacy assets and document system prerequisites.</li>
+					<li><strong>Planning Phase (3 weeks):</strong> Design mobile-responsive wireframes and evaluate cloud infrastructure providers.</li>
+					<li><strong>Testing Phase (2 weeks):</strong> Migrate legacy data to a private staging server and run rigorous security penetration checks.</li>
+				</ul>
+				<p class="small text-muted mb-0">
+					<i class="bi bi-lightbulb me-1"></i><strong>Trainer tip:</strong> pad every phase —
+					propose 3 weeks when you expect 2. Under-promise, over-deliver.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q14 · Show your answers for Part 2 to your supervisor and gather feedback.</h3>
+				<p class="small mb-0">
+					My supervisor reviewed and approved the proposal, providing feedback that we must complete
+					all testing and training on a private staging server before altering the live public domain.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q15 · Are there any industry best practices or regulatory requirements that need to be adhered to?</h3>
+				<p class="small mb-2">
+					We must comply with the Australian Privacy Principles (APPs) to protect client data inputs
+					from unauthorized breaches. The new user interface must also adhere to WCAG 2.1 guidelines
+					to guarantee digital accessibility for all users.
+				</p>
+				<p class="small text-muted mb-0">
+					<i class="bi bi-info-circle me-1"></i>Heads-up from class: new Australian privacy
+					legislation lands around 6 December this year — and WCAG 2.1 gets its own class on Monday.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q16 · What are the key performance indicators (KPIs) or metrics aimed to be achieved?</h3>
+				<p class="small mb-0">
+					The project aims to achieve a baseline website page loading speed of under 2 seconds and
+					secure a 25% increase in client inquiries through the site within 60 days of launch.
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q17 · How will the schedule be monitored throughout the implementation process?</h3>
+				<p class="small mb-0">
+					Progress will be tracked visually using a digital Kanban board on Trello, combined with
+					short, weekly team stand-up meetings to rapidly address any project bottlenecks.
+					(Notion, monday.com, or GitHub Projects work just as well — pick one and stick with it.)
+				</p>
+			</div>
+
+			<div class="border p-4 mb-3">
+				<h3 class="h6 fw-bold">Q18 · Estimate what costs may be associated with the proposed changes.</h3>
+				<p class="small mb-2">
+					The total capital investment is estimated at <strong>$14,500 AUD</strong>, covering
+					$12,500 for professional UX/UI design and responsive database development, $1,200 per
+					year for managed cloud infrastructure, and $800 for internal staff training.
+				</p>
+				<p class="small text-muted mb-0">
+					Based on current Perth grocery pricing of $4.90 per kilogram, this entire technical
+					overhaul equates to investing exactly 2,959 kilograms of fresh loose bananas
+					(or approximately 17,407 individual bananas). 🍌
+				</p>
+			</div>
+
+			<!-- Why $14,500 and not the assessment's placeholder figure -->
+			<div class="border p-4">
+				<h3 class="h6 fw-bold text-uppercase mb-2"><i class="bi bi-cash-coin me-2"></i>About that number</h3>
+				<p class="small text-muted mb-0">
+					The assessment's placeholder figure is $3,600 — nowhere near a realistic quote for a
+					rebuild + migration + training in the current market. We used ~$14,500 in class as a
+					defensible real-world estimate. Whichever figure you use, show the breakdown.
+				</p>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="bg-black text-white-50 mt-auto py-4 small">
+		<div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+			<div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+			<div><a class="link-light text-decoration-none" href="../../index.html">Back to Hub</a></div>
+		</div>
+	</footer>
+</body>
+
+</html>

@@ -1,62 +1,941 @@
-/* Custom Palette & Adjustments */
+/* ============================================================================
+   INTAKE 26.13 · THE iBONES — CLASS HUB
+   Custom layer on top of Bootstrap 5.
+   ============================================================================
+   Philosophy: Bootstrap does the layout. This file adds the character —
+   typography, and a colour system that MEANS something.
 
-header {
-	background-color: #2b3e50;
-	/* Deep Slate */
+   THE COLOUR SYSTEM
+   -----------------
+   Colour is never decoration here. Every hue answers one of two questions:
+
+   1. "What do I use this for?"  → the four resource families
+        LEARN   blue    read it, look it up
+        BUILD   green   install it, write code with it
+        CHECK   orange  test it before you ship
+        CREATE  violet  design it, play with it
+
+   2. "Which subject is this class?" → the schedule tiles
+        SUBJECT 1  warm red   Clients & Concepts
+        SUBJECT 2  cool blue  Front End Web Dev
+
+   Change a value below and everything that uses it follows.
+   ============================================================================ */
+
+:root {
+	/* ---- neutrals (the base the site sits on) ---- */
+	--ink: #111;
+	--paper: #fff;
+	--line: #e5e5e5;
+	--muted: #6b6b6b;
+	--paper-soft: #fafafa;
+
+	/* ---- type ---- */
+	--font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+	--font-body: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+	--font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+	/* ---- 1. RESOURCE FAMILIES — "what do I use this for?" ---- */
+	--learn: #2563eb;
+	--learn-soft: #eef3fe;
+	--build: #15803d;
+	--build-soft: #eaf6ee;
+	--check: #c2410c;
+	--check-soft: #fdf0e8;
+	--create: #7c3aed;
+	--create-soft: #f3eefe;
+
+	/* ---- 2. SUBJECTS — "which subject is this class?" ---- */
+	--s1: #c0392b;
+	--s1-soft: #fbeeec;
+	--s2: #1f3a5f;
+	--s2-soft: #e8eff8;
+
+	/* ---- accents ---- */
+	--gold: #a8802f;
+	--live: #15803d;   /* class done / live now */
+	--next: #a8621f;   /* next class up         */
+
+	/* ---- 3. SECTION ACCENTS — each section owns a colour, and its
+	         navbar link lights up in that same colour on hover. ---- */
+	--sec-start: #15803d;
+	/* Start here  · green  */
+	--sec-overview: #2563eb;
+	/* Overview    · blue   */
+	--sec-resources: #7c3aed;
+	/* Resources   · violet */
+	--sec-sheets: #c2410c;
+	/* Cheat Sheets· orange */
+	--sec-schedule: #a8802f;
+	/* Schedule    · gold   */
+
+	/* the four loader-mark colours — the brand mark only */
+	--ib-red: #ED303C;
+	--ib-teal: #3B8183;
+	--ib-yellow: #FAD089;
+	--ib-orange: #FF9C5B;
 }
 
-.btn-attendance {
-	background-color: #0d6efd;
-	color: #ffffff;
-	border: none;
-	transition: background-color 0.2s ease;
-}
-
-.btn-attendance:hover {
-	background-color: #0b5ed7;
-	color: #ffffff;
-}
-
-.btn-zoom {
-	background-color: #ff7d2d;
-	/* Zoom Blue */
-	color: #ffffff;
-	border: 2px solid #000000;
-	transition: background-color 0.2s ease;
-}
-
-.btn-zoom:hover {
-	background-color: #e81ab5;
-	color: #ffffff;
-}
-
-.resource-link {
-	color: #333333;
-	text-decoration: none;
-	font-weight: 500;
-	display: inline-block;
-	transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.resource-link:hover {
-	color: #0d6efd;
-	transform: translateX(3px);
-}
-
-/* Ensure footer sticks cleanly if content is light */
+/* ----------------------------------------------------------------------------
+   TYPOGRAPHY
+   Playfair Display for headings (institutional, a bit of character),
+   Roboto for body, JetBrains Mono for labels, dates and code.
+---------------------------------------------------------------------------- */
 body {
+	font-family: var(--font-body);
+	color: var(--ink);
+	background: var(--paper);
+	-webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .h4, .h5, .h6 {
+	letter-spacing: -0.01em;
+}
+
+h1, h2, .display-4, .modal-title {
+	font-family: var(--font-display);
+	font-weight: 500;
+}
+
+/* Mono eyebrow — the small uppercase labels above headings */
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.letter-spacing {
+	letter-spacing: 0.15em;
+}
+
+/* Dates, class numbers, room codes — anything you read as data */
+.mono {
+	font-family: var(--font-mono);
+}
+
+/* ----------------------------------------------------------------------------
+   BLACK / WHITE / GREY — overrides
+---------------------------------------------------------------------------- */
+.bg-black, .bg-dark {
+	background-color: var(--ink) !important;
+}
+
+.card, .border {
+	border-color: var(--line) !important;
+	border-radius: 0.375rem;
+	background: var(--paper);
+	box-shadow: none;
+}
+
+.btn {
+	border-radius: 0.375rem;
+	font-weight: 500;
+}
+
+.btn:focus, .btn:focus-visible {
+	box-shadow: none;
+	outline: 2px solid var(--ink);
+	outline-offset: 2px;
+}
+
+a.link-dark {
+	color: var(--ink);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+a.link-dark:hover {
+	border-bottom-color: currentColor;
+}
+
+/* ----------------------------------------------------------------------------
+   THE ANIMATED BRAND MARK
+   Four dots chasing each other into a circle. Pure CSS — no image file.
+---------------------------------------------------------------------------- */
+.ib-loader {
+	width: 2rem;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background:
+		radial-gradient(farthest-side, var(--ib-red) 94%, #0000),
+		radial-gradient(farthest-side, var(--ib-teal) 94%, #0000),
+		radial-gradient(farthest-side, var(--ib-yellow) 94%, #0000),
+		radial-gradient(farthest-side, var(--ib-orange) 94%, #0000),
+		var(--ib-red);
+	background-size: 105% 105%;
+	background-repeat: no-repeat;
+	animation: ib-spin 2s infinite;
+	flex-shrink: 0;
+}
+
+@keyframes ib-spin {
+	0%       { background-position: 50% -40px, -32px 50%, 50% calc(100% + 40px), calc(100% + 40px) 50%; }
+	20%, 25% { background-position: 50% -40px, -40px 50%, 50% calc(100% + 40px), 50% 50%; }
+	45%, 50% { background-position: 50% -40px, -40px 50%, 50% 50%, 50% 50%; }
+	70%, 75% { background-position: 50% -40px, 50% 50%, 50% 50%, 50% 50%; }
+	95%, 100%{ background-position: 50% 50%, 50% 50%, 50% 50%, 50% 50%; }
+}
+
+/* ----------------------------------------------------------------------------
+   NAVBAR
+---------------------------------------------------------------------------- */
+.navbar {
+	box-shadow: none;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+	color: rgba(255, 255, 255, 0.72);
+	position: relative;
+	transition: color 0.15s ease;
+}
+
+/* Each nav link lights up in ITS SECTION'S colour, with a matching underline —
+   so the colour you hover in the nav is the colour you land on. */
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus-visible {
+	color: var(--sec, #fff);
+}
+
+.navbar-nav .nav-link[data-sec]::after {
+	content: "";
+	position: absolute;
+	left: 0.5rem;
+	right: 0.5rem;
+	bottom: 0.15rem;
+	height: 2px;
+	background: var(--sec);
+	transform: scaleX(0);
+	transition: transform 0.18s ease;
+}
+
+.navbar-nav .nav-link[data-sec]:hover::after,
+.navbar-nav .nav-link[data-sec]:focus-visible::after,
+.navbar-nav .nav-link[data-sec].show::after {
+	transform: scaleX(1);
+}
+
+/* The one knob per link — matches the section it jumps to */
+.nav-link[data-sec="start"]     { --sec: var(--sec-start); }
+.nav-link[data-sec="overview"]  { --sec: var(--sec-overview); }
+.nav-link[data-sec="resources"] { --sec: var(--sec-resources); }
+.nav-link[data-sec="sheets"]    { --sec: var(--sec-sheets); }
+.nav-link[data-sec="schedule"]  { --sec: var(--sec-schedule); }
+
+.navbar-brand small {
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: rgba(255, 255, 255, 0.55);
+	display: block;
+	line-height: 1;
+	margin-top: 2px;
+}
+
+.navbar-brand strong {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: 1.05rem;
+	line-height: 1;
+}
+
+/* Round icon buttons (Attendance + Zoom) */
+.btn-icon-circle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.25rem;
+	height: 2.25rem;
+	border-radius: 50%;
+	border: 1px solid rgba(255, 255, 255, 0.4);
+	color: rgba(255, 255, 255, 0.85);
+	text-decoration: none;
+	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-icon-circle:hover {
+	background: #fff;
+	color: var(--ink);
+	border-color: #fff;
+}
+
+.btn-icon-circle:focus-visible {
+	outline: 2px solid #fff;
+	outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------------------
+   HERO
+---------------------------------------------------------------------------- */
+.hero-title {
+	transition: color 0.2s ease;
+	font-family: var(--font-display);
+}
+
+.hero-title:hover {
+	color: var(--ib-yellow);
+}
+
+/* Live status pills — "where are we right now?" at a glance */
+.status-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.8rem;
+	font-weight: 500;
+	padding: 0.35rem 0.85rem;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.status-pill .bi {
+	font-size: 0.85rem;
+}
+
+.status-pill.is-live {
+	background: rgba(34, 197, 94, 0.16);
+	border-color: rgba(34, 197, 94, 0.45);
+	color: #86efac;
+}
+
+/* ----------------------------------------------------------------------------
+   SECTION HEADINGS
+   ----------------------------------------------------------------------------
+   Each section carries `section-block` + a `sec-*` class that sets --sec.
+   The heading gets a thick coloured rule directly above it and sits TIGHT
+   against its own content, so the title clearly belongs to what follows
+   rather than floating between two sections.
+---------------------------------------------------------------------------- */
+.section-block {
+	--sec: var(--ink);
+	padding-top: 2.75rem;
+	margin-bottom: 3.5rem;
+}
+
+.section-head {
+	border-top: 5px solid var(--sec);
+	padding-top: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.section-eyebrow {
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--sec);
+	display: block;
+	margin-bottom: 0.25rem;
+}
+
+.section-title {
+	font-family: var(--font-display);
+	font-size: clamp(1.9rem, 4vw, 2.9rem);
+	font-weight: 700;
+	line-height: 1.05;
+	letter-spacing: -0.02em;
+	color: var(--sec);
+	margin: 0;
+}
+
+/* The lede sits close to the title — they read as one unit. */
+.section-lede {
+	font-size: 0.95rem;
+	color: var(--muted);
+	margin: 0.4rem 0 0;
+	max-width: 60ch;
+}
+
+/* One knob per section */
+.sec-start { --sec: var(--sec-start); }
+.sec-overview { --sec: var(--sec-overview); }
+.sec-resources { --sec: var(--sec-resources); }
+.sec-schedule { --sec: var(--sec-schedule); }
+
+/* ----------------------------------------------------------------------------
+   START HERE — the three steps a brand-new student takes on day one.
+   ----------------------------------------------------------------------------
+   Laid out as a left-to-right path: big icon, number badge, then the words.
+   On desktop a connector line runs between the steps so it reads as a
+   sequence rather than three unrelated cards.
+---------------------------------------------------------------------------- */
+.start-path {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1rem;
+	position: relative;
+}
+
+/* The connector — a hairline behind the icons, desktop only */
+.start-path::before {
+	content: "";
+	position: absolute;
+	top: 3.25rem;
+	left: 16%;
+	right: 16%;
+	height: 2px;
+	background: repeating-linear-gradient(to right,
+			var(--line) 0 8px, transparent 8px 14px);
+	z-index: 0;
+}
+
+.start-step {
+	position: relative;
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	align-items: center;
+	text-align: center;
+	gap: 0.65rem;
+	padding: 1.5rem 1.25rem;
+	border: 1px solid var(--line);
+	border-radius: 0.5rem;
+	background: var(--paper);
+	text-decoration: none;
+	color: inherit;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
-
-/*footer dark coloring*/
-footer {
-	background-color: #2b3e50;
-	color: white
+.start-step:hover {
+	transform: translateY(-3px);
+	border-color: var(--sec-start);
+	box-shadow: 0 0 0 1px var(--sec-start), 0 10px 28px rgba(21, 128, 61, 0.16);
+	color: inherit;
 }
 
-.footer-text {
-	color: #ffffff
+/* The big icon disc — the visual anchor of each step */
+.start-icon {
+	width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	background: var(--build-soft);
+	color: var(--build);
+	font-size: 1.5rem;
+	position: relative;
+	transition: background 0.15s ease, color 0.15s ease;
+}
+
+.start-step:hover .start-icon {
+	background: var(--build);
+	color: #fff;
+}
+
+/* The step number rides on the icon's corner */
+.start-icon .start-num {
+	position: absolute;
+	top: -0.25rem;
+	right: -0.25rem;
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 50%;
+	background: var(--ink);
+	color: #fff;
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	font-weight: 700;
+	display: grid;
+	place-items: center;
+	border: 2px solid var(--paper);
+}
+
+.start-step h3 {
+	font-size: 1rem;
+	font-weight: 700;
+	margin: 0;
+	font-family: var(--font-body);
+}
+
+.start-step p {
+	font-size: 0.84rem;
+	color: var(--muted);
+	margin: 0;
+	line-height: 1.45;
+}
+
+/* The little "and then" arrow under each step */
+.start-step .start-go {
+	font-family: var(--font-mono);
+	font-size: 0.66rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--build);
+	margin-top: auto;
+}
+
+@media (max-width: 767px) {
+	.start-path {
+		grid-template-columns: 1fr;
+	}
+
+	.start-path::before {
+		display: none;
+	}
+
+	.start-step {
+		flex-direction: row;
+		text-align: left;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.start-step .start-body {
+		flex: 1;
+	}
+}
+
+/* ----------------------------------------------------------------------------
+   THE COLOUR LEGEND
+   Tells students what the colours mean, so the coding teaches itself.
+---------------------------------------------------------------------------- */
+.legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.legend-item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-size: 0.78rem;
+	padding: 0.3rem 0.7rem;
+	border-radius: 999px;
+	border: 1px solid transparent;
+	font-weight: 500;
+}
+
+.legend-item i.dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 2px;
+	flex-shrink: 0;
+}
+
+.legend-item span {
+	color: var(--muted);
+	font-weight: 400;
+}
+
+.legend-learn  { color: var(--learn);  background: var(--learn-soft);  border-color: color-mix(in srgb, var(--learn) 20%, transparent); }
+.legend-build  { color: var(--build);  background: var(--build-soft);  border-color: color-mix(in srgb, var(--build) 20%, transparent); }
+.legend-check  { color: var(--check);  background: var(--check-soft);  border-color: color-mix(in srgb, var(--check) 20%, transparent); }
+.legend-create { color: var(--create); background: var(--create-soft); border-color: color-mix(in srgb, var(--create) 20%, transparent); }
+.legend-s1     { color: var(--s1);     background: var(--s1-soft);     border-color: color-mix(in srgb, var(--s1) 20%, transparent); }
+.legend-s2     { color: var(--s2);     background: var(--s2-soft);     border-color: color-mix(in srgb, var(--s2) 20%, transparent); }
+
+.legend-learn  i.dot { background: var(--learn); }
+.legend-build  i.dot { background: var(--build); }
+.legend-check  i.dot { background: var(--check); }
+.legend-create i.dot { background: var(--create); }
+.legend-s1     i.dot { background: var(--s1); }
+.legend-s2     i.dot { background: var(--s2); }
+
+/* ----------------------------------------------------------------------------
+   RESOURCE TILES
+   ----------------------------------------------------------------------------
+   Each tile carries `resource-tile` plus one family class (fam-learn etc.).
+   The family class sets --accent; everything else follows from it.
+
+   Unlike the old version, the colour shows AT REST — a coloured top edge and
+   a category chip — so you can scan the grid and know what each tile is for
+   without hovering. Hover then lifts and intensifies.
+---------------------------------------------------------------------------- */
+.resource-tile {
+	--accent: var(--ink);
+	--accent-soft: var(--paper-soft);
+	position: relative;
+	border-top: 3px solid var(--accent) !important;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.resource-tile:hover {
+	transform: translateY(-2px);
+	box-shadow:
+		0 0 0 1px var(--accent),
+		0 8px 28px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* The category chip in each tile's heading */
+.tile-chip {
+	display: inline-flex;
+	align-items: center;
+	font-family: var(--font-mono);
+	font-size: 0.6rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	padding: 0.15rem 0.5rem;
+	border-radius: 3px;
+	color: var(--accent);
+	background: var(--accent-soft);
+}
+
+/* Icons carry the family colour at rest, gently. Full strength on hover. */
+.resource-tile .bi {
+	color: var(--accent);
+	opacity: 0.65;
+	transition: opacity 0.15s ease;
+}
+
+.resource-tile:hover .bi {
+	opacity: 1;
+}
+
+.resource-tile a.link-dark:hover {
+	color: var(--accent);
+}
+
+/* ---- the four families ---- */
+.fam-learn  { --accent: var(--learn);  --accent-soft: var(--learn-soft); }
+.fam-build  { --accent: var(--build);  --accent-soft: var(--build-soft); }
+.fam-check  { --accent: var(--check);  --accent-soft: var(--check-soft); }
+.fam-create { --accent: var(--create); --accent-soft: var(--create-soft); }
+
+/* Class Access + Course Overview sit outside the families */
+.tile-access   { --accent: var(--s2); --accent-soft: var(--s2-soft); }
+.tile-overview { --accent: var(--learn); --accent-soft: var(--learn-soft); }
+
+/* ----------------------------------------------------------------------------
+   ASSIGNMENT PANEL
+   ----------------------------------------------------------------------------
+   Assignments live inside the modal of the class that launches them, rather
+   than in a separate tile — so the brief sits next to the lesson that
+   introduced it. Gold, so it stands out from the class's own subject colour.
+---------------------------------------------------------------------------- */
+.assignment-panel {
+	--accent: var(--gold);
+	--accent-soft: #fbf4e6;
+	border: 1px solid var(--gold);
+	border-left: 4px solid var(--gold);
+	background: #fffcf5;
+	border-radius: 0.375rem;
+	padding: 1rem 1.15rem;
+	margin: 1rem 0;
+}
+
+.assignment-panel .bi {
+	color: var(--gold);
+}
+
+.assignment-panel ul {
+	padding-left: 1.1rem;
+	color: var(--muted);
+}
+
+/* An assignment flag on the schedule tile, so you can spot the two
+   assignment kick-off classes without opening anything. */
+.flag-assign {
+	color: #fff;
+	background: var(--gold);
+}
+
+/* ----------------------------------------------------------------------------
+   SCHEDULE TILES
+   ----------------------------------------------------------------------------
+   Colour-coded by SUBJECT via a left edge, so the two subjects are readable
+   down the grid at a glance. Locked (future) classes fade out.
+---------------------------------------------------------------------------- */
+.class-tile {
+	background: var(--paper);
+	color: var(--ink);
+	border-radius: 0.375rem;
+	border-left: 4px solid var(--subject, var(--line)) !important;
+	transition: transform 0.12s ease, box-shadow 0.12s ease;
+	cursor: pointer;
+	min-height: 8.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+}
+
+.class-tile:hover:not(.locked):not(:disabled) {
+	transform: translateY(-2px);
+	box-shadow:
+		0 0 0 1px var(--subject),
+		0 8px 24px color-mix(in srgb, var(--subject) 25%, transparent);
+}
+
+.class-tile:focus-visible {
+	outline: 2px solid var(--subject, var(--ink));
+	outline-offset: 2px;
+}
+
+.class-tile .tile-chip {
+	color: var(--subject);
+	background: var(--subject-soft);
+}
+
+/* The big class number — the thing you scan for */
+.class-num {
+	font-family: var(--font-display);
+	font-size: 1.6rem;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--subject);
+}
+
+.class-date {
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	color: var(--muted);
+}
+
+.class-title {
+	font-weight: 600;
+	font-size: 0.92rem;
+	line-height: 1.3;
+}
+
+.class-sub {
+	font-size: 0.78rem;
+	color: var(--muted);
+	line-height: 1.3;
+}
+
+/* Locked = the class hasn't run yet */
+.class-tile.locked, .class-tile:disabled {
+	background: var(--paper-soft);
+	cursor: not-allowed;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.class-tile.locked:hover {
+	transform: none;
+}
+
+/* "This one's next" — a quiet ring so students find their place */
+.class-tile.is-next {
+	box-shadow: 0 0 0 2px var(--next);
+}
+
+.tile-flag {
+	font-family: var(--font-mono);
+	font-size: 0.58rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	padding: 0.12rem 0.45rem;
+	border-radius: 3px;
+}
+
+.flag-done { color: var(--live); background: #eaf6ee; }
+.flag-next { color: var(--next); background: #fdf3e7; }
+.flag-live { color: #fff; background: var(--live); }
+
+/* ----------------------------------------------------------------------------
+   MODAL (class detail)
+---------------------------------------------------------------------------- */
+.modal-content {
+	border-radius: 0.5rem;
+	border-top: 4px solid var(--subject, var(--ink));
+}
+
+.modal-body code {
+	background: #f5f5f5;
+	color: var(--ink);
+	padding: 0.1em 0.35em;
+	border-radius: 0.2rem;
+	font-family: var(--font-mono);
+	font-size: 0.85em;
+}
+
+.modal-body ul {
+	padding-left: 1.1rem;
+}
+
+.modal-body li {
+	margin-bottom: 0.3rem;
+}
+
+/* ----------------------------------------------------------------------------
+   CLASS TIMELINE
+   ----------------------------------------------------------------------------
+   For classes that had distinct phases, the notes render as a stacked
+   sequence of light accent-tinted panels — each a "moment" on the night's
+   timeline. A vertical spine on the left ties them together; each segment
+   sets its own tone via --tl (edge + heading) and --tl-bg (fill).
+---------------------------------------------------------------------------- */
+.class-timeline {
+	position: relative;
+	margin: 1rem 0 0.5rem;
+	padding-left: 0.5rem;
+}
+
+/* The spine running down the left of the whole sequence */
+.class-timeline::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.6rem;
+	bottom: 0.6rem;
+	width: 2px;
+	background: linear-gradient(to bottom, var(--line), var(--line) 60%, transparent);
+}
+
+.tl-seg {
+	position: relative;
+	margin-bottom: 0.75rem;
+	padding: 0.85rem 1rem;
+	border-radius: 0.5rem;
+	border-left: 4px solid var(--tl);
+	background: var(--tl-bg);
+	margin-left: 0.75rem;
+}
+
+/* The node dot where each segment meets the spine */
+.tl-seg::before {
+	content: "";
+	position: absolute;
+	left: -1.35rem;
+	top: 1rem;
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 50%;
+	background: var(--tl);
+	box-shadow: 0 0 0 3px var(--surface-card, #fff);
+}
+
+.tl-head {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tl);
+	margin-bottom: 0.5rem;
+}
+
+.tl-seg ul {
+	margin: 0;
+	padding-left: 1.05rem;
+}
+
+.tl-seg li {
+	margin-bottom: 0.3rem;
+	font-size: 0.9rem;
+}
+
+.tl-seg li::marker {
+	color: var(--tl);
+}
+
+.tl-seg li:last-child {
+	margin-bottom: 0;
+}
+
+/* A single-line segment (the dinner break) reads better without a bullet */
+.tl-seg.tl-warm ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.tl-seg.tl-warm li {
+	font-style: italic;
+}
+
+/* Tones — cool → warm → cool → yellow, per the night's flow */
+.tl-cool1 { --tl: #2563eb; --tl-bg: #eef3fe; }   /* Part 1  · cool blue   */
+.tl-warm  { --tl: #c2772a; --tl-bg: #fdf3e7; }   /* Dinner  · warm peach  */
+.tl-cool2 { --tl: #2c6d6e; --tl-bg: #e6f2f2; }   /* Part 2  · cool teal   */
+.tl-admin { --tl: #9a7b14; --tl-bg: #fdf8e3; }   /* Admin   · light yellow*/
+
+/* Resource links inside the modal, as chips */
+.modal-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin-top: 0.75rem;
+}
+
+.modal-links a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.8rem;
+	font-weight: 500;
+	padding: 0.3rem 0.65rem;
+	border-radius: 0.3rem;
+	text-decoration: none;
+	color: var(--subject, var(--ink));
+	background: var(--subject-soft, var(--paper-soft));
+}
+
+.modal-links a:hover {
+	filter: brightness(0.95);
+}
+
+/* ----------------------------------------------------------------------------
+   RETURN TO TOP
+---------------------------------------------------------------------------- */
+#backToTop {
+	position: fixed;
+	bottom: 1.5rem;
+	right: 1.5rem;
+	z-index: 1030;
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: 50%;
+	border: none;
+	background: var(--ink);
+	color: #fff;
+	font-size: 1.1rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(0.5rem);
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#backToTop.show {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+
+#backToTop:hover { background: #333; }
+
+#backToTop:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 2px;
+}
+
+html { scroll-behavior: smooth; }
+
+/* Anchor targets clear the sticky navbar */
+section[id] { scroll-margin-top: 5rem; }
+
+/* ----------------------------------------------------------------------------
+   FOOTER
+---------------------------------------------------------------------------- */
+footer a.link-light:hover { text-decoration: underline; }
+
+/* ----------------------------------------------------------------------------
+   ACCESSIBILITY
+---------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+	html { scroll-behavior: auto; }
+	.ib-loader { animation: none; }
+	.resource-tile, .class-tile, .start-step, #backToTop { transition: none; }
+	.resource-tile:hover, .class-tile:hover, .start-step:hover { transform: none; }
+}
+
+@media print {
+	.navbar, #backToTop { display: none !important; }
+	.class-tile.locked { opacity: 1; }
 }

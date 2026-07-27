@@ -1,144 +1,684 @@
 <!DOCTYPE html>
+<!--
+  ============================================================================
+  INTAKE 26.13 · TIM'S EQC MINIONS — CLASS HUB
+  ============================================================================
+  Single-page hub for Equinim College Intake 26.13.
+  Bootstrap 5 + a custom stylesheet + one script file.
+
+  Page order (top → bottom):
+    1. <nav>       — sticky top bar (links light up in their section's colour)
+    2. <header>    — hero + live status
+    3. Start here  — the three day-one steps
+    4. Access card — attendance, Zoom, Study Hub
+    5. Overview    — plain-English summary of the course
+    6. Resources   — colour-coded tiles, grouped by what you use them for
+    7. Schedule    — 24 class tiles, colour-coded by subject
+    8. Modal       — shared modal for class detail
+    9. Footer
+   10. hub.js      — schedule data, rendering, unlock logic
+
+  Students: everything is plain HTML + Bootstrap classes — the same Bootstrap
+  you're learning in class. Read style.css to see how the colour system works.
+  ============================================================================
+-->
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Intake 2613 | Resource Hub</title>
-	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
-	<link rel="stylesheet" href="/style-bootstrap.css">
-	<link rel="stylesheet" href="/style.css">
+	<title>Tim's EQC Minions · Web Development Intake 26.13</title>
+	<meta name="description"
+		content="Class hub for EQC Intake 26.13 — schedule, attendance, Zoom, cheat sheets, resources and the full lesson log.">
+
+	<link rel="icon"
+		href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23111'/%3E%3Ccircle cx='50' cy='32' r='16' fill='%23ED303C'/%3E%3Ccircle cx='68' cy='50' r='16' fill='%233B8183' opacity='.85'/%3E%3Ccircle cx='50' cy='68' r='16' fill='%23FAD089' opacity='.85'/%3E%3Ccircle cx='32' cy='50' r='16' fill='%23FF9C5B' opacity='.85'/%3E%3C/svg%3E">
+
+	<!-- Bootstrap via CDN so you can just double-click index.html to run it. -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+	<!-- Bootstrap Icons — the <i class="bi bi-*"> tags throughout the page. -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+	<!-- Type: Playfair Display (headings) · Roboto (body) · JetBrains Mono (labels) -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
+
+	<!-- Our custom layer. Bootstrap does the layout; this adds the character. -->
+	<link rel="stylesheet" href="style.css">
 </head>
 
-<!--test comment-->
+<body class="d-flex flex-column min-vh-100">
 
-<body class="bg-light">
-
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+	<!-- ========================================================================
+	  1. STICKY NAV
+	  ======================================================================== -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
 		<div class="container">
-			<a class="navbar-brand fw-bold" href="#">Intake 2613</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<a class="navbar-brand d-flex align-items-center gap-2" href="#top">
+				<span class="ib-loader" style="width:1.75rem;height:1.75rem" aria-hidden="true"></span>
+				<span>
+					<strong>Tim's EQC Minions</strong>
+					<small>Web Development · Intake 26.13</small>
+				</span>
+			</a>
+			<button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+				data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav ms-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="https://form.jotform.com/260060120423841"
-							target="_blank">Attendance</a>
+				<ul class="navbar-nav ms-auto align-items-lg-center">
+					<li class="nav-item"><a class="nav-link" data-sec="start" href="#start">Start</a></li>
+					<li class="nav-item"><a class="nav-link" data-sec="overview" href="#overview">Overview</a></li>
+					<li class="nav-item"><a class="nav-link" data-sec="resources" href="#resources">Resources</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1"
-							target="_blank">Zoom Room</a>
-					</li>
+					<li class="nav-item"><a class="nav-link" data-sec="schedule" href="#schedule">Schedule</a></li>
+
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button"
-							data-bs-toggle="dropdown" aria-expanded="false">
-							Quick Links
-						</a>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="resourcesDropdown">
-							<li><a class="dropdown-menu-item dropdown-item" href="https://www.w3schools.com"
-									target="_blank">W3Schools</a></li>
-							<li><a class="dropdown-menu-item dropdown-item" href="https://developer.mozilla.org"
-									target="_blank">MDN Docs</a></li>
+						<a class="nav-link dropdown-toggle" data-sec="sheets" href="#" id="cheatsheetsDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">Cheat Sheets</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cheatsheetsDropdown">
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-clone-a-site.html"
+									target="_blank">⭐ Clone a Bootstrap site (A1)</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-build-your-own.html"
+									target="_blank">⭐ Build your own website (A2)</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
-							<li><a class="dropdown-menu-item dropdown-item" href="https://code.visualstudio.com"
-									target="_blank">VS Code</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-htmltags.html"
+									target="_blank">HTML Tags</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-flexbox.html"
+									target="_blank">Flexbox</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-bootstrap.html"
+									target="_blank">Bootstrap</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-git.html"
+									target="_blank">Git &amp; GitHub</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-ai-prompting.html"
+									target="_blank">AI Prompting</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-folderstructure.html"
+									target="_blank">Folder Structure</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-qachecklist.html"
+									target="_blank">QA Checklist (WCAG 2.1)</a></li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-accessibility.html"
+									target="_blank">Accessibility (POUR)</a></li>
+							<li>
+								<hr class="dropdown-divider">
+							</li>
+							<li><a class="dropdown-item" href="assets/cheatsheets/cheatsheet-activity4-ictneeds.html"
+									target="_blank">Activity 4 — Answers</a></li>
 						</ul>
+					</li>
+
+					<li class="nav-item d-flex align-items-center ms-lg-2 mt-2 mt-lg-0">
+						<a class="btn-icon-circle" href="https://form.jotform.com/260060839447864" target="_blank"
+							rel="noopener" title="Log attendance" aria-label="Log attendance">
+							<i class="bi bi-clipboard-check"></i>
+						</a>
+					</li>
+					<li class="nav-item d-flex align-items-center ms-lg-2 mt-2 mt-lg-0">
+						<a class="btn-icon-circle"
+							href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1" target="_blank"
+							rel="noopener" title="Join Zoom" aria-label="Join Zoom">
+							<i class="bi bi-camera-video"></i>
+						</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 
-	<header class="text-white text-center py-5">
-		<div class="container">
-			<h1 class="display-4 fw-bold">Intake 2613</h1>
-			<p class="lead">Your central hub for classes, links, and code resources.</p>
+	<!-- ========================================================================
+	  2. HERO
+	  ======================================================================== -->
+	<header id="top" class="bg-black text-white py-5">
+		<div class="container py-4">
+			<p class="eyebrow mb-3">EQC · Front End Web Development</p>
+
+			<div class="d-flex align-items-center gap-3 mb-3">
+				<span class="ib-loader" style="width:3.5rem;height:3.5rem" aria-hidden="true"></span>
+				<h1 class="display-4 mb-0 hero-title">Tim's EQC Minions</h1>
+			</div>
+
+			<p class="lead mb-4 text-white-50" style="max-width: 46rem;">
+				Your central hub for classes, live links, cheat sheets and code.
+				Bookmark this page — everything you need for the intake lives here.
+			</p>
+
+			<!-- Live status: where we are right now, filled in by hub.js -->
+			<div class="d-flex flex-wrap gap-2">
+				<span class="status-pill" id="pillWeek"><i class="bi bi-calendar3"></i><span>Loading…</span></span>
+				<span class="status-pill" id="pillNext"><i class="bi bi-arrow-right-circle"></i><span>Loading…</span></span>
+			</div>
 		</div>
 	</header>
 
 	<main class="container my-5">
-		<div class="row g-4">
 
-			<div class="col-md-5">
-				<div class="card h-100 shadow-sm border-0">
-					<div class="card-body d-flex flex-column justify-content-between p-4">
-						<div>
-							<h2 class="h4 card-title mb-3 fw-bold text-dark">Class Access</h2>
-							<p class="text-muted small">Log your attendance daily and jump straight into the live
-								lecture stream.</p>
+		<!-- ====================================================================
+		  3. START HERE — the three things a brand-new student does first.
+		  Numbered because the order actually matters.
+		  ==================================================================== -->
+		<section id="start" class="section-block sec-start">
+			<div class="section-head">
+				<span class="section-eyebrow">First things first</span>
+				<h2 class="section-title">Start here</h2>
+				<p class="section-lede">Brand new? Do these three things, in this order — then you're set up for the
+					whole course.</p>
+			</div>
+
+			<div class="start-path">
+				<a class="start-step" href="https://code.visualstudio.com" target="_blank" rel="noopener">
+					<span class="start-icon">
+						<i class="bi bi-download" aria-hidden="true"></i>
+						<span class="start-num">1</span>
+					</span>
+					<span class="start-body">
+						<h3>Install your tools</h3>
+						<p>VS Code, the Live Server extension, and Git. Everything else runs in the browser.</p>
+					</span>
+					<span class="start-go">Get set up <i class="bi bi-arrow-right"></i></span>
+				</a>
+
+				<a class="start-step" href="https://form.jotform.com/260060839447864" target="_blank"
+					rel="noopener">
+					<span class="start-icon">
+						<i class="bi bi-clipboard-check" aria-hidden="true"></i>
+						<span class="start-num">2</span>
+					</span>
+					<span class="start-body">
+						<h3>Mark your attendance</h3>
+						<p>Every class, before you start. Then join the Zoom room — it opens at 17:20.</p>
+					</span>
+					<span class="start-go">Open the form <i class="bi bi-arrow-right"></i></span>
+				</a>
+
+				<a class="start-step" href="#schedule">
+					<span class="start-icon">
+						<i class="bi bi-calendar-week" aria-hidden="true"></i>
+						<span class="start-num">3</span>
+					</span>
+					<span class="start-body">
+						<h3>Open this week's class</h3>
+						<p>Every class in the schedule holds its plan, topics and resources.</p>
+					</span>
+					<span class="start-go">Go to schedule <i class="bi bi-arrow-down"></i></span>
+				</a>
+			</div>
+		</section>
+
+		<!-- ====================================================================
+		  4. ACCESS  +  5. OVERVIEW
+		  ==================================================================== -->
+		<section id="overview" class="section-block sec-overview">
+			<div class="section-head">
+				<span class="section-eyebrow">The course</span>
+				<h2 class="section-title">Overview</h2>
+				<p class="section-lede">What you're studying, when it runs, and how to get into class.</p>
+			</div>
+
+			<div class="row g-4">
+
+			<div class="col-lg-5">
+				<div class="card h-100 border resource-tile tile-access">
+					<div class="card-body p-4 d-flex flex-column">
+						<div class="d-flex align-items-center justify-content-between mb-3">
+							<h2 class="h5 fw-bold mb-0">Class Access</h2>
+							<span class="tile-chip">Every class</span>
 						</div>
-						<div class="d-grid gap-3 mt-4">
-							<a href="https://form.jotform.com/260060120423841" target="_blank"
-								class="btn btn-attendance">
-								📝 Log Daily Attendance
-							</a>
-							<a href="https://zoom.us/j/YOUR_ZOOM_LINK_HERE" target="_blank"
-								class="btn btn-zoom btn-lg fw-semibold">
-								🎥 Join Zoom Lecture
-							</a>
-							<a href="https://github.com" target="_blank"
-								class="btn btn-zoom btn-lg btn-dark fw-semibold">
-								GITHUB
-							</a>
-
-
+						<p class="text-muted small mb-4">
+							Log attendance every class, then jump into Zoom.
+							Coursework lives on the Study Hub.
+						</p>
+						<div class="d-grid gap-2 mt-auto">
+							<a href="https://form.jotform.com/260060839447864" target="_blank" rel="noopener"
+								class="btn btn-dark"><i class="bi bi-clipboard-check me-2"></i>Log Daily
+								Attendance</a>
+							<a href="https://zoom.us/j/97451593016?pwd=K62aTSI92Uw6c66ysqPvpUTCdoxDyj.1"
+								target="_blank" rel="noopener" class="btn btn-outline-dark"><i
+									class="bi bi-camera-video me-2"></i>Join Zoom Lecture</a>
+							<a href="https://study.equinimcollege.com/login" target="_blank" rel="noopener"
+								class="btn btn-outline-dark"><i class="bi bi-mortarboard me-2"></i>Equinim Study
+								Hub</a>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-md-7">
-				<div class="card h-100 shadow-sm border-0">
+			<div class="col-lg-7">
+				<div class="card h-100 border resource-tile tile-overview">
 					<div class="card-body p-4">
-						<h2 class="h4 card-title mb-4 fw-bold text-dark">Essential Resources</h2>
+						<div class="d-flex align-items-center justify-content-between mb-3">
+							<h3 class="h5 fw-bold mb-0">Two subjects, side by side</h3>
+							<span class="tile-chip">12 weeks</span>
+						</div>
+						<p class="small text-muted mb-3">
+							Twelve weeks · Twenty-four classes · Two subjects, taught side-by-side.
+						</p>
 
-						<div class="row g-3">
-							<div class="col-sm-6">
-								<div class="p-3 border rounded bg-white h-100">
-									<h3 class="h6 fw-bold text-secondary text-uppercase mb-2">Documentation</h3>
-									<ul class="list-unstyled mb-0">
-										<li class="mb-2"><a href="https://www.w3schools.com" target="_blank"
-												class="resource-link">W3Schools</a></li>
-										<li><a href="https://developer.mozilla.org" target="_blank"
-												class="resource-link">MDN Web Docs</a></li>
-									</ul>
-								</div>
+						<!-- The two subjects, each in its own colour. Same colours the
+						     schedule tiles use, so the link is obvious. -->
+						<div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
+							<div class="col">
+								<span class="legend-item legend-s1 mb-2"><i class="dot"></i>Subject 1</span>
+								<h4 class="h6 fw-semibold">Clients &amp; Concepts</h4>
+								<ul class="small text-muted mb-0 ps-3">
+									<li>Originate and develop concepts</li>
+									<li>Match ICT needs to a client brief</li>
+									<li>Manage client problems &amp; scope</li>
+									<li>Lead and facilitate a team</li>
+								</ul>
 							</div>
-
-							<div class="col-sm-6">
-								<div class="p-3 border rounded bg-white h-100">
-									<h3 class="h6 fw-bold text-secondary text-uppercase mb-2">Environment & Tooling</h3>
-									<ul class="list-unstyled mb-0">
-										<li class="mb-2"><a href="https://code.visualstudio.com" target="_blank"
-												class="resource-link">VS Code Download</a></li>
-										<li class="mb-2"><a
-												href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
-												target="_blank" class="resource-link">Prettier Extension</a></li>
-										<li><a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
-												target="_blank" class="resource-link">Live Server (Go Live)</a></li>
-									</ul>
-								</div>
+							<div class="col">
+								<span class="legend-item legend-s2 mb-2"><i class="dot"></i>Subject 2</span>
+								<h4 class="h6 fw-semibold">Front End Web Dev</h4>
+								<ul class="small text-muted mb-0 ps-3">
+									<li>Clean HTML + CSS from scratch</li>
+									<li>Bootstrap 5 for responsive layouts</li>
+									<li>Flexbox, Grid and the box model</li>
+									<li>Ship a portfolio-ready website</li>
+								</ul>
 							</div>
 						</div>
 
+						<div class="d-flex flex-wrap gap-3 align-items-center pt-3 border-top">
+							<span class="small text-muted"><i class="bi bi-clock me-1"></i>Mon &amp; Wed ·
+								5:30–8:30pm</span>
+							<a class="btn btn-sm btn-outline-dark" href="assets/2613-classes.ics" download>
+								<i class="bi bi-calendar-plus me-1"></i>Add all 24 classes (.ics)
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
+			</div>
+		</section>
 
-		</div>
+		<!-- ====================================================================
+		  6. RESOURCES
+		  ====================================================================
+		  Tiles are grouped by WHAT YOU USE THEM FOR, and each group has its
+		  own colour. The legend below explains the coding — so the colours
+		  teach themselves rather than just decorating.
+
+		    LEARN  (blue)   read it, look it up
+		    BUILD  (green)  install it, write code with it
+		    CHECK  (orange) test it before you ship
+		    CREATE (violet) design it, play with it
+		  ==================================================================== -->
+		<section id="resources" class="section-block sec-resources">
+			<div class="section-head">
+				<span class="section-eyebrow">Bookmarked</span>
+				<h2 class="section-title">Resources</h2>
+				<p class="section-lede">Everything you'll open on a normal class day, grouped by what you use it
+					for.</p>
+			</div>
+
+			<div class="legend mb-4">
+				<span class="legend-item legend-learn"><i class="dot"></i>Learn <span>· read it, look it up</span></span>
+				<span class="legend-item legend-build"><i class="dot"></i>Build <span>· install it, code with it</span></span>
+				<span class="legend-item legend-check"><i class="dot"></i>Check <span>· test before you ship</span></span>
+				<span class="legend-item legend-create"><i class="dot"></i>Create <span>· design it, play with it</span></span>
+			</div>
+
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+				<!-- ─── LEARN · Cheatsheets / Interactive Tools ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Cheat Sheets &amp; Tools</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-clone-a-site.html" target="_blank"><i
+										class="bi bi-star-fill me-2"></i><strong>Clone a Bootstrap site
+										(A1)</strong></a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-build-your-own.html" target="_blank"><i
+										class="bi bi-star-fill me-2"></i><strong>Build your own website
+										(A2)</strong></a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-htmltags.html"
+									target="_blank"><i class="bi bi-code-slash me-2"></i>HTML tags</a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-flexbox.html"
+									target="_blank"><i class="bi bi-columns-gap me-2"></i>Flexbox</a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-bootstrap.html"
+									target="_blank"><i class="bi bi-bootstrap me-2"></i>Bootstrap</a></li>
+							<li class="mb-1"><a class="link-dark" href="assets/cheatsheets/cheatsheet-git.html"
+									target="_blank"><i class="bi bi-git me-2"></i>Git &amp; GitHub</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-ai-prompting.html" target="_blank"><i
+										class="bi bi-robot me-2"></i>AI Prompting</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-folderstructure.html" target="_blank"><i
+										class="bi bi-folder2-open me-2"></i>Folder structure</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-qachecklist.html" target="_blank"><i
+										class="bi bi-list-check me-2"></i>QA Checklist (WCAG 2.1)</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-accessibility.html" target="_blank"><i
+										class="bi bi-universal-access me-2"></i>Accessibility (POUR)</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-activity4-ictneeds.html" target="_blank"><i
+										class="bi bi-patch-check me-2"></i>Activity 4 — Answers</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/interactive/interactive-brandwheel.html" target="_blank"><i
+										class="bi bi-palette me-2"></i>Brand Wheel</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/interactive/interactive-studentpicker.html" target="_blank"><i
+										class="bi bi-shuffle me-2"></i>Random Student Picker</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── LEARN · Docs / Guides ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Docs / Guides</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://www.w3schools.com" target="_blank"
+									rel="noopener"><i class="bi bi-book me-2"></i>W3Schools</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://developer.mozilla.org"
+									target="_blank" rel="noopener"><i class="bi bi-book-half me-2"></i>MDN Web
+									Docs</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://getbootstrap.com/docs/5.3/"
+									target="_blank" rel="noopener"><i class="bi bi-bootstrap me-2"></i>Bootstrap 5
+									Docs</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank"
+									rel="noopener"><i class="bi bi-columns-gap me-2"></i>CSS-Tricks Flexbox
+									Guide</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://www.w3.org/WAI/standards-guidelines/" target="_blank"
+									rel="noopener"><i class="bi bi-universal-access me-2"></i>W3 Accessibility
+									Guidelines</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://dev.to" target="_blank"
+									rel="noopener"><i class="bi bi-newspaper me-2"></i>dev.to</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── LEARN · Learning ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-learn">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Courses</h3>
+							<span class="tile-chip">Learn</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://roadmap.sh" target="_blank"
+									rel="noopener"><i class="bi bi-signpost-split me-2"></i>roadmap.sh — dev roadmaps</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://www.codecademy.com" target="_blank"
+									rel="noopener"><i class="bi bi-mortarboard-fill me-2"></i>Codecademy</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.freecodecamp.org" target="_blank"
+									rel="noopener"><i class="bi bi-fire me-2"></i>freeCodeCamp</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.theodinproject.com"
+									target="_blank" rel="noopener"><i class="bi bi-signpost-2 me-2"></i>The Odin
+									Project</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://scrimba.com" target="_blank"
+									rel="noopener"><i class="bi bi-play-circle me-2"></i>Scrimba</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://exercism.org" target="_blank"
+									rel="noopener"><i class="bi bi-puzzle me-2"></i>Exercism</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── BUILD · Environment ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Environment</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://code.visualstudio.com"
+									target="_blank" rel="noopener"><i class="bi bi-code-square me-2"></i>VS Code</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://git-scm.com/downloads"
+									target="_blank" rel="noopener"><i class="bi bi-git me-2"></i>Git</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+									target="_blank" rel="noopener"><i class="bi bi-magic me-2"></i>Prettier</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
+									target="_blank" rel="noopener"><i class="bi bi-broadcast me-2"></i>Live
+									Server</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat"
+									target="_blank" rel="noopener"><i class="bi bi-chat-dots me-2"></i>Copilot
+									Chat</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── BUILD · AI Coding Partners ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">AI Coding Partners</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://claude.ai" target="_blank"
+									rel="noopener"><i class="bi bi-stars me-2"></i>Claude</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://gemini.google.com" target="_blank"
+									rel="noopener"><i class="bi bi-gem me-2"></i>Gemini</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://chatgpt.com" target="_blank"
+									rel="noopener"><i class="bi bi-chat-square-text me-2"></i>ChatGPT</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://github.com/features/copilot"
+									target="_blank" rel="noopener"><i class="bi bi-cpu me-2"></i>GitHub Copilot</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── BUILD · Repos & Channels ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-build">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Repos &amp; Channels</h3>
+							<span class="tile-chip">Build</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://github.com/thedalycreative"
+									target="_blank" rel="noopener"><i class="bi bi-github me-2"></i>Class repos</a>
+							</li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://github.com/microsoft/Web-Dev-For-Beginners" target="_blank"
+									rel="noopener"><i class="bi bi-github me-2"></i>Web Dev for Beginners</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="https://github.com/thedaviddias/Front-End-Checklist" target="_blank"
+									rel="noopener"><i class="bi bi-github me-2"></i>Front-End Checklist</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@KevinPowell"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Kevin Powell
+									(CSS)</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@TraversyMedia"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Traversy
+									Media</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@NetNinja"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Net Ninja</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://www.youtube.com/@Fireship"
+									target="_blank" rel="noopener"><i class="bi bi-youtube me-2"></i>Fireship</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://css-tricks.com" target="_blank"
+									rel="noopener"><i class="bi bi-rss me-2"></i>CSS-Tricks</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.joshwcomeau.com" target="_blank"
+									rel="noopener"><i class="bi bi-rss me-2"></i>Josh Comeau</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── CHECK · Quality Assurance ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-check">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Quality Assurance</h3>
+							<span class="tile-chip">Check</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-qachecklist.html" target="_blank"><i
+										class="bi bi-list-check me-2"></i>Class QA Checklist</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/cheatsheets/cheatsheet-accessibility.html" target="_blank"><i
+										class="bi bi-universal-access me-2"></i>Accessibility (POUR)</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://wave.webaim.org" target="_blank"
+									rel="noopener"><i class="bi bi-eye me-2"></i>WAVE Accessibility</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://validator.w3.org" target="_blank"
+									rel="noopener"><i class="bi bi-check2-circle me-2"></i>W3C HTML Validator</a>
+							</li>
+							<li class="mb-1"><a class="link-dark" href="https://jigsaw.w3.org/css-validator/"
+									target="_blank" rel="noopener"><i class="bi bi-check2-circle me-2"></i>W3C CSS
+									Validator</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://pagespeed.web.dev/" target="_blank"
+									rel="noopener"><i class="bi bi-speedometer2 me-2"></i>PageSpeed Insights</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── CREATE · Design ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-create">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Design</h3>
+							<span class="tile-chip">Create</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://www.figma.com" target="_blank"
+									rel="noopener"><i class="bi bi-vector-pen me-2"></i>Figma</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://excalidraw.com" target="_blank"
+									rel="noopener"><i class="bi bi-pencil me-2"></i>Excalidraw</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://coolors.co" target="_blank"
+									rel="noopener"><i class="bi bi-palette2 me-2"></i>Coolors</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://fonts.google.com" target="_blank"
+									rel="noopener"><i class="bi bi-fonts me-2"></i>Google Fonts</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://icons.getbootstrap.com"
+									target="_blank" rel="noopener"><i class="bi bi-bootstrap me-2"></i>Bootstrap
+									Icons</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://unsplash.com" target="_blank"
+									rel="noopener"><i class="bi bi-camera me-2"></i>Unsplash</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://pexels.com" target="_blank"
+									rel="noopener"><i class="bi bi-camera-reels me-2"></i>Pexels</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- ─── CREATE · Games ─── -->
+				<div class="col">
+					<div class="border p-3 h-100 resource-tile fam-create">
+						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+							<h3 class="h6 fw-bold text-uppercase text-muted small mb-0">Games</h3>
+							<span class="tile-chip">Create</span>
+						</div>
+						<ul class="list-unstyled small mb-0">
+							<li class="mb-1"><a class="link-dark" href="https://flexboxfroggy.com" target="_blank"
+									rel="noopener"><i class="bi bi-controller me-2"></i>Flexbox Froggy</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://cssgridgarden.com" target="_blank"
+									rel="noopener"><i class="bi bi-flower1 me-2"></i>Grid Garden</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://flukeout.github.io" target="_blank"
+									rel="noopener"><i class="bi bi-cup-straw me-2"></i>CSS Diner</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://cssbattle.dev" target="_blank"
+									rel="noopener"><i class="bi bi-trophy me-2"></i>CSSBattle</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://mastery.games/flexboxzombies/"
+									target="_blank" rel="noopener"><i class="bi bi-crosshair me-2"></i>Flexbox
+									Zombies</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://learngitbranching.js.org"
+									target="_blank" rel="noopener"><i class="bi bi-diagram-2 me-2"></i>Learn Git
+									Branching</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://www.codewars.com" target="_blank"
+									rel="noopener"><i class="bi bi-shield me-2"></i>Codewars</a></li>
+							<li class="mb-1"><a class="link-dark" href="https://monkeytype.com" target="_blank"
+									rel="noopener"><i class="bi bi-keyboard me-2"></i>Monkeytype (typing)</a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</section>
+
+		<!-- ====================================================================
+		  7. SCHEDULE  (tiles rendered by hub.js)
+		  ====================================================================
+		  Each tile is colour-coded by subject and shows its class number, date
+		  and topic. Past classes open a modal with the full plan + resources.
+		  Future classes stay locked until the morning after they run.
+		  ==================================================================== -->
+		<section id="schedule" class="section-block sec-schedule">
+			<div class="section-head">
+				<span class="section-eyebrow">24 classes · 12 weeks</span>
+				<h2 class="section-title">Schedule</h2>
+				<p class="section-lede">Click any past class to open its plan and resources. Future classes unlock
+					the morning after they run.</p>
+			</div>
+
+			<div class="legend mb-4">
+				<span class="legend-item legend-s1"><i class="dot"></i>Subject 1 <span>· Clients &amp; Concepts</span></span>
+				<span class="legend-item legend-s2"><i class="dot"></i>Subject 2 <span>· Front End Web Dev</span></span>
+			</div>
+
+			<div id="classGrid" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3"></div>
+		</section>
+
 	</main>
 
-	<footer class="text-center py-4 border-top mt-auto">
-		<p class="footer-text">&copy; 2026 | Built simple with Bootstrap.</p>
+	<!-- ========================================================================
+	  9. SHARED MODAL (populated on tile click)
+	  ======================================================================== -->
+	<div class="modal fade" id="classModal" tabindex="-1" aria-labelledby="classModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable modal-lg">
+			<div class="modal-content border" id="classModalContent">
+				<div class="modal-header">
+					<div>
+						<span class="tile-chip" id="classModalChip">Class</span>
+						<h2 class="modal-title h5 fw-bold mt-2 mb-0" id="classModalLabel">Class</h2>
+						<p class="class-date mb-0" id="classModalDate"></p>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="classModalBody">
+					<!-- injected by hub.js -->
+				</div>
+			</div>
+		</div>
+	</div>
 
+	<!-- Floating "return to top" — appears once you scroll down a bit. -->
+	<button type="button" id="backToTop" aria-label="Return to top" title="Return to top">
+		<i class="bi bi-arrow-up"></i>
+	</button>
+
+	<!-- ========================================================================
+	  10. FOOTER
+	  ======================================================================== -->
+	<footer class="bg-black text-white-50 mt-auto py-4 small">
+		<div
+			class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+			<div>EQC Institute of Technology · ICT50220 Diploma of IT · RTO 45758</div>
+			<div>
+				<a class="link-light text-decoration-none me-3"
+					href="mailto:tim@equinimcollege.com">tim@equinimcollege.com</a>
+				<a class="link-light text-decoration-none" href="https://github.com/thedalycreative" target="_blank"
+					rel="noopener">GitHub</a>
+			</div>
+		</div>
 	</footer>
 
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Bootstrap JS — the navbar toggle, dropdown and modal all need it. -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous"></script>
+
+	<!-- Schedule data + rendering. Edit the CLASSES array in here to add a class. -->
+	<script src="hub.js"></script>
 
 </body>
 
