@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  INTAKE 26.13 · AI PROMPTING CHEAT SHEET
+  ============================================================================
+  Eight plain-English prompting tricks — one web-dev example and one everyday
+  admin example each. Works on the free tier of ChatGPT, Claude, Gemini, Grok.
+
+  Restyled into the hub's cheat-sheet house style (Playfair / Roboto /
+  JetBrains Mono, shared style-cheatsheet.css). Accent: blue — it's a LEARN
+  reference. Tap Copy on any example to paste it straight into your AI chat.
+  ============================================================================
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Prompting Cheat Sheet · Intake 26.13</title>
+  <meta name="description"
+    content="8 plain-English prompting tricks for beginner web-dev students and everyday admin tasks — free ChatGPT, Claude, Gemini or Grok.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..700&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="style-cheatsheet.css">
+  <!-- This sheet's accent: blue — it's a LEARN reference -->
+  <style>
+    :root { --accent: #2563eb; --accent-soft: #eef3fe; }
+
+    /* Per-trick card — house borders + a coloured top edge */
+    .trick {
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--accent);
+      border-radius: 0.5rem;
+      background: var(--paper);
+    }
+    .trick-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .trick h2 { font-size: 1.3rem; font-weight: 600; }
+
+    /* skip-this → try-this */
+    .swap { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.9rem; }
+    .swap-label {
+      font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+      display: block; margin-bottom: 0.2rem;
+    }
+    .swap-vague {
+      background: #f5f5f5; color: var(--muted); text-decoration: line-through;
+      padding: 0.3rem 0.75rem; border-radius: 0.3rem; font-size: 0.85rem; display: inline-block;
+    }
+    .swap-clear {
+      background: var(--ink); color: #fff; padding: 0.3rem 0.75rem;
+      border-radius: 0.3rem; font-size: 0.85rem; font-weight: 500; display: inline-block;
+    }
+
+    /* Example panels — web dev vs admin */
+    .ex {
+      background: #fafafa; border-left: 3px solid var(--accent);
+      border-radius: 0.375rem; padding: 0.9rem 1rem; height: 100%;
+      display: flex; flex-direction: column;
+    }
+    .ex.admin { border-left-color: #15803d; }
+    .ex-label {
+      font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+    .ex.admin .ex-label { color: #15803d; }
+    .ex:not(.admin) .ex-label { color: var(--accent); }
+    .ex-text { font-size: 0.92rem; flex-grow: 1; margin-bottom: 0.6rem; }
+    .ex-text::before { content: "\201C"; }
+    .ex-text::after { content: "\201D"; }
+    .mode-label { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; color: var(--muted); }
+    .mode-text { display: block; margin: 0.15rem 0 0.35rem; font-size: 0.9rem; }
+    .mode-text::before { content: "\201C"; }
+    .mode-text::after { content: "\201D"; }
+
+    .copy-btn {
+      align-self: flex-start; border: 1px solid var(--line); background: transparent;
+      color: var(--ink); font-size: 0.75rem; border-radius: 999px; padding: 0.2rem 0.7rem;
+      font-family: var(--font-mono);
+    }
+    .copy-btn:hover { background: var(--ink); color: #fff; }
+    .copy-btn.copied { background: #15803d; border-color: #15803d; color: #fff; }
+
+    .tool-pill {
+      display: inline-block; border: 1px solid rgba(255,255,255,.28); border-radius: 999px;
+      padding: 0.25rem 0.85rem; font-size: 0.8rem; font-weight: 500; margin: 0.2rem 0.3rem 0.2rem 0;
+      color: rgba(255,255,255,.9);
+    }
+
+    @media print {
+      .navbar, .copy-btn, .print-btn, nav[aria-label] { display: none !important; }
+      .trick { break-inside: avoid; border: 1px solid #ddd !important; }
+    }
+  </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="../../index.html">
+        <span class="ib-loader" aria-hidden="true"></span>
+        Tim's EQC Minions
+      </a>
+      <a class="nav-link text-white-50" href="../../index.html"><i class="bi bi-arrow-left me-1"></i>Back to Hub</a>
+    </div>
+  </nav>
+
+  <header class="bg-black text-white py-5">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+        <div>
+          <p class="text-uppercase small text-secondary mb-2 letter-spacing">EQC · Intake 26.13 · Talking to AI</p>
+          <h1 class="display-5 fw-bold mb-2">AI Prompting Cheat Sheet</h1>
+          <p class="lead text-white-50 mb-3" style="max-width:44rem;">Eight tricks the pros use, in plain English —
+            one example for web-dev practice, one for everyday admin.</p>
+          <div>
+            <span class="tool-pill">ChatGPT</span><span class="tool-pill">Claude</span><span
+              class="tool-pill">Gemini</span><span class="tool-pill">Grok</span>
+          </div>
+          <p class="small text-secondary mt-2 mb-0">Works on the free version of any of them — no paid plan needed.</p>
+        </div>
+        <button class="btn btn-outline-light btn-sm print-btn" onclick="window.print()"><i
+            class="bi bi-printer me-1"></i>Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container my-5">
+
+    <nav class="border p-3 mb-4" aria-label="On this page">
+      <h2 class="h6 fw-bold text-uppercase text-muted small mb-2">The eight tricks</h2>
+      <div class="row row-cols-1 row-cols-md-2 g-1 small">
+        <div class="col"><a class="link-dark" href="#t1">1. Say what NOT to do</a></div>
+        <div class="col"><a class="link-dark" href="#t2">2. Think out loud first</a></div>
+        <div class="col"><a class="link-dark" href="#t3">3. Ask for an exact format</a></div>
+        <div class="col"><a class="link-dark" href="#t4">4. Show an example with your thinking</a></div>
+        <div class="col"><a class="link-dark" href="#t5">5. Rules first, then the ask</a></div>
+        <div class="col"><a class="link-dark" href="#t6">6. Creative vs. precise</a></div>
+        <div class="col"><a class="link-dark" href="#t7">7. Break big asks into steps</a></div>
+        <div class="col"><a class="link-dark" href="#t8">8. Ask it to double-check itself</a></div>
+      </div>
+    </nav>
+
+    <div class="border p-3 mb-4" style="border-left:4px solid var(--accent) !important;">
+      <p class="small mb-0"><i class="bi bi-lightbulb-fill me-2" style="color:var(--accent)"></i><strong>How to use
+          this page:</strong> every trick shows the boring way (crossed out) and the better way. Pick the matching
+        example — <i class="bi bi-code-slash"></i> for web-dev practice or <i class="bi bi-clipboard-check"></i> for
+        admin tasks — tap <em>Copy</em>, and paste it straight into your AI chat.</p>
+    </div>
+
+    <!-- 1 ============================================================= -->
+    <section id="t1" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">01</span>
+          <h2 class="mt-1">Tell it what NOT to do</h2>
+          <p class="small text-muted mb-0">Sometimes the fastest way to get what you want is to rule out what you
+            don't.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">"Write professionally"</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">"Never use jargon or sentences over
+                20 words"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e1w">Explain why my CSS isn't centering. Don't use jargon like "flexbox" or
+                  "z-index" without explaining it first.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e1w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e1a">Plan my week's meals. Don't include seafood. Don't pick recipes with more
+                  than 5 ingredients.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e1a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 ============================================================= -->
+    <section id="t2" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">02</span>
+          <h2 class="mt-1">Ask it to think out loud first</h2>
+          <p class="small text-muted mb-0">Ask for the reasoning before the answer — it catches mistakes before they
+            reach you.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">"Fix my code"</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">"Walk through your reasoning first,
+                step by step"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e2w">My navbar won't center. Before you give me the fix, explain your reasoning
+                  step by step so I actually understand it.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e2w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e2a">Before you give me a final weekly budget, show your reasoning for each
+                  category, step by step.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e2a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 ============================================================= -->
+    <section id="t3" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">03</span>
+          <h2 class="mt-1">Ask for an exact format</h2>
+          <p class="small text-muted mb-0">AI often ignores loose formatting requests — spell out exactly what you
+            want back.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">"Give me this as a list"</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">"A table with columns: Item, Qty,
+                Price"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e3w">Comment every section of this HTML, then explain each comment in one line
+                  underneath.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e3w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e3a">Give me my shopping list as a table with 3 columns: Item, Quantity,
+                  Estimated Price.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e3a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 ============================================================= -->
+    <section id="t4" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">04</span>
+          <h2 class="mt-1">Show it an example — with your thinking</h2>
+          <p class="small text-muted mb-0">Don't just show input → output. Show input → your reasoning → output, so it
+            copies the logic, not just the pattern.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">example with no reasoning</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">example that includes the
+                "why"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e4w">Example — Task: make a delete button red. Reasoning: red signals danger.
+                  Code: background-color: red;. Now do the same for a "save" button.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e4w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e4a">Example — Task: cut the grocery bill. Reasoning: buy staples in bulk since
+                  I use them weekly. Now apply that same thinking to my electricity bill.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e4a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 ============================================================= -->
+    <section id="t5" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">05</span>
+          <h2 class="mt-1">Rules first, then the ask</h2>
+          <p class="small text-muted mb-0">Put your standing context in one clear block, then your actual request —
+            don't bury them together.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">one long rambling
+                paragraph</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">"MY SITUATION: … MY REQUEST:
+                …"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e5w">MY SITUATION: I'm a beginner, I only know HTML and CSS, no JavaScript yet.
+                  MY REQUEST: Help me build a responsive photo gallery.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e5w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e5a">MY SITUATION: I'm saving for a trip and prefer home-cooked meals. MY
+                  REQUEST: Build me a 2-week grocery budget.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e5a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 ============================================================= -->
+    <section id="t6" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">06</span>
+          <h2 class="mt-1">Be creative vs. be precise</h2>
+          <p class="small text-muted mb-0">Tell it which mode you want — loose and imaginative, or exact and careful.
+            It won't guess which one you meant.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">"Give me some ideas"</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">say "be creative" or "be
+                precise"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <div class="mb-2">
+                  <span class="mode-label">🎨 Creative</span>
+                  <span class="mode-text" id="e6wa">Give me 5 bold, unusual name ideas for my portfolio site — really
+                    go wild.</span>
+                  <button class="btn copy-btn" onclick="copyText(this,'e6wa')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+                </div>
+                <div>
+                  <span class="mode-label">🎯 Precise</span>
+                  <span class="mode-text" id="e6wb">Only use CSS properties that actually exist. Don't guess or invent
+                    any.</span>
+                  <button class="btn copy-btn" onclick="copyText(this,'e6wb')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <div class="mb-2">
+                  <span class="mode-label">🎨 Creative</span>
+                  <span class="mode-text" id="e6aa">Brainstorm 10 fun, cheap weekend activities — get creative.</span>
+                  <button class="btn copy-btn" onclick="copyText(this,'e6aa')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+                </div>
+                <div>
+                  <span class="mode-label">🎯 Precise</span>
+                  <span class="mode-text" id="e6ab">Calculate my exact monthly total. Don't round anything, don't
+                    estimate.</span>
+                  <button class="btn copy-btn" onclick="copyText(this,'e6ab')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 ============================================================= -->
+    <section id="t7" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">07</span>
+          <h2 class="mt-1">Break big asks into small steps</h2>
+          <p class="small text-muted mb-0">Don't ask for the whole thing in one go — build it up, message by
+            message.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">"Build me a whole site with
+                everything"</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">Step 1, then Step 2, then Step
+                3</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e7w">Step 1: just the HTML structure for a contact form. (Next message) Step 2:
+                  now style it. (Next message) Step 3: now add a hover effect on the button.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e7w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e7a">Step 1: list all my monthly bills. (Next message) Step 2: now sort them
+                  into needs vs wants. (Next message) Step 3: now suggest where I could cut back.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e7a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 ============================================================= -->
+    <section id="t8" class="trick p-4 mb-4">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <span class="trick-num">08</span>
+          <h2 class="mt-1">Ask it to double-check itself</h2>
+          <p class="small text-muted mb-0">Before you accept the answer, make it review its own work first.</p>
+          <div class="swap">
+            <span><span class="swap-label">Skip this</span><span class="swap-vague">accept the first answer
+                as-is</span></span>
+            <span><span class="swap-label">Try this</span><span class="swap-clear">"Now check your answer and fix
+                anything you missed"</span></span>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="ex">
+                <span class="ex-label"><i class="bi bi-code-slash me-1"></i>Web Dev</span>
+                <p class="ex-text" id="e8w">Now check your code: does it work on mobile? Are all the tags closed? Fix
+                  anything you find.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e8w')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="ex admin">
+                <span class="ex-label"><i class="bi bi-clipboard-check me-1"></i>Admin Task</span>
+                <p class="ex-text" id="e8a">Now check this budget: does it actually add up to my income? Did you miss
+                  any bill? Fix anything you find.</p>
+                <button class="btn copy-btn" onclick="copyText(this,'e8a')"><i class="bi bi-clipboard me-1"></i>Copy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-black text-white-50 mt-auto py-4 small">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+      <div>EQC Institute of Technology · Intake 26.13 · AI Prompting Cheat Sheet</div>
+      <a class="link-light text-decoration-none" href="../../index.html">← Back to the Hub</a>
+    </div>
+  </footer>
+
+  <script>
+    function copyText(btn, id) {
+      var text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        var original = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-check2 me-1"></i>Copied';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.innerHTML = original; btn.classList.remove('copied'); }, 1500);
+      }).catch(function () { btn.innerHTML = 'Select &amp; copy manually'; });
+    }
+  </script>
+
+</body>
+
+</html>
