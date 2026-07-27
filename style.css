@@ -758,6 +758,101 @@ a.link-dark:hover {
 	margin-bottom: 0.3rem;
 }
 
+/* ----------------------------------------------------------------------------
+   CLASS TIMELINE
+   ----------------------------------------------------------------------------
+   For classes that had distinct phases, the notes render as a stacked
+   sequence of light accent-tinted panels — each a "moment" on the night's
+   timeline. A vertical spine on the left ties them together; each segment
+   sets its own tone via --tl (edge + heading) and --tl-bg (fill).
+---------------------------------------------------------------------------- */
+.class-timeline {
+	position: relative;
+	margin: 1rem 0 0.5rem;
+	padding-left: 0.5rem;
+}
+
+/* The spine running down the left of the whole sequence */
+.class-timeline::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0.6rem;
+	bottom: 0.6rem;
+	width: 2px;
+	background: linear-gradient(to bottom, var(--line), var(--line) 60%, transparent);
+}
+
+.tl-seg {
+	position: relative;
+	margin-bottom: 0.75rem;
+	padding: 0.85rem 1rem;
+	border-radius: 0.5rem;
+	border-left: 4px solid var(--tl);
+	background: var(--tl-bg);
+	margin-left: 0.75rem;
+}
+
+/* The node dot where each segment meets the spine */
+.tl-seg::before {
+	content: "";
+	position: absolute;
+	left: -1.35rem;
+	top: 1rem;
+	width: 0.6rem;
+	height: 0.6rem;
+	border-radius: 50%;
+	background: var(--tl);
+	box-shadow: 0 0 0 3px var(--surface-card, #fff);
+}
+
+.tl-head {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-family: var(--font-mono);
+	font-size: 0.68rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tl);
+	margin-bottom: 0.5rem;
+}
+
+.tl-seg ul {
+	margin: 0;
+	padding-left: 1.05rem;
+}
+
+.tl-seg li {
+	margin-bottom: 0.3rem;
+	font-size: 0.9rem;
+}
+
+.tl-seg li::marker {
+	color: var(--tl);
+}
+
+.tl-seg li:last-child {
+	margin-bottom: 0;
+}
+
+/* A single-line segment (the dinner break) reads better without a bullet */
+.tl-seg.tl-warm ul {
+	list-style: none;
+	padding-left: 0;
+}
+
+.tl-seg.tl-warm li {
+	font-style: italic;
+}
+
+/* Tones — cool → warm → cool → yellow, per the night's flow */
+.tl-cool1 { --tl: #2563eb; --tl-bg: #eef3fe; }   /* Part 1  · cool blue   */
+.tl-warm  { --tl: #c2772a; --tl-bg: #fdf3e7; }   /* Dinner  · warm peach  */
+.tl-cool2 { --tl: #2c6d6e; --tl-bg: #e6f2f2; }   /* Part 2  · cool teal   */
+.tl-admin { --tl: #9a7b14; --tl-bg: #fdf8e3; }   /* Admin   · light yellow*/
+
 /* Resource links inside the modal, as chips */
 .modal-links {
 	display: flex;

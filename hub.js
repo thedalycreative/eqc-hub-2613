@@ -216,21 +216,49 @@ const CLASSES = [
 		num: 12, date: '2026-07-22', subject: 's2',
 		title: '10-minute websites + Git setup', sub: 'Your first freelance client · then GitHub',
 		focus: 'Two halves. First: a surprise 10-minute build sprint — everyone got a (ridiculous) client and had to ship a site with an AI agent. Then after dinner, the part every developer has to survive once — getting Git and GitHub working on your own machine.',
-		topics: [
-			'<strong>The sprint:</strong> no Menti tonight — Tim built a JavaScript card-dealer that night while practising animations, and dealt everyone a business',
-			'<strong>The clients:</strong> Reverse Gym ("we do the reps, you do the couch") · Sandwich Ambulance · Professional Queue Stander · Extreme Ironing Tours · Grandpa’s Mystery Soup Club · Bubble Wrap Therapy Studio · Snail Racing League',
-			'10 minutes, an AI agent, then 30 seconds to present. Everyone shipped something.',
-			'<strong>Three routes that worked:</strong> the agent inside VS Code (most of the class) · ChatGPT in a browser, then paste into VS Code (Andrew) · reopening a previous project so the agent already had context (Viktoria)',
-			'<strong>Prompts that worked</strong> named the stack and the components: "use HTML, Bootstrap, CSS, must include a booking section and an accordion of session types, make it fun and over the top"',
-			'<strong>Name your file <code>index.html</code>.</strong> Leslie called hers <code>snail.html</code> and the agent lost the plot',
-			'Placeholder images come from services like <a href="https://picsum.photos" target="_blank" rel="noopener">Picsum</a> — grey-box stand-ins until you have the real thing',
-			'Emojis render differently on Windows and Mac — worth knowing before you rely on them',
-			'Copilot is an amalgamation of OpenAI, Anthropic and Gemini models; Codex is OpenAI',
-			'<strong>After the break — Git &amp; GitHub:</strong> the README as project documentation, cloning the class repo with <code>gh repo clone</code>, and installing Git where it was missing',
-			'Windows: <code>winget install --id Git.Git</code> then <code>--id GitHub.cli</code>. Mac: Homebrew, then <code>brew install git</code>. Then <code>gh auth login</code> and restart VS Code',
-			'You push to <strong>your own</strong> repo — you’re taking Tim’s code, not collaborating on it',
+		segments: [
+			{
+				tone: 'cool1', icon: 'bi-clock-history',
+				label: 'Part 1 · The "10-minute" build sprint',
+				body: [
+					'No Menti tonight — Tim built a JavaScript card-dealer that afternoon while practising animations, and dealt everyone a business',
+					'<strong>The clients:</strong> Reverse Gym ("we do the reps, you do the couch") · Sandwich Ambulance · Professional Queue Stander · Extreme Ironing Tours · Grandpa’s Mystery Soup Club · Bubble Wrap Therapy Studio · Snail Racing League',
+					'10 minutes, an AI agent, then 30 seconds to present. Everyone shipped something (it ran a little over 10 minutes — worth it)',
+					'<strong>Three routes that worked:</strong> the agent inside VS Code (most of the class) · ChatGPT in a browser, then paste into VS Code (Andrew) · reopening a previous project so the agent already had context (Viktoria)',
+					'<strong>Prompts that worked</strong> named the stack and the components: "use HTML, Bootstrap, CSS, must include a booking section and an accordion of session types, make it fun and over the top"',
+					'<strong>Name your file <code>index.html</code>.</strong> Leslie called hers <code>snail.html</code> and the agent lost the plot',
+					'Placeholder images come from services like <a href="https://picsum.photos" target="_blank" rel="noopener">Picsum</a> — grey-box stand-ins until you have the real thing',
+					'Emojis render differently on Windows and Mac — worth knowing before you rely on them',
+					'Copilot is an amalgamation of OpenAI, Anthropic and Gemini models; Codex is OpenAI',
+					'<strong>Tim’s line of the night:</strong> coding by hand vs coding with an agent is a hand drill vs a power drill. And the agent mirrors your language back — the class got good results because they asked for elements by their proper names',
+				],
+			},
+			{
+				tone: 'warm', icon: 'bi-cup-hot',
+				label: 'Dinner break',
+				body: [
+					'Fish and chips, well earned — back at 7:05 for the Git half',
+				],
+			},
+			{
+				tone: 'cool2', icon: 'bi-git',
+				label: 'Part 2 · Git & GitHub',
+				body: [
+					'The README as project documentation, and cloning the class repo with <code>gh repo clone</code>',
+					'Installing Git where it was missing. Windows: <code>winget install --id Git.Git</code> then <code>--id GitHub.cli</code>. Mac: Homebrew, then <code>brew install git</code>',
+					'Then <code>gh auth login</code> — and restart VS Code so it picks up the new commands',
+					'You push to <strong>your own</strong> repo — you’re taking Tim’s code, not collaborating on it',
+					'Full walkthrough on the <a href="assets/cheatsheets/cheatsheet-git.html" target="_blank">Git &amp; GitHub cheat sheet</a>',
+				],
+			},
+			{
+				tone: 'admin', icon: 'bi-clipboard-check',
+				label: 'Admin · Attendance',
+				body: [
+					'Use your <strong>full name as registered</strong> on the form — not a nickname. Too many names in this class overlap and the sign-on sheet is getting confused',
+				],
+			},
 		],
-		note: '<strong>Attendance:</strong> use your <strong>full name as registered</strong> on the form — not a nickname. Too many names in this class overlap and the sign-on sheet is getting confused.<br><br><strong>Tim’s line of the night:</strong> coding by hand versus coding with an agent is a hand drill versus a power drill. And the agent mirrors your language back at you — the class got good results because they asked for elements by their proper names.',
 		links: [
 			{ label: 'Git & GitHub Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-git.html' },
 			{ label: 'Class repo: S02-A01-BootstrapClone', href: 'https://github.com/thedalycreative/S02-A01-BootstrapClone' },
@@ -530,6 +558,22 @@ function initModal() {
 			formatDate(parseLocalDate(c.date)) + ' · 5:30–8:30pm';
 
 		const topics = (c.topics || []).map((t) => `<li>${t}</li>`).join('');
+
+		// Some classes tell a story better as a colour-coded timeline than as one
+		// flat list — each segment is a light accent-tinted panel with its own
+		// tone (see .tl-* in style.css). Used where a class had distinct phases.
+		let timeline = '';
+		if (c.segments) {
+			timeline = '<div class="class-timeline">' + c.segments.map((seg) => {
+				const items = (seg.body || []).map((b) => `<li>${b}</li>`).join('');
+				return `
+					<div class="tl-seg tl-${seg.tone}">
+						<div class="tl-head"><i class="bi ${seg.icon}"></i>${seg.label}</div>
+						${items ? `<ul>${items}</ul>` : ''}
+					</div>`;
+			}).join('') + '</div>';
+		}
+
 		const links = (c.links || []).map((l) => {
 			const ext = /^https?:\/\//.test(l.href);
 			const rel = ext ? ' target="_blank" rel="noopener"' : ' target="_blank"';
@@ -560,6 +604,7 @@ function initModal() {
 
 		document.getElementById('classModalBody').innerHTML =
 			(c.focus ? `<p><strong>Focus:</strong> ${c.focus}</p>` : '') +
+			timeline +
 			(topics ? `<ul>${topics}</ul>` : '') +
 			assignment +
 			(c.note ? `<p class="mb-0">${c.note}</p>` : '') +
