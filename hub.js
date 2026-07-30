@@ -119,6 +119,7 @@ const CLASSES = [
 		],
 		links: [
 			{ label: 'Folder Structure Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-folderstructure.html' },
+			{ label: 'Wireframes Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-wireframes.html' },
 			{ label: 'Figma', href: 'https://www.figma.com' },
 		],
 	},
