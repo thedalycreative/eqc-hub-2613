@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  ASSESSMENT · S1.a02 · Provide ICT Support (Katie & Marvin)
+  Subject 1 · Clients & Concepts · Intake 26.13
+  =====================================================================
+
+  DONE in class — two clients, two fixes, one submission.
+    Part 1 (Katie)  — Class 13 · Mon 27 Jul 2026 · SEO / metadata fix
+    Part 2 (Marvin) — Class 14 · Wed 29 Jul 2026 · broken-links fix
+
+  Comments walk through what this file is doing so students can read
+  the source and learn from it.
+  =====================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S1.a02 · Katie &amp; Marvin · Intake 26.13</title>
+
+  <style>
+    :root { --accent: #c0392b; --ink: #222; --muted: #666; --border: #eee; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           max-width: 46rem; margin: 2rem auto; padding: 0 1rem;
+           line-height: 1.6; color: var(--ink); }
+    a { color: var(--accent); }
+    header.assessment { border-left: 4px solid var(--accent);
+                        padding: .25rem 0 .25rem 1rem; margin: 1rem 0 2rem; }
+    header.assessment p { margin: 0; color: var(--muted); font-size: .875rem; }
+    header.assessment h1 { margin: .25rem 0; font-size: 1.75rem; }
+    section { margin: 2.5rem 0; }
+    h2 { border-bottom: 2px solid var(--border); padding-bottom: .35rem; }
+    h3 { color: var(--accent); margin-top: 1.5rem; }
+    .status { display: inline-block; padding: .1rem .5rem; border-radius: .25rem;
+              font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+              background: var(--accent); color: #fff; }
+    .warn { background: #fff8e1; border-left: 3px solid #d4a017;
+            padding: .75rem 1rem; margin: 1rem 0; font-size: .9rem; }
+    .cta { display: inline-block; padding: .5rem 1rem; margin-top: .5rem;
+           background: var(--accent); color: #fff; text-decoration: none;
+           border-radius: .25rem; font-weight: 600; }
+    pre { background: #f6f6f6; padding: .75rem; border-radius: .25rem;
+          overflow-x: auto; font-size: .85rem; }
+    footer { margin: 3rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+             color: var(--muted); font-size: .8rem; }
+  </style>
+</head>
+<body>
+
+  <p><a href="../index.html">&larr; Back to hub</a></p>
+
+  <header class="assessment">
+    <p>Subject 1 · Clients &amp; Concepts</p>
+    <h1>S1.a02 · Provide ICT Support (Katie &amp; Marvin)</h1>
+    <p><span class="status">Done</span> · Classes 13 &amp; 14 · One submission covering both clients.</p>
+  </header>
+
+  <!-- 1. THE BRIEF — one section that covers both parts. -->
+  <section>
+    <h2>The brief</h2>
+    <p>Two small clients, two different ICT support tickets. Diagnose the problem, plan the fix,
+      execute it, and communicate throughout — the way you would in a real support role.</p>
+    <ul>
+      <li><strong>Part 1 (Katie):</strong> Katie is a videographer. Her site can't be found on Google.
+        The problem is SEO — the <code>&lt;head&gt;</code> is full of placeholder junk.</li>
+      <li><strong>Part 2 (Marvin):</strong> Marvin runs an online flower delivery. Half his site's
+        links are broken — navbar items go nowhere, footer links dead-end.</li>
+    </ul>
+  </section>
+
+  <!-- 2. TASKS — split by client. -->
+  <section>
+    <h2>Tasks</h2>
+    <h3>Part 1 · Katie's SEO fix</h3>
+    <ol>
+      <li>Rewrite <code>&lt;title&gt;</code>, <code>&lt;meta name="description"&gt;</code>,
+          <code>&lt;meta name="keywords"&gt;</code> and <code>&lt;meta name="author"&gt;</code>.</li>
+      <li>Match the metadata to the visible page content — consistency helps ranking.</li>
+      <li>Copy the same metadata across every page.</li>
+      <li>Zip and submit.</li>
+    </ol>
+    <h3>Part 2 · Marvin's broken site</h3>
+    <ol>
+      <li>Answer all 11 questions in the activity brief.</li>
+      <li>Audit every <code>href</code> across the site.</li>
+      <li>Build the missing <code>products.html</code>, <code>contact.html</code>, and a friendly <code>404.html</code>.</li>
+      <li>Write the client-facing email in the tone Marvin's SLA calls for.</li>
+      <li>Zip the fixed site and submit alongside the written answers.</li>
+    </ol>
+  </section>
+
+  <!-- 3. MODEL ANSWERS — for Marvin, we already have the full set in
+       references/activity-2-marvin.md. For Katie, we walk through the key answers here. -->
+  <section>
+    <h2>Model answers</h2>
+
+    <div class="warn"><strong>Reword, don't copy.</strong> Rewrite in your own voice before submitting.</div>
+
+    <h3>Katie · what the fixed &lt;head&gt; looks like</h3>
+    <pre>&lt;head&gt;
+  &lt;title&gt;Katie Reid Videography — Perth wedding &amp; family films&lt;/title&gt;
+  &lt;meta name="description"
+        content="Warm, unhurried wedding and family videography in Perth,
+                 capturing moments that last a lifetime."&gt;
+  &lt;meta name="keywords"
+        content="wedding videographer Perth, family video, event videography, WA"&gt;
+  &lt;meta name="author" content="Tim's EQC Minions · ICT Support"&gt;
+&lt;/head&gt;</pre>
+    <p><em>Why this works:</em> the title names the business, the service and the location. The
+      description echoes the tagline visible on the homepage ("capturing moments that last a
+      lifetime") — search engines reward that consistency. Keywords are honest and specific.
+      The <code>author</code> is <strong>your</strong> company as the contractor, not the client.</p>
+
+    <h3>Marvin · full worked answers (all 11 questions)</h3>
+    <p>The full model answer set for Marvin — including the client email, the SLA review, and
+      the fix plan — is a separate document because it's long. Open it below.</p>
+    <a class="cta" href="../references/activity-2-marvin.md" target="_blank">Open Marvin model answers &rarr;</a>
+
+    <h3>Marvin · view the finished site</h3>
+    <p>The completed Marvin site (index / products / contact / 404) is included in this repo so
+      you can compare it to your own. Open it locally with Live Server, or preview it here:</p>
+    <a class="cta" href="../assets/exercises/marvin-completed/index.html" target="_blank">Open the finished Marvin site &rarr;</a>
+  </section>
+
+  <footer>
+    <p><a href="../index.html">&larr; Back to hub</a> · EQC Institute of Technology · Intake 26.13</p>
+  </footer>
+
+</body>
+</html>

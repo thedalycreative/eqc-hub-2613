@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  ASSESSMENT · S1.a01 · Originate and Develop Concepts
+  Subject 1 · Clients & Concepts · Intake 26.13
+  =====================================================================
+
+  Minimal HTML — no Bootstrap, no external stylesheet, no build step.
+  Everything lives in this one file so students can View Source and see
+  exactly how a tiny page is put together.
+
+  Sections top-to-bottom:
+    1. <head>    — page metadata + a tiny <style> block
+    2. Back link — always let the reader get out
+    3. <header>  — subject, code, title, done-yet flag
+    4. Brief     — what the assessment is asking
+    5. Tasks     — what you actually hand in
+    6. Model     — drafted sample answers (rewrite before submitting)
+  =====================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S1.a01 · Originate and Develop Concepts · Intake 26.13</title>
+
+  <!-- One embedded stylesheet keeps this file portable.
+       :root vars mirror the hub's Subject 1 / Subject 2 accent colours. -->
+  <style>
+    :root { --accent: #c0392b; --ink: #222; --muted: #666; --border: #eee; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           max-width: 46rem; margin: 2rem auto; padding: 0 1rem;
+           line-height: 1.6; color: var(--ink); }
+    a { color: var(--accent); }
+    header.assessment { border-left: 4px solid var(--accent);
+                        padding: .25rem 0 .25rem 1rem; margin: 1rem 0 2rem; }
+    header.assessment p { margin: 0; color: var(--muted); font-size: .875rem; }
+    header.assessment h1 { margin: .25rem 0; font-size: 1.75rem; }
+    section { margin: 2.5rem 0; }
+    h2 { border-bottom: 2px solid var(--border); padding-bottom: .35rem; }
+    h3 { color: var(--accent); margin-top: 1.5rem; }
+    .status { display: inline-block; padding: .1rem .5rem; border-radius: .25rem;
+              font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+              background: #f6f6f6; color: var(--muted); }
+    .status.done { background: var(--accent); color: #fff; }
+    .warn { background: #fff8e1; border-left: 3px solid #d4a017;
+            padding: .75rem 1rem; margin: 1rem 0; font-size: .9rem; }
+    footer { margin: 3rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+             color: var(--muted); font-size: .8rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Back link — put it at the top AND the bottom so the reader
+       never has to scroll to get out. -->
+  <p><a href="../index.html">&larr; Back to hub</a></p>
+
+  <!-- Page header. The status pill flags whether we've done this in class yet. -->
+  <header class="assessment">
+    <p>Subject 1 · Clients &amp; Concepts</p>
+    <h1>S1.a01 · Originate and Develop Concepts</h1>
+    <p><span class="status">Not yet run in class</span> · Model answers are drafted below.</p>
+  </header>
+
+  <!-- 1. THE BRIEF — plain-English framing of what the assessment covers. -->
+  <section>
+    <h2>The brief</h2>
+    <p>You've been handed a client brief: a small local business (in class we'll pick one — a café,
+      a plumber, a personal trainer). Turn that brief into a real design concept: moodboard,
+      colour palette, typography choices, and a first-pass wireframe of the homepage.</p>
+    <p>This assessment is about the <em>thinking</em> that happens before you touch code —
+      showing you can read a brief, ask the right questions, and turn a rough idea into something
+      a client could sign off on.</p>
+  </section>
+
+  <!-- 2. TASKS — the actual deliverables the assessor will mark. -->
+  <section>
+    <h2>Tasks</h2>
+    <ol>
+      <li>Summarise the client's business and audience in 3–5 sentences.</li>
+      <li>List 5 questions you would ask the client before starting.</li>
+      <li>Assemble a moodboard (6–9 images) and explain each choice in one line.</li>
+      <li>Propose a 3–5 colour palette with hex codes and a short rationale.</li>
+      <li>Pick two typefaces (heading + body) from Google Fonts and justify the pairing.</li>
+      <li>Sketch a wireframe of the homepage (paper, Excalidraw or Figma — any fidelity).</li>
+    </ol>
+  </section>
+
+  <!-- 3. MODEL ANSWERS — drafted so students see the level of detail expected.
+       These are placeholders written by AI; rewrite in your own voice before you submit. -->
+  <section>
+    <h2>Model answers</h2>
+
+    <div class="warn"><strong>Reword, don't copy.</strong> These are model answers written to
+      show the level of detail — plagiarism software will catch a direct paste. Rewrite every
+      answer in your own words before submitting.</div>
+
+    <h3>Q1 · Business summary</h3>
+    <p><em>Sample client — Bloom &amp; Bean, a small suburban café that opens for breakfast and
+      brunch only.</em> Bloom &amp; Bean is a family-run café in a residential pocket of the
+      inner suburbs. Their audience is local — parents on the school run, remote workers looking
+      for a mid-morning break, weekend brunch crowds. They're not competing on price; they're
+      competing on warmth, dietary options, and consistency.</p>
+
+    <h3>Q2 · Five questions for the client</h3>
+    <ol>
+      <li>Who do you most want the website to reach — new customers, existing regulars, or catering enquiries?</li>
+      <li>What single action do you most want a visitor to take on the site?</li>
+      <li>Do you sell or take bookings online now, or is this the first version?</li>
+      <li>Are there any brand assets already — logo, colours, photos — or do we start from scratch?</li>
+      <li>What websites do you like, and what about them do you want to steal?</li>
+    </ol>
+
+    <h3>Q3 · Moodboard notes</h3>
+    <p>Six images grouped in three pairs: <em>Warmth</em> (soft morning light through a window,
+      a mug on a wooden counter), <em>Community</em> (small hands passing a plate, a parent
+      chatting to staff), <em>Craft</em> (a hand pouring milk, close-up of a pastry). The story
+      is "we know your name, and we know how you take your coffee".</p>
+
+    <h3>Q4 · Colour palette</h3>
+    <ul>
+      <li><code>#2E1F1B</code> — dark espresso brown, for headings and nav.</li>
+      <li><code>#F4EDE4</code> — warm parchment, for backgrounds.</li>
+      <li><code>#C08A5A</code> — caramel, the "call-to-action" colour.</li>
+      <li><code>#3D5A3E</code> — deep leaf green, a quiet accent for icons and borders.</li>
+    </ul>
+    <p>Rationale: browns and creams evoke coffee and bread without cliché; the caramel picks up
+      the pastry palette and gives buttons enough contrast to be found; the green earths the
+      whole thing so it doesn't drift beige.</p>
+
+    <h3>Q5 · Typography pairing</h3>
+    <p><strong>Headings:</strong> Playfair Display (serif, warm, editorial).
+       <strong>Body:</strong> Inter (sans-serif, high legibility at small sizes).
+       The pairing gives the site a magazine feel without making the body copy hard to read on
+       phones — where 80% of visits will come from.</p>
+
+    <h3>Q6 · Wireframe notes</h3>
+    <p>Homepage top-to-bottom: sticky nav with the phone number and "Book a table" button →
+      hero (photo of the counter at 8am, big headline "Neighbourhood mornings, since 2019") →
+      opening hours strip → today's specials (3 cards) → what people are saying (2 quotes) →
+      footer with map, socials, dietary FAQ. Nothing below the fold that a first-time visitor
+      genuinely needs — the top of the page has to earn the scroll.</p>
+  </section>
+
+  <!-- Bottom back link — mirror of the top one. -->
+  <footer>
+    <p><a href="../index.html">&larr; Back to hub</a> · EQC Institute of Technology · Intake 26.13</p>
+  </footer>
+
+</body>
+</html>

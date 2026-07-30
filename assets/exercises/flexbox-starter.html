@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+  FLEXBOX STARTER FILE — open this in VS Code and run it with Live Server
+  (or just double-click it to open in a browser and refresh after saving).
+
+  Nothing here uses Flexbox yet. That's the point — students see the
+  "broken" default layout first, then you type the flex properties into
+  the empty rule blocks below, live, one line at a time.
+
+  Follow flexbox_typing_script.md for exactly what to type and when.
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Flexbox Practice</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 70px;
+    }
+
+    h2 {
+      border-bottom: 2px solid #333;
+      padding-bottom: 8px;
+    }
+
+
+    /* ============================================
+     1. CENTER A DIV
+     ============================================ */
+
+    .ex1-container {
+      height: 400px;
+      border: 2px dashed #999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+
+
+    }
+
+    .ex1-box {
+      width: 200px;
+      height: 200px;
+      background: #2EC4B6;
+      border-radius: 8px;
+    }
+
+
+    /* ============================================
+     2. NAVBAR
+     ============================================ */
+
+    .navbar {
+      background: #1B2430;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+
+
+
+
+      /* 👇 type here */
+
+    }
+
+    .navbar .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .navbar .links {
+      /* 👇 type here (later step) */
+
+    }
+
+    .navbar .links a {
+      color: white;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+
+
+    /* ============================================
+     3. RESPONSIVE CARD ROW
+     ============================================ */
+
+    .cards {
+      /* 👇 type here */
+
+    }
+
+    .card {
+      background: #3A86FF;
+      color: white;
+      padding: 24px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      width: 150px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <h1>Flexbox Practice</h1>
+
+  <section>
+    <h2>1. Center a Div</h2>
+    <div class="ex1-container">
+      <div class="ex1-box"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Navbar</h2>
+    <div class="navbar">
+      <div class="logo">MyLogo</div>
+      <div class="links">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Responsive Card Row</h2>
+    <div class="cards">
+      <div class="card">1</div>
+      <div class="card">2</div>
+      <div class="card">3</div>
+      <div class="card">4</div>
+      <div class="card">5</div>
+    </div>
+  </section>
+
+</body>
+
+</html>
