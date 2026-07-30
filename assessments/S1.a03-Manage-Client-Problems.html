@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  ASSESSMENT · S1.a03 · Manage Client Problems
+  Subject 1 · Clients & Concepts · Intake 26.13
+  =====================================================================
+  Not yet run in class — model answers below are drafted for reference.
+  Read them, learn the shape, rewrite in your own voice when the real
+  assessment lands.
+  =====================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S1.a03 · Manage Client Problems · Intake 26.13</title>
+
+  <style>
+    :root { --accent: #c0392b; --ink: #222; --muted: #666; --border: #eee; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           max-width: 46rem; margin: 2rem auto; padding: 0 1rem;
+           line-height: 1.6; color: var(--ink); }
+    a { color: var(--accent); }
+    header.assessment { border-left: 4px solid var(--accent);
+                        padding: .25rem 0 .25rem 1rem; margin: 1rem 0 2rem; }
+    header.assessment p { margin: 0; color: var(--muted); font-size: .875rem; }
+    header.assessment h1 { margin: .25rem 0; font-size: 1.75rem; }
+    section { margin: 2.5rem 0; }
+    h2 { border-bottom: 2px solid var(--border); padding-bottom: .35rem; }
+    h3 { color: var(--accent); margin-top: 1.5rem; }
+    .status { display: inline-block; padding: .1rem .5rem; border-radius: .25rem;
+              font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+              background: #f6f6f6; color: var(--muted); }
+    .warn { background: #fff8e1; border-left: 3px solid #d4a017;
+            padding: .75rem 1rem; margin: 1rem 0; font-size: .9rem; }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .9rem; }
+    th, td { border: 1px solid var(--border); padding: .5rem .75rem; text-align: left; }
+    th { background: #fafafa; }
+    footer { margin: 3rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+             color: var(--muted); font-size: .8rem; }
+  </style>
+</head>
+<body>
+
+  <p><a href="../index.html">&larr; Back to hub</a></p>
+
+  <header class="assessment">
+    <p>Subject 1 · Clients &amp; Concepts</p>
+    <h1>S1.a03 · Manage Client Problems</h1>
+    <p><span class="status">Not yet run in class</span> · Model answers are drafted below.</p>
+  </header>
+
+  <!-- 1. BRIEF -->
+  <section>
+    <h2>The brief</h2>
+    <p>A client raises an issue with a live site you're supporting. Diagnose it, prioritise it
+      against everything else on your plate, communicate a plan, and know when to escalate.
+      This assessment tests the <em>process</em> around a fix, not the fix itself.</p>
+  </section>
+
+  <!-- 2. TASKS -->
+  <section>
+    <h2>Tasks</h2>
+    <ol>
+      <li>Write your team's SLA in plain English (response times, resolution targets, escalation path).</li>
+      <li>Build a priority matrix (Critical / High / Medium / Low) with concrete examples of each.</li>
+      <li>Draft the initial acknowledgement email a client sees when they raise a ticket.</li>
+      <li>Draft the escalation email — client-facing — when a High-priority ticket is going to breach.</li>
+      <li>Write a short post-incident note the client can read in 30 seconds.</li>
+    </ol>
+  </section>
+
+  <!-- 3. MODEL ANSWERS -->
+  <section>
+    <h2>Model answers</h2>
+
+    <div class="warn"><strong>Reword, don't copy.</strong> Rewrite in your own voice.</div>
+
+    <h3>Q1 · SLA in plain English</h3>
+    <ul>
+      <li><strong>Acknowledge:</strong> we reply to every new ticket within 1 business hour.</li>
+      <li><strong>Triage:</strong> we tell you the priority within 4 business hours.</li>
+      <li><strong>Resolve targets:</strong> Critical = same day · High = 2 business days ·
+        Medium = 5 business days · Low = next scheduled release.</li>
+      <li><strong>Comms cadence:</strong> at least one written update per business day until closed.</li>
+      <li><strong>Escalation:</strong> if we can't hit the resolve target, we tell you <em>before</em>
+        the deadline, name the blocker, and give a new date.</li>
+      <li><strong>Closure:</strong> we don't mark a ticket closed until you sign off in writing.</li>
+    </ul>
+
+    <h3>Q2 · Priority matrix</h3>
+    <table>
+      <thead>
+        <tr><th>Priority</th><th>What qualifies</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Critical</td><td>Site down or unable to take payments</td><td>Checkout page 500-erroring</td></tr>
+        <tr><td>High</td><td>Live feature broken, workaround difficult</td><td>Contact form silently failing</td></tr>
+        <tr><td>Medium</td><td>Cosmetic issue affecting brand or usability</td><td>Mobile nav overlapping the logo</td></tr>
+        <tr><td>Low</td><td>Nice-to-have, doesn't affect the customer flow</td><td>Footer copyright year is wrong</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Q3 · Acknowledgement email</h3>
+    <p><strong>Subject:</strong> Got your message — ticket #1234 opened</p>
+    <p>Hi Sam,<br><br>
+      Thanks for flagging this — I've opened ticket #1234 and I'll come back to you with a
+      priority and rough timing within the next 4 hours. If it turns out to be more urgent
+      than that, I'll call.<br><br>
+      No action needed from you right now.<br><br>
+      — Tim · EQC Minions ICT Support</p>
+
+    <h3>Q4 · Escalation email (before the breach)</h3>
+    <p><strong>Subject:</strong> Update on #1234 — target date shifting</p>
+    <p>Hi Sam,<br><br>
+      Quick heads-up on ticket #1234. Our target was end-of-day Thursday. We've hit a snag
+      with the payment gateway's API response — we're waiting on their support to confirm the
+      change is on their end and not ours.<br><br>
+      New target: <strong>close of business Friday</strong>. If that shifts again I'll email
+      by 10am tomorrow with the reason and a new date. Nothing broken on your customer flow
+      in the meantime.<br><br>
+      — Tim</p>
+
+    <h3>Q5 · 30-second post-incident note</h3>
+    <p><strong>What happened:</strong> The checkout page 500-errored between 2:14pm and 2:31pm
+      Thursday. <strong>Cause:</strong> a payment-gateway timeout during their maintenance window
+      (they didn't announce it). <strong>Fix:</strong> we've added a retry with a 3-second
+      backoff so the customer sees a spinner, not an error. <strong>Impact:</strong> ~18 checkouts
+      attempted during the window; 12 recovered on retry, 6 need a manual follow-up email —
+      list attached.</p>
+  </section>
+
+  <footer>
+    <p><a href="../index.html">&larr; Back to hub</a> · EQC Institute of Technology · Intake 26.13</p>
+  </footer>
+
+</body>
+</html>

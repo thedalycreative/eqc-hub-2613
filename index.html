@@ -136,7 +136,8 @@
 	  ======================================================================== -->
 	<header id="top" class="bg-black text-white py-5">
 		<div class="container py-4">
-			<p class="eyebrow mb-3">EQC · Front End Web Development</p>
+			<div class="row align-items-center g-4"><div class="col-md-8">
+<p class="eyebrow mb-3">EQC · Front End Web Development</p>
 
 			<div class="d-flex align-items-center gap-3 mb-3">
 				<span class="ib-loader" style="width:3.5rem;height:3.5rem" aria-hidden="true"></span>
@@ -153,6 +154,13 @@
 				<span class="status-pill" id="pillWeek"><i class="bi bi-calendar3"></i><span>Loading…</span></span>
 				<span class="status-pill" id="pillNext"><i class="bi bi-arrow-right-circle"></i><span>Loading…</span></span>
 			</div>
+			</div><!-- /.col-md-8 -->
+			<!-- Mascot column: hidden on xs/sm so mobile stays clean -->
+			<div class="col-md-4 d-none d-md-block text-center">
+				<img src="assets/images/minions-stuart.png" alt="Stuart the Minion — class mascot"
+					style="max-height: 14rem; width: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,.5));">
+			</div>
+			</div><!-- /.row -->
 		</div>
 	</header>
 
@@ -326,7 +334,7 @@
 
 			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-				<!-- ─── LEARN · Assessments (in order we did them) ─── -->
+				<!-- ─── LEARN · Assessments (all activities, ★ = done) ─── -->
 				<div class="col">
 					<div class="border p-3 h-100 resource-tile fam-learn">
 						<div class="d-flex align-items-start justify-content-between gap-2 mb-3">
@@ -335,30 +343,40 @@
 						</div>
 						<ul class="list-unstyled small mb-0">
 							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
-									href="assessments/1.04-ICTNeeds.html" target="_blank">
+									href="assessments/S1.a01-Originate-and-Develop-Concepts.html" target="_blank">
 									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
-									<span><strong>1.04</strong> · Match ICT Needs</span></a></li>
+									<span><strong>S1.a01</strong> · Originate &amp; Develop Concepts</span></a></li>
 							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
-									href="assessments/2.01-Clone.html" target="_blank">
+									href="assessments/S1.a02-Katie-and-Marvin.html" target="_blank">
+									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
+									<span><strong>★ S1.a02</strong> · Katie &amp; Marvin</span></a></li>
+							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
+									href="assessments/S1.a03-Manage-Client-Problems.html" target="_blank">
+									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
+									<span><strong>S1.a03</strong> · Manage Client Problems</span></a></li>
+							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
+									href="assessments/S1.a04-Match-ICT-Needs.html" target="_blank">
+									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
+									<span><strong>★ S1.a04</strong> · Match ICT Needs</span></a></li>
+							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
+									href="assessments/S1.a05-Lead-and-Facilitate-a-Team.html" target="_blank">
+									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
+									<span><strong>S1.a05</strong> · Lead &amp; Facilitate a Team</span></a></li>
+							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
+									href="assessments/S2.a01-Bootstrap-Clone.html" target="_blank">
 									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s2); flex:none;" aria-hidden="true"></i>
-									<span><strong>2.01</strong> · Bootstrap Clone</span></a></li>
+									<span><strong>★ S2.a01</strong> · Bootstrap Clone</span></a></li>
 							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
-									href="assessments/1.02-Katie.html" target="_blank">
-									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
-									<span><strong>1.02</strong> · Katie's SEO Fix</span></a></li>
-							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
-									href="assessments/1.02-Marvin.html" target="_blank">
-									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); flex:none;" aria-hidden="true"></i>
-									<span><strong>1.02</strong> · Marvin's Broken Site</span></a></li>
-							<li class="mb-1"><a class="link-dark d-flex align-items-center gap-2"
-									href="assessments/2.02-BuildYourOwn.html" target="_blank">
+									href="assessments/S2.a02-Build-Your-Own-Website.html" target="_blank">
 									<i style="width:.55rem; height:.55rem; border-radius:50%; background:var(--s2); flex:none;" aria-hidden="true"></i>
-									<span><strong>2.02</strong> · Build Your Own Website</span></a></li>
+									<span><strong>S2.a02</strong> · Build Your Own Website</span></a></li>
 						</ul>
 						<p class="small text-muted mt-3 mb-0">
-							<i style="display:inline-block; width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); margin-right:.35rem; vertical-align:middle;" aria-hidden="true"></i>Subject 1
+							<strong>★</strong> = done in class
 							&nbsp;·&nbsp;
-							<i style="display:inline-block; width:.55rem; height:.55rem; border-radius:50%; background:var(--s2); margin-right:.35rem; vertical-align:middle;" aria-hidden="true"></i>Subject 2
+							<i style="display:inline-block; width:.55rem; height:.55rem; border-radius:50%; background:var(--s1); margin-right:.35rem; vertical-align:middle;" aria-hidden="true"></i>S1
+							&nbsp;
+							<i style="display:inline-block; width:.55rem; height:.55rem; border-radius:50%; background:var(--s2); margin-right:.35rem; vertical-align:middle;" aria-hidden="true"></i>S2
 						</p>
 					</div>
 				</div>
@@ -408,6 +426,15 @@
 							<li class="mb-1"><a class="link-dark"
 									href="assets/interactive/interactive-studentpicker.html" target="_blank"><i
 										class="bi bi-shuffle me-2"></i>Random Student Picker</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/interactive/interactive-clientpicker.html" target="_blank"><i
+										class="bi bi-suit-diamond me-2"></i>Client Card-Dealer</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/exercises/flexbox-starter.html" target="_blank"><i
+										class="bi bi-columns-gap me-2"></i>Flexbox Starter (practice)</a></li>
+							<li class="mb-1"><a class="link-dark"
+									href="assets/exercises/marvin-completed/index.html" target="_blank"><i
+										class="bi bi-flower1 me-2"></i>Marvin — finished site</a></li>
 						</ul>
 					</div>
 				</div>

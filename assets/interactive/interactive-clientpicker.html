@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  INTERACTIVE · Client Card-Dealer
+  Intake 26.13 · Class 12 sprint tool
+  =====================================================================
+  Tim's original card-dealer handed every student a (ridiculous) client
+  for the 10-minute build sprint. This is a reusable version of it —
+  press "Deal a client" and it draws one from the deck.
+
+  The seven clients are the same ones from Class 12:
+    Reverse Gym · Sandwich Ambulance · Professional Queue Stander
+    Extreme Ironing Tours · Grandpa's Mystery Soup Club
+    Bubble Wrap Therapy Studio · Snail Racing League
+
+  Add your own clients — just drop them into the CLIENTS array below.
+
+  Everything (HTML + CSS + JS) is in this one file so students can read
+  it cover-to-cover and copy the pattern.
+  =====================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client Card-Dealer · Intake 26.13</title>
+
+  <style>
+    :root {
+      --ink: #111;
+      --muted: #666;
+      --card-bg: #fff;
+      --accent: #c0392b;
+      --page-bg: linear-gradient(135deg, #fdf6e3 0%, #f9e4b7 100%);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      background: var(--page-bg);
+      color: var(--ink);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem 1rem;
+    }
+    header { text-align: center; margin-bottom: 1.5rem; max-width: 32rem; }
+    h1 { margin: 0 0 .5rem; font-size: 1.75rem; }
+    header p { color: var(--muted); margin: 0; }
+
+    /* THE CARD — big and central */
+    .card {
+      width: min(90vw, 24rem);
+      min-height: 18rem;
+      background: var(--card-bg);
+      border-radius: 1rem;
+      box-shadow: 0 20px 40px -20px rgba(0,0,0,.3);
+      padding: 2rem;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      transition: transform .3s ease;
+    }
+    /* Little bounce when a new card is dealt */
+    .card.dealing { transform: scale(0.9) rotate(-3deg); opacity: .5; }
+
+    .card-label {
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--muted); font-size: .75rem; margin-bottom: .5rem;
+    }
+    .card-name {
+      font-size: 2rem; font-weight: 700; margin: 0 0 .75rem;
+      color: var(--accent);
+    }
+    .card-tagline {
+      color: var(--muted); font-style: italic; margin: 0;
+    }
+
+    /* Empty state before the first draw */
+    .card.empty .card-name { color: var(--muted); font-size: 1.25rem; font-style: italic; }
+
+    /* Actions */
+    .actions { margin-top: 1.5rem; display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center; }
+    button {
+      font: inherit; font-weight: 600;
+      padding: .75rem 1.5rem;
+      border: none; border-radius: .5rem;
+      cursor: pointer;
+      transition: transform .1s ease;
+    }
+    button:active { transform: translateY(1px); }
+    .btn-primary { background: var(--ink); color: #fff; }
+    .btn-secondary { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+
+    /* Deck counter */
+    .counter { margin-top: 1rem; color: var(--muted); font-size: .85rem; }
+
+    /* Back link */
+    .back { position: fixed; top: 1rem; left: 1rem; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--ink); }
+  </style>
+</head>
+<body>
+
+  <a class="back" href="../../index.html">&larr; Back to hub</a>
+
+  <header>
+    <h1>Deal a Client</h1>
+    <p>Press the button. Get a (ridiculous) client. Build them a site in 10 minutes.</p>
+  </header>
+
+  <!-- THE CARD — this element gets updated by JS every time you press "Deal a client". -->
+  <div id="card" class="card empty">
+    <p class="card-label">Ready to deal</p>
+    <p class="card-name">Press the button below</p>
+    <p class="card-tagline">&mdash;</p>
+  </div>
+
+  <div class="actions">
+    <button id="dealBtn" class="btn-primary">Deal a client</button>
+    <button id="resetBtn" class="btn-secondary">Reshuffle deck</button>
+  </div>
+
+  <p class="counter" id="counter">Deck full: 7 clients remaining</p>
+
+  <!-- =========================================================
+       JAVASCRIPT
+       Deck of client cards. Draw without replacement — every
+       student gets a unique one. Reshuffle when the deck is out.
+       ========================================================= -->
+  <script>
+    // The deck. Add more clients here to expand the pool.
+    const CLIENTS = [
+      { name: "Reverse Gym",              tagline: "We do the reps. You do the couch." },
+      { name: "Sandwich Ambulance",       tagline: "Emergency lunch delivery, 24/7." },
+      { name: "Professional Queue Stander", tagline: "We wait in line so you don't have to." },
+      { name: "Extreme Ironing Tours",    tagline: "Cliff-side. Cave-floor. Wherever the wrinkles are." },
+      { name: "Grandpa's Mystery Soup Club", tagline: "A new soup every week. We won't tell you what's in it." },
+      { name: "Bubble Wrap Therapy Studio", tagline: "Pop your way to a calmer you." },
+      { name: "Snail Racing League",      tagline: "Motorsports at 0.03 mph." },
+    ];
+
+    // Runtime state — the deck we draw from, and the card currently on screen.
+    let deck = shuffle([...CLIENTS]);
+
+    // Elements we'll update — grabbed once instead of every call.
+    const card    = document.getElementById("card");
+    const counter = document.getElementById("counter");
+    const dealBtn = document.getElementById("dealBtn");
+    const reset   = document.getElementById("resetBtn");
+
+    // Fisher-Yates shuffle — a standard "randomise this array" recipe.
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // Draw the top card of the deck and show it. Handles the "deck empty" case too.
+    function deal() {
+      if (deck.length === 0) {
+        alert("Deck's empty — reshuffle to keep dealing.");
+        return;
+      }
+      // Little "flip" animation
+      card.classList.add("dealing");
+      setTimeout(() => {
+        const next = deck.pop();
+        card.classList.remove("empty");
+        card.innerHTML = `
+          <p class="card-label">Your client</p>
+          <p class="card-name">${next.name}</p>
+          <p class="card-tagline">"${next.tagline}"</p>`;
+        card.classList.remove("dealing");
+        updateCounter();
+      }, 200);
+    }
+
+    // Rebuild the deck from scratch when we run out.
+    function reshuffle() {
+      deck = shuffle([...CLIENTS]);
+      card.classList.add("empty");
+      card.innerHTML = `
+        <p class="card-label">Deck reshuffled</p>
+        <p class="card-name">Press the button below</p>
+        <p class="card-tagline">&mdash;</p>`;
+      updateCounter();
+    }
+
+    function updateCounter() {
+      counter.textContent = deck.length === 0
+        ? "Deck empty — reshuffle to deal again"
+        : `${deck.length} client${deck.length === 1 ? "" : "s"} remaining`;
+    }
+
+    dealBtn.addEventListener("click", deal);
+    reset.addEventListener("click", reshuffle);
+  </script>
+</body>
+</html>

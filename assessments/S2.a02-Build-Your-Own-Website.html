@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--
+  =====================================================================
+  ASSESSMENT · S2.a02 · Build Your Own Website
+  Subject 2 · Front End Web Dev · Intake 26.13
+  =====================================================================
+  Not yet run in class — kicks off Class 15 (Mon 3 Aug 2026), runs
+  through the second half of the intake. Model plan below.
+  =====================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S2.a02 · Build Your Own Website · Intake 26.13</title>
+
+  <style>
+    :root { --accent: #1f3a5f; --ink: #222; --muted: #666; --border: #eee; }
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+           max-width: 46rem; margin: 2rem auto; padding: 0 1rem;
+           line-height: 1.6; color: var(--ink); }
+    a { color: var(--accent); }
+    header.assessment { border-left: 4px solid var(--accent);
+                        padding: .25rem 0 .25rem 1rem; margin: 1rem 0 2rem; }
+    header.assessment p { margin: 0; color: var(--muted); font-size: .875rem; }
+    header.assessment h1 { margin: .25rem 0; font-size: 1.75rem; }
+    section { margin: 2.5rem 0; }
+    h2 { border-bottom: 2px solid var(--border); padding-bottom: .35rem; }
+    h3 { color: var(--accent); margin-top: 1.5rem; }
+    .status { display: inline-block; padding: .1rem .5rem; border-radius: .25rem;
+              font-size: .75rem; text-transform: uppercase; letter-spacing: .05em;
+              background: #f6f6f6; color: var(--muted); }
+    .warn { background: #fff8e1; border-left: 3px solid #d4a017;
+            padding: .75rem 1rem; margin: 1rem 0; font-size: .9rem; }
+    .cta { display: inline-block; padding: .5rem 1rem; margin-top: .5rem;
+           background: var(--accent); color: #fff; text-decoration: none;
+           border-radius: .25rem; font-weight: 600; }
+    footer { margin: 3rem 0 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+             color: var(--muted); font-size: .8rem; }
+  </style>
+</head>
+<body>
+
+  <p><a href="../index.html">&larr; Back to hub</a></p>
+
+  <header class="assessment">
+    <p>Subject 2 · Front End Web Dev</p>
+    <h1>S2.a02 · Build Your Own Website</h1>
+    <p><span class="status">Not yet run in class</span> · Kicks off Class 15 · Runs across 10 classes.</p>
+  </header>
+
+  <section>
+    <h2>The brief</h2>
+    <p>Same Bootstrap skills as the clone — but this time <em>you</em> pick the subject, and
+      every design decision is yours. About 4 pages, real content, real images, portfolio-ready.</p>
+  </section>
+
+  <section>
+    <h2>The rules</h2>
+    <ol>
+      <li>A <strong>real subject</strong>: yourself, a real business, or a club you belong to.</li>
+      <li><strong>~4 pages</strong> with a working nav on every one.</li>
+      <li>Bootstrap 5 via CDN, your own <code>style.css</code> loaded after it.</li>
+      <li>Real content and real images — no lorem ipsum in a submission.</li>
+      <li>Validate, run WAVE, and test on an actual phone before you submit.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Model plan (spread across classes 15–24)</h2>
+
+    <div class="warn"><strong>Reword the plan for your own site.</strong> This is a template of
+      the <em>process</em>, not the content.</div>
+
+    <h3>Week 1 · Concept &amp; sitemap</h3>
+    <ul>
+      <li>One-sentence "who this is for" statement pinned to the top of your notes.</li>
+      <li>Sitemap on paper: 4 boxes, arrows between them, what each page has to do.</li>
+      <li>Colour palette (Coolors) and typography pair (Google Fonts) chosen before you code.</li>
+    </ul>
+
+    <h3>Week 2 · Wireframe &amp; skeleton</h3>
+    <ul>
+      <li>Low-fi wireframes for every page — Excalidraw is fine.</li>
+      <li>HTML shell for every page: nav + section boxes + placeholder text. No styling yet.</li>
+      <li>Every image tag has an <code>alt</code> attribute from the moment it's added — retrofitting is worse.</li>
+    </ul>
+
+    <h3>Week 3 · Build</h3>
+    <ul>
+      <li>Fill in each page top-to-bottom. Real copy, real images.</li>
+      <li>Check every breakpoint: xs · sm · md · lg · xl.</li>
+      <li>Photos from Unsplash / Pexels if you don't own the rights.</li>
+    </ul>
+
+    <h3>Week 4 · Review &amp; polish</h3>
+    <ul>
+      <li>W3C HTML/CSS validators — clean pass on every page.</li>
+      <li>WAVE accessibility scan — zero errors, contrast alerts explained.</li>
+      <li>PageSpeed Insights on mobile and desktop.</li>
+      <li>Favicon, meta description, OpenGraph tags — the little polish signals.</li>
+      <li>Test on an actual phone. Not DevTools mobile mode. An actual phone.</li>
+    </ul>
+
+    <h3>What the assessor is looking for</h3>
+    <ul>
+      <li>The nav works on every page.</li>
+      <li>Every image has an <code>alt</code>.</li>
+      <li>The site tells you what it's for within 5 seconds of landing.</li>
+      <li>The contact / booking / call-to-action path works end-to-end.</li>
+      <li>It doesn't break on a 375px-wide phone.</li>
+    </ul>
+
+    <a class="cta" href="../references/build-your-own.md" target="_blank">Open the walkthrough &rarr;</a>
+  </section>
+
+  <footer>
+    <p><a href="../index.html">&larr; Back to hub</a> · EQC Institute of Technology · Intake 26.13</p>
+  </footer>
+
+</body>
+</html>
