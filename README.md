@@ -1,7 +1,7 @@
 # ICT50220 · Intake 26.13 — Class Hub
 
 The class website for Diploma of Information Technology, intake 26.13.
-Cheat sheets, class notes, assignment briefs — all in one place.
+Lesson summaries, reference cheat sheets, assignment briefs — all in one place.
 
 **To open:** double-click `index.html`, or right-click it in VS Code → *Open with Live Server*.
 
@@ -9,44 +9,39 @@ Cheat sheets, class notes, assignment briefs — all in one place.
 
 ## How each class works
 
-Every class in the schedule is one entry in the `CLASSES` array in [`hub.js`](hub.js).
-
-- **Past & current classes** show the full summary — focus, topics, links.
-- **Future classes** show a title only. Everything else gets filled in after the class runs.
-- **A class unlocks at midnight the day after it runs** — until then the tile is greyed out.
-
-A future-class entry looks like this — just four fields:
-
-```js
-{ num: 15, date: '2026-08-03', subject: 's2', title: 'To be confirmed' },
-```
+- **Past & current classes** are written up in `lessons/NN-Name.md` — focus, topics, links.
+- **Future classes** are placeholders until they run — just a title and a "paste Zoom summary here" line.
+- **A class tile unlocks at midnight the day after it runs** — until then it's greyed out on the hub.
 
 ---
 
 ## Updating a class after Zoom
 
-At the end of each class, Zoom produces a meeting summary. Paste it into that class's entry:
+At the end of each class, Zoom produces a meeting summary. Paste it into that class's Markdown file:
 
-1. Open [`hub.js`](hub.js) in VS Code.
-2. Find the class by its `num:` (Class 15, Class 16 …).
-3. Add `focus` and `topics` — copy the bullets straight from Zoom:
+1. Open the class file in the `lessons/` folder — e.g. [`lessons/15-YourWebsite.md`](lessons/15-YourWebsite.md).
+2. Under **What we'll cover**, replace the placeholder bullets with the ones from your Zoom summary.
+3. Fill in the **Focus** line with the one-sentence summary Zoom gives you.
+4. Save. Done — GitHub renders the Markdown, no build step.
 
-```js
-{
-  num: 15, date: '2026-08-03', subject: 's2',
-  title: 'The real class title',
-  focus: 'One sentence — what the class was about.',
-  topics: [
-    'First bullet from the Zoom summary',
-    'Second bullet',
-    'Third bullet',
-  ],
-},
+Every lesson file follows the same simple shape:
+
+```markdown
+# Class 15 · Your Website
+
+**Date:** Mon 3 Aug 2026 · **Subject:** S2 (Front End Web Dev)
+
+## Focus
+One sentence — what the class was about.
+
+## What we covered
+- First bullet from the Zoom summary
+- Second bullet
+- Third bullet
+
+## Links & resources
+- [Any relevant reference or link](https://…)
 ```
-
-4. Save. Refresh `index.html`. Done.
-
-Leave `num`, `date`, and `subject` alone — those are set for the whole term.
 
 ---
 
@@ -55,11 +50,12 @@ Leave `num`, `date`, and `subject` alone — those are set for the whole term.
 | File / folder | What it is |
 |---|---|
 | `index.html` | The page itself — nav, hero, class grid |
-| `hub.js` | Every class in the schedule (edit this to update lessons) |
+| `hub.js` | The class schedule — dates, subjects, titles, tile links |
 | `style.css` | All the custom styling |
-| `assets/cheatsheets/` | The cheat sheet library — one HTML file per topic |
-| `assets/class-notes/` | Raw class notes |
+| `lessons/` | One Markdown file per class (`01-Introduction.md` → `24-SubmitShowAndTell.md`) |
+| `references/` | Cheat sheets and walkthroughs — Bootstrap, Flexbox, Git, wireframes, QA checklist, and more |
 | `assets/interactive/` | Class games and tools |
+| `assets/class-calendar.ics` | The full term schedule as a calendar file |
 
 ---
 
