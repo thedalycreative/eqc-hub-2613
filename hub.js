@@ -294,15 +294,26 @@ const CLASSES = [
 		],
 	},
 	{
-		num: 14, date: '2026-07-29', subject: 's1',
-		title: 'Managing client problems', sub: 'Scope & feedback',
-		focus: 'The soft skills that keep you employed.',
+		num: 14, date: '2026-07-29', subject: 's1', forceUnlock: true,
+		title: 'Fix a client’s broken site', sub: 'S01-A02 Part 2 · Marvin’s Flower Delivery',
+		focus: 'Subject 1, Activity 2 continues — Client B is <strong>Marvin</strong>, who runs an online flower delivery business. Half his site’s links are broken. We diagnosed the problem, planned the fix, and rebuilt the missing pages live in class.',
 		topics: [
-			'Scope creep — how to spot it, how to say no',
-			'Turning "make it pop" into a specific brief',
-			'Writing a client update email',
+			'<strong>The symptom:</strong> essential links on Marvin’s site do nothing (navbar) or dead-end (footer) — every broken link is a lost sale',
+			'<strong>The diagnosis:</strong> <code>href</code> attributes pointing at placeholder <code>#</code> values or filenames that don’t exist in the folder',
+			'<strong>The fix plan:</strong> full link audit → repoint every <code>href</code> to the correct relative path → build the missing <code>products.html</code> and <code>contact.html</code> → add a branded <code>404.html</code> as a fallback for the legal links',
+			'Rebuilt <strong>products.html</strong> as a Bootstrap card grid (9 products) and <strong>contact.html</strong> as a Name/Email/Message form — matched the homepage styling exactly',
+			'Wrote the client-facing "here’s what I’m doing" email in the tone the SLA calls for — warm, plain English, no jargon',
+			'Reviewed Marvin’s <strong>SLA</strong>: acknowledge in 1hr · High-priority resolves in 2 business days · daily written updates · escalate before the deadline, never after',
+			'Wrapped up with the follow-up feedback email (Q10) and zipped the fixed site for submission (Q11)',
 		],
-		links: [],
+		note: '<strong>Answers up:</strong> full model answers for all 11 questions of Activity 2 (Marvin) are on the hub — link below. As always, <em>reword before you submit</em>.',
+		links: [
+			{ label: 'Activity 2 (Marvin) — Model Answers', href: 'assets/cheatsheets/cheatsheet-activity2-marvin.html' },
+			{ label: 'HTML Tags Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-htmltags.html' },
+			{ label: 'Bootstrap Cheat Sheet', href: 'assets/cheatsheets/cheatsheet-bootstrap.html' },
+			{ label: 'QA Checklist', href: 'assets/cheatsheets/cheatsheet-qachecklist.html' },
+			{ label: 'W3C Link Checker', href: 'https://validator.w3.org/checklink' },
+		],
 	},
 	{
 		num: 15, date: '2026-08-03', subject: 's2',
@@ -435,7 +446,10 @@ function classEnd(c) {
 }
 
 // A class is "locked" until 00:00 the day AFTER it ran.
+// `forceUnlock: true` on a CLASSES entry opens the tile early — used the
+// evening of a class when the writeup is already published.
 function isLocked(c, now) {
+	if (c.forceUnlock) return false;
 	const unlockAt = parseLocalDate(c.date);
 	unlockAt.setDate(unlockAt.getDate() + 1);
 	return now < unlockAt;
